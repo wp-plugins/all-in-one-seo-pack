@@ -18,6 +18,8 @@ META tags are extracted from your posts/pages like this:
 Meta Plugin.
 * Your titles are rewritten. Actual post title comes first, then your blog name. Not the other way round.
 
+*Warning*: At the moment this plugin is not compatible with gzip. So don't use it when you are gzipping your content.
+
 == Installation ==
 
 1. Upload `all_in_one_seo_pack.php` to the `/wp-content/plugins/` directory

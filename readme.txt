@@ -14,8 +14,8 @@ META tags are extracted from your posts/pages like this:
 
 * Your categories become your META keywords.
 * Your excerpt is used as META description (put effort into that one, it will pay off).
-* Additional custom fields named "keywords" and "description" are taken into account for backwards compatibility with [Another Wordpres
-Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
+* Additional custom fields named "keywords" and "description" are taken into account for backwards compatibility with
+[Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
 * Your titles are rewritten. Actual post title comes first, then your blog name. Not the other way round.
 
 *Warning*: At the moment this plugin is not compatible with gzip. So don't use it when you are gzipping your content.

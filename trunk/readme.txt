@@ -6,9 +6,11 @@ Requires at least: 2.0.2
 Tested up to: 2.1.3
 Stable tag: trunk
 
-Adds META tags like keywords and descriptions to your posts and pages.
+Adds META tags like keywords and descriptions to your posts and pages and makes your pages unique.
 
 == Description ==
+
+Adds META tags like keywords and descriptions to your posts and pages and makes your pages unique.
 
 META tags are extracted from your posts/pages like this:
 
@@ -17,6 +19,7 @@ META tags are extracted from your posts/pages like this:
 * Additional custom fields named "keywords" and "description" are taken into account for backwards compatibility with
 [Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
 * Your titles are rewritten. Actual post title comes first, then your blog name. Not the other way round.
+* "Filler Pages" like archives and categories are excluded from indexing to avoid duplicate content.
 
 [Please leave feedback!](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
 

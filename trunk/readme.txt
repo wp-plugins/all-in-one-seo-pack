@@ -1,7 +1,7 @@
 === All in One SEO Pack ===
 Contributors: uberdose
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40uberdose%2ecom&item_name=Donation%20to%20wp%2euberdose%2ecom&no_shipping=0&no_note=1&tax=0&currency_code=USD&bn=PP%2dDonationsBF&charset=UTF%2d8
-Tags: seo,meta,meta keywords,meta description,title
+Tags: post,google,seo,meta,meta keywords,meta description,title
 Requires at least: 2.0.2
 Tested up to: 2.1.3
 Stable tag: trunk

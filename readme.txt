@@ -1,4 +1,4 @@
-=== All in One SEO pack ===
+=== All in One SEO Pack ===
 Contributors: uberdose
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40uberdose%2ecom&item_name=Donation%20to%20wp%2euberdose%2ecom&no_shipping=0&no_note=1&tax=0&currency_code=USD&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: seo,meta,meta keywords,meta description,title
@@ -17,6 +17,8 @@ META tags are extracted from your posts/pages like this:
 * Additional custom fields named "keywords" and "description" are taken into account for backwards compatibility with
 [Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
 * Your titles are rewritten. Actual post title comes first, then your blog name. Not the other way round.
+
+[Please leave feedback!](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
 
 == Installation ==
 

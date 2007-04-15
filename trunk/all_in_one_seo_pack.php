@@ -4,8 +4,8 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.3
-Author: some guy
+Version: 0.4
+Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
 
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.3";
+ 	var $version = "0.4";
  	
  	var $minimum_excerpt_length = 10;
 
@@ -131,10 +131,48 @@ class All_in_One_SEO_Pack {
 		return implode(',', $keywords_ar);
 	}
 	
+	function add_meta_tags_textinput() {
+	    global $post;
+	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
+	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
+		?>
+		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
+		<table style="margin-bottom:40px; margin-top:30px;">
+		<tr><th style="text-align:left;" colspan="2">The recommended way to add META keywords is through categories, but you can also add some more here.
+		<br/>See <a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#comment-1577">this discussion</a>.</th></tr>
+		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="50"/></td>
+		</tr>
+		</table>
+		<?php
+	}
+
+	function post_meta_tags($id) {
+	    $awmp_edit = $_POST["aiosp_edit"];
+	    if (isset($awmp_edit) && !empty($awmp_edit)) {
+		    $keywords = $_POST["aiosp_keywords"];
+
+		    delete_post_meta($id, 'keywords');
+
+		    if (isset($keywords) && !empty($keywords)) {
+			    add_post_meta($id, 'keywords', $keywords);
+		    }
+	    }
+	}
+
 }
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
+
+add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
+add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
+add_action('edit_page_form', array($aiosp, 'add_meta_tags_textinput'));
+
+add_action('edit_post', array($aiosp, 'post_meta_tags'));
+add_action('publish_post', array($aiosp, 'post_meta_tags'));
+add_action('save_post', array($aiosp, 'post_meta_tags'));
+add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 
 $aiosp->start();
 

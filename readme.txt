@@ -6,27 +6,28 @@ Requires at least: 2.0.2
 Tested up to: 2.1.3
 Stable tag: trunk
 
-This Wordpress plugin can help you to boost your rank in search engines.
-You can add META tags like keywords and descriptions to your posts and pages and makes them unique.
-Your titles get optimized (actual title first, then blog name), this is independent of your theme so you don't have to touch code.
+Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==
 
-This Wordpress plugin can help you to boost your rank in search engines.
-You can add META tags like keywords and descriptions to your posts and pages and makes them unique.
-Your post/page titles get optimized (actual title first, then blog name), this is independent of your theme so you don't have to touch code.
+Optimizes your Wordpress blog for Search Engines (Search Engine Optimization) by generating META tags, optimizing your titles
+and avoiding indexing of duplicate content.
 
-META tags are extracted from your posts/pages like this:
+META tags are generated like this:
 
-* Your categories become your META keywords.
-* Your excerpt is used as META description (*put effort into that one, it will pay off!*)
-* Your titles are rewritten. Actual post title comes first, then your blog name. Not the other way round.
-* "Filler Pages" like archives and categories are excluded from indexing to avoid duplicate content.
-* Additional custom fields named "keywords" and "description" are taken into account for backwards compatibility with
+* Your categories become your META keywords, followed by any additional keywords you specify in the keywords field
+for your post or page (edit one or create a new one, it's right below where you insert your post content).
+* Your excerpt is used as META description. *This is very important* since most
+search engines show this as content snippet in their search engine results pages (SERPs). So it's the first thing many users will see of
+your blog.
+* If there is no excerpt, the custom field named "description" is taken into account. This is for backwards compatibility with
 [Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
 
-The recommended way to add keywords is to simply add categories to a post, but you can also put them into the respective field below your
-post content.
+In addition to generating META tags the following optimizations are done:
+
+* Your titles are rewritten. Actual post title comes first, then your blog name (separated with "|"). Not the other way round. You don't
+have to touch your template! Never ever have "Archive" appear before your precious post title!
+* "Filler Pages" like archives and categories are excluded from indexing to avoid duplicate content.
 
 *[Please leave feedback here!](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)*
 

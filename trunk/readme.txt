@@ -22,6 +22,7 @@ search engines show this as content snippet in their search engine results pages
 your blog.
 * If there is no excerpt, the custom field named "description" is taken into account. This is for backwards compatibility with
 [Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
+* You can set your home page descriptions under "Options" -> "All in One SEO".
 
 In addition to generating META tags the following optimizations are done:
 

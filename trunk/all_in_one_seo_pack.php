@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.4.1
+Version: 0.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,9 +27,9 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.4";
+ 	var $version = "0.5";
  	
- 	var $minimum_excerpt_length = 10;
+ 	var $minimum_excerpt_length = 1;
 
 	function start() {
 		ob_start();
@@ -45,20 +45,18 @@ class All_in_One_SEO_Pack {
 
 		if (is_single() || is_page()) {
 			$description = trim(stripslashes(get_the_excerpt()));
-			if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
-				if (isset($meta_string)) {
-					$meta_string .= "\n";
-				}
-				$meta_string .= sprintf("<meta name=\"description\" content=\"%s\"/>", $description);
-			} else {
+			if (!isset($description) || empty($description)) {
 	            $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
-				if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
-					if (isset($meta_string)) {
-						$meta_string .= "\n";
-					}
-					$meta_string .= sprintf("<meta name=\"description\" content=\"%s\"/>", $description);
-				}
 			}
+		} else if (is_home()) {
+			$description = trim(stripslashes(get_option('aiosp_home_description')));
+		}
+		
+		if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
+			if (isset($meta_string)) {
+				$meta_string .= "\n";
+			}
+			$meta_string .= sprintf("<meta name=\"description\" content=\"%s\"/>", $description);
 		}
 
 		if (isset ($keywords) && !empty($keywords)) {
@@ -131,6 +129,19 @@ class All_in_One_SEO_Pack {
 		return implode(',', $keywords_ar);
 	}
 	
+	function post_meta_tags($id) {
+	    $awmp_edit = $_POST["aiosp_edit"];
+	    if (isset($awmp_edit) && !empty($awmp_edit)) {
+		    $keywords = $_POST["aiosp_keywords"];
+
+		    delete_post_meta($id, 'keywords');
+
+		    if (isset($keywords) && !empty($keywords)) {
+			    add_post_meta($id, 'keywords', $keywords);
+		    }
+	    }
+	}
+
 	function add_meta_tags_textinput() {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
@@ -147,20 +158,50 @@ class All_in_One_SEO_Pack {
 		<?php
 	}
 
-	function post_meta_tags($id) {
-	    $awmp_edit = $_POST["aiosp_edit"];
-	    if (isset($awmp_edit) && !empty($awmp_edit)) {
-		    $keywords = $_POST["aiosp_keywords"];
-
-		    delete_post_meta($id, 'keywords');
-
-		    if (isset($keywords) && !empty($keywords)) {
-			    add_post_meta($id, 'keywords', $keywords);
-		    }
-	    }
+	function admin_menu() {
+		add_submenu_page('options-general.php', __('All in One SEO'), __('All in One SEO'), 5, __FILE__, array($this, 'plugin_menu'));
 	}
+	
+	function plugin_menu() {
+		$message = null;
+		$message_updated = __("Home description updated.");
+		
+		// update options
+		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
+			$message = $message_updated;
+			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
+			wp_cache_flush();
+		}
+
+?>
+<?php if ($message) : ?>
+<div id="message" class="updated fade"><p><?php echo $message; ?></p></div>
+<?php endif; ?>
+<div id="dropmessage" class="updated" style="display:none;"></div>
+<div class="wrap">
+<h2><?php _e('All in One SEO Plugin Options'); ?></h2>
+<p><?php _e('For feedback, help etc. please click <a title="Homepage for AdMan" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here.</a>.') ?></p>
+<p><?php _e('Your home description here:') ?></p>
+<form name="dofollow" action="" method="post">
+<table>
+<tr><th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Ad-Code:')?></td>
+<td>
+<textarea cols="80" rows="10" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea></td></tr>
+</table>
+<p class="submit">
+<input type="hidden" name="action" value="aiosp_update" /> 
+<input type="hidden" name="page_options" value="aiosp_home_description" /> 
+<input type="submit" name="Submit" value="<?php _e('Update Options')?> &raquo;" /> 
+</p>
+</form>
+</div>
+<?php
+	
+	} // plugin_menu
 
 }
+
+add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
@@ -173,6 +214,8 @@ add_action('edit_post', array($aiosp, 'post_meta_tags'));
 add_action('publish_post', array($aiosp, 'post_meta_tags'));
 add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
+
+add_action('admin_menu', array($aiosp, 'admin_menu'));
 
 $aiosp->start();
 

@@ -34,7 +34,7 @@ have to touch your template! Never ever have "Archive" appear before your precio
 
 == Installation ==
 
-1. Unzip into the `/wp-content/plugins/` directory
+1. Unzip into your `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. That's it! Don't forget to write good excerpts :)
 

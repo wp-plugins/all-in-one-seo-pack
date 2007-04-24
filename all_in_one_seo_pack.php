@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.2";
+ 	var $version = "0.5.3";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -189,7 +189,7 @@ class All_in_One_SEO_Pack {
 <div id="dropmessage" class="updated" style="display:none;"></div>
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options'); ?></h2>
-<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here.</a>.') ?></p>
+<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here</a>.') ?></p>
 <p><?php _e('Your home description here:') ?></p>
 <form name="dofollow" action="" method="post">
 <table>

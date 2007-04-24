@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.1";
+ 	var $version = "0.5.2";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -45,6 +45,7 @@ class All_in_One_SEO_Pack {
 
 		if (is_single() || is_page()) {
 			$description = trim(stripslashes(get_the_excerpt()));
+			echo("description: $description");
 			if ($description == "Share This") {
 				// comes from share this plugin, ignore
 				unset($description);
@@ -133,6 +134,10 @@ class All_in_One_SEO_Pack {
 		return implode(',', $keywords_ar);
 	}
 	
+	function the_content ($content) {
+		return $content . " blub";
+	}
+	
 	function post_meta_tags($id) {
 	    $awmp_edit = $_POST["aiosp_edit"];
 	    if (isset($awmp_edit) && !empty($awmp_edit)) {
@@ -184,11 +189,11 @@ class All_in_One_SEO_Pack {
 <div id="dropmessage" class="updated" style="display:none;"></div>
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options'); ?></h2>
-<p><?php _e('For feedback, help etc. please click <a title="Homepage for AdMan" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here.</a>.') ?></p>
+<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here.</a>.') ?></p>
 <p><?php _e('Your home description here:') ?></p>
 <form name="dofollow" action="" method="post">
 <table>
-<tr><th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Ad-Code:')?></td>
+<tr><th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
 <td>
 <textarea cols="80" rows="10" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea></td></tr>
 </table>
@@ -220,6 +225,9 @@ add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
+
+// used for some debugging
+//add_action('the_content', array($aiosp, 'the_content'));
 
 $aiosp->start();
 

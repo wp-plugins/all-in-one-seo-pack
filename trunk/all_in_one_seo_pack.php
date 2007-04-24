@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.3";
+ 	var $version = "0.5.4";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -45,7 +45,6 @@ class All_in_One_SEO_Pack {
 
 		if (is_single() || is_page()) {
 			$description = trim(stripslashes(get_the_excerpt()));
-			echo("description: $description");
 			if ($description == "Share This") {
 				// comes from share this plugin, ignore
 				unset($description);

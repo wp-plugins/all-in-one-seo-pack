@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.4
+Version: 0.5.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.4";
+ 	var $version = "0.5.5";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -189,7 +189,6 @@ class All_in_One_SEO_Pack {
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options'); ?></h2>
 <p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here</a>.') ?></p>
-<p><?php _e('Your home description here:') ?></p>
 <form name="dofollow" action="" method="post">
 <table>
 <tr><th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
@@ -227,6 +226,13 @@ add_action('admin_menu', array($aiosp, 'admin_menu'));
 
 // used for some debugging
 //add_action('the_content', array($aiosp, 'the_content'));
+
+/*
+<fieldset id="tagdiv">
+	<legend>Tags (separate multiple tags with commas: cats, pet food, dogs)</legend>
+	<div><input type="text" name="tags_input" id="tags-input" size="30" tabindex="3" value="tag, warrior" /></div>
+</fieldset>
+*/
 
 $aiosp->start();
 

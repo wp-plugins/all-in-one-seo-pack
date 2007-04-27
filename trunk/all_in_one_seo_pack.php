@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.5
+Version: 0.5.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.5";
+ 	var $version = "0.5.6";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -44,7 +44,12 @@ class All_in_One_SEO_Pack {
 		$keywords = $this->get_all_keywords();
 
 		if (is_single() || is_page()) {
-			$description = trim(stripslashes(get_the_excerpt()));
+			if (function_exists('braille_excerpt')) {
+				$description = $this->trim_excerpt(get_the_excerpt());
+			} else {
+				$description = trim(stripslashes(get_the_excerpt()));
+			}
+			//echo("description: $description");
 			if ($description == "Share This") {
 				// comes from share this plugin, ignore
 				unset($description);
@@ -96,6 +101,20 @@ class All_in_One_SEO_Pack {
 		if ($meta_string != null) {
 			echo $meta_string;
 		}
+	}
+	
+	function trim_excerpt($text) {
+		$text = apply_filters('the_content', $text);
+		$text = str_replace(']]>', ']]&gt;', $text);
+		$text = strip_tags($text);
+		$excerpt_length = 55;
+		$words = explode(' ', $text, $excerpt_length + 1);
+		if (count($words) > $excerpt_length) {
+			array_pop($words);
+			array_push($words, '[...]');
+			$text = implode(' ', $words);
+		}
+		return trim(stripslashes($text));
 	}
 	
 	function get_all_keywords() {

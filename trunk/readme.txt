@@ -24,7 +24,8 @@ your blog.
 [Another Wordpress Meta Plugin](http://wp.uberdose.com/2006/11/04/another-wordpress-meta-plugin/).
 * You can set your home page descriptions under "Options" -> "All in One SEO".
 
-In addition to generating META tags the following optimizations are done:
+In addition to generating META tags the following optimizations are done (some of which are optional,
+see *Options - All in One SEO* in your admin panel):
 
 * Your titles are rewritten. Actual post title comes first, then your blog name (separated with "|"). Not the other way round. You don't
 have to touch your template! Never ever have "Archive" appear before your precious post title!

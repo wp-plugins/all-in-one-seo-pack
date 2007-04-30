@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.6
+Version: 0.5.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,12 +27,14 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.6";
+ 	var $version = "0.5.7";
  	
  	var $minimum_excerpt_length = 1;
 
 	function start() {
-		ob_start();
+		if (get_option('aiosp_rewrite_titles')) {
+			ob_start();
+		}
 	}
 
 	function wp_head() {
@@ -48,8 +50,10 @@ class All_in_One_SEO_Pack {
 				$description = $this->trim_excerpt(get_the_excerpt());
 			} else {
 				$description = trim(stripslashes(get_the_excerpt()));
+				if (!$description) {
+					// TODO create automatically
+				}
 			}
-			//echo("description: $description");
 			if ($description == "Share This") {
 				// comes from share this plugin, ignore
 				unset($description);
@@ -83,20 +87,22 @@ class All_in_One_SEO_Pack {
 		}
 		
 		// title
-		$header = ob_get_contents();
-		ob_end_clean();
-		$title = wp_title('', false);
-		global $s;
-		if (is_search() && isset($s) && !empty($s)) {
-			$title = attribute_escape(stripslashes($s));
-		}		
-		if (isset($title) && !empty($title)) {
-			$title .= ' | ' . get_bloginfo('name');
-			$title = trim($title);
-			$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
+		if (get_option('aiosp_rewrite_titles')) {
+			$header = ob_get_contents();
+			ob_end_clean();
+			$title = wp_title('', false);
+			global $s;
+			if (is_search() && isset($s) && !empty($s)) {
+				$title = attribute_escape(stripslashes($s));
+			}		
+			if (isset($title) && !empty($title)) {
+				$title .= ' | ' . get_bloginfo('name');
+				$title = trim($title);
+				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
+			}
+			gzip_compression();
+			print($header);
 		}
-		gzip_compression();
-		print($header);
 
 		if ($meta_string != null) {
 			echo $meta_string;
@@ -197,6 +203,7 @@ class All_in_One_SEO_Pack {
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
 			$message = $message_updated;
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
+			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			wp_cache_flush();
 		}
 
@@ -210,9 +217,18 @@ class All_in_One_SEO_Pack {
 <p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here</a>.') ?></p>
 <form name="dofollow" action="" method="post">
 <table>
-<tr><th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
 <td>
-<textarea cols="80" rows="10" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea></td></tr>
+<textarea cols="80" rows="10" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Rewrite Titles:')?></td>
+<td>
+<input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -228,6 +244,7 @@ class All_in_One_SEO_Pack {
 }
 
 add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
+add_option("aiosp_rewrite_titles", null, __('All in One SEO Plugin Rewrite Titles'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
@@ -242,16 +259,6 @@ add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
-
-// used for some debugging
-//add_action('the_content', array($aiosp, 'the_content'));
-
-/*
-<fieldset id="tagdiv">
-	<legend>Tags (separate multiple tags with commas: cats, pet food, dogs)</legend>
-	<div><input type="text" name="tags_input" id="tags-input" size="30" tabindex="3" value="tag, warrior" /></div>
-</fieldset>
-*/
 
 $aiosp->start();
 

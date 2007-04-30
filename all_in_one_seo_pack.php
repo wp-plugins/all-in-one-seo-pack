@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.7
+Version: 0.5.8
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.7";
+ 	var $version = "0.5.8";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -129,13 +129,15 @@ class All_in_One_SEO_Pack {
 	    if (is_array($posts)) {
 	        foreach ($posts as $post) {
 	            if ($post) {
-	                $categories = get_the_category($post->ID);
-	                foreach ($categories as $category) {
-	                    if (isset($keywords) && !empty($keywords)) {
-	                        $keywords .= ',';
-	                    }
-	                	$keywords .= $category->cat_name;
-	                }
+	            	if (get_option('aiosp_use_categories')) {
+		                $categories = get_the_category($post->ID);
+		                foreach ($categories as $category) {
+		                    if (isset($keywords) && !empty($keywords)) {
+		                        $keywords .= ',';
+		                    }
+		                	$keywords .= $category->cat_name;
+		                }
+	            	}
 	                $keywords_a = $keywords_i = null;
 	                $description_a = $description_i = null;
 	                $id = $post->ID;
@@ -204,6 +206,7 @@ class All_in_One_SEO_Pack {
 			$message = $message_updated;
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
+			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			wp_cache_flush();
 		}
 
@@ -220,13 +223,19 @@ class All_in_One_SEO_Pack {
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
 <td>
-<textarea cols="80" rows="10" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
+<textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
 </td>
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Rewrite Titles:')?></td>
 <td>
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use Categories for META keywords:')?></td>
+<td>
+<input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 </table>
@@ -244,7 +253,8 @@ class All_in_One_SEO_Pack {
 }
 
 add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
-add_option("aiosp_rewrite_titles", null, __('All in One SEO Plugin Rewrite Titles'), 'yes');
+add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles'), 'yes');
+add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

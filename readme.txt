@@ -25,7 +25,7 @@ your blog. *Please note*: You have to provide an excerpt to get a META descripti
 * You can set your home page descriptions under "Options" -> "All in One SEO".
 
 In addition to generating META tags the following optimizations are done (some of which are optional,
-see *Options - All in One SEO* in your admin panel):
+please visit *Options - All in One SEO* in your admin panel):
 
 * Your titles are rewritten. Actual post title comes first, then your blog name (separated with "|"). Not the other way round. You don't
 have to touch your template! Never ever have "Archive" appear before your precious post title!
@@ -37,6 +37,7 @@ have to touch your template! Never ever have "Archive" appear before your precio
 
 1. Unzip into your `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Visit your SEO options (*Options - All in One SEO*)
 1. That's it! Don't forget to write good excerpts :)
 
 == Frequently Asked Questions ==

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9
+Version: 0.5.9.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9";
+ 	var $version = "0.5.9.1";
  	
  	var $minimum_excerpt_length = 1;
 
@@ -43,7 +43,11 @@ class All_in_One_SEO_Pack {
 		
 		echo "<!-- all in one seo pack $this->version -->\n";
 		
-		$keywords = $this->get_all_keywords();
+		if (is_home() && get_option('aiosp_home_keywords')) {
+			$keywords = trim(get_option('aiosp_home_keywords'));
+		} else {
+			$keywords = $this->get_all_keywords();
+		}
 
 		if (is_single() || is_page()) {
 			if (function_exists('braille_excerpt')) {
@@ -231,12 +235,13 @@ class All_in_One_SEO_Pack {
 	
 	function plugin_menu() {
 		$message = null;
-		$message_updated = __("Home description updated.");
+		$message_updated = __("All in One SEO Options Updated.");
 		
 		// update options
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
 			$message = $message_updated;
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
+			update_option('aiosp_home_keywords', $_POST['aiosp_home_keywords']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			wp_cache_flush();
@@ -256,6 +261,12 @@ class All_in_One_SEO_Pack {
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Keywords (comma separated):')?></td>
+<td>
+<textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
 </td>
 </tr>
 <tr>

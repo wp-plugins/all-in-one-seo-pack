@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9.2
+Version: 0.5.9.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,11 +27,23 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9.2";
+ 	var $version = "0.5.9.3";
  	
+ 	/**
+ 	 * Number of words to be used (max) for generating an excerpt.
+ 	 */
+ 	var $maximum_excerpt_length = 25;
+
+ 	/**
+ 	 * Minimum number of chars an excerpt should be so that it can be used
+ 	 * as description. Touch only if you know what you're doing.
+ 	 */
  	var $minimum_excerpt_length = 1;
 
 	function start() {
+		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
+			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
+		}
 		if (get_option('aiosp_rewrite_titles')) {
 			ob_start();
 		}
@@ -105,6 +117,9 @@ class All_in_One_SEO_Pack {
 		}
 	}
 	
+	/**
+	 * @deprecated Was only used for braille, will be removed in a coming release
+	 */
 	function trim_excerpt($text) {
 		$text = apply_filters('the_content', $text);
 		$text = str_replace(']]>', ']]&gt;', $text);
@@ -113,7 +128,7 @@ class All_in_One_SEO_Pack {
 		$words = explode(' ', $text, $excerpt_length + 1);
 		if (count($words) > $excerpt_length) {
 			array_pop($words);
-			array_push($words, '[...]');
+			array_push($words, '...');
 			$text = implode(' ', $words);
 		}
 		return trim(stripslashes($text));
@@ -122,11 +137,11 @@ class All_in_One_SEO_Pack {
 	function trim_excerpt_without_filters($text) {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
-		$excerpt_length = 55;
+		$excerpt_length = $this->maximum_excerpt_length;
 		$words = explode(' ', $text, $excerpt_length + 1);
 		if (count($words) > $excerpt_length) {
 			array_pop($words);
-			array_push($words, '[...]');
+			array_push($words, '...');
 			$text = implode(' ', $words);
 		}
 		return trim(stripslashes($text));
@@ -167,10 +182,6 @@ class All_in_One_SEO_Pack {
 	function get_unique_keywords($keywords) {
 		$keywords_ar = array_unique(explode(',', $keywords));
 		return implode(',', $keywords_ar);
-	}
-	
-	function the_content ($content) {
-		return $content . " blub";
 	}
 	
 	function post_meta_tags($id) {
@@ -247,6 +258,7 @@ class All_in_One_SEO_Pack {
 			$message = $message_updated;
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
 			update_option('aiosp_home_keywords', $_POST['aiosp_home_keywords']);
+			update_option('aiosp_max_words_excerpt', $_POST['aiosp_max_words_excerpt']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			wp_cache_flush();
@@ -272,6 +284,12 @@ class All_in_One_SEO_Pack {
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Keywords (comma separated):')?></td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Max Number of Words in Auto-Generated Descriptions:')?></td>
+<td>
+<input size="60" name="aiosp_max_words_excerpt" value="<?php echo stripcslashes(get_option('aiosp_max_words_excerpt')); ?>"/>
 </td>
 </tr>
 <tr>
@@ -303,6 +321,7 @@ class All_in_One_SEO_Pack {
 add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
 add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles'), 'yes');
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
+add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

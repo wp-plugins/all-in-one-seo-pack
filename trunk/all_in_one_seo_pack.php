@@ -153,7 +153,7 @@ class All_in_One_SEO_Pack {
 	    if (is_array($posts)) {
 	        foreach ($posts as $post) {
 	            if ($post) {
-	            	if (get_option('aiosp_use_categories')) {
+	            	if (get_option('aiosp_use_categories') && !is_page()) {
 		                $categories = get_the_category($post->ID);
 		                foreach ($categories as $category) {
 		                    if (isset($keywords) && !empty($keywords)) {

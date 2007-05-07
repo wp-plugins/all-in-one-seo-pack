@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9.3
+Version: 0.5.9.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9.3";
+ 	var $version = "0.5.9.4";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -62,12 +62,12 @@ class All_in_One_SEO_Pack {
 		}
 
 		if (is_single() || is_page()) {
-			$description = $post->post_excerpt;
+            $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
 			if (!$description) {
-				$description = $this->trim_excerpt_without_filters($post->post_content);
-			}				
-			if (!isset($description) || empty($description)) {
-	            $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
+				$description = $post->post_excerpt;
+				if (!$description) {
+					$description = $this->trim_excerpt_without_filters($post->post_content);
+				}				
 			}
 		} else if (is_home()) {
 			$description = trim(stripslashes(get_option('aiosp_home_description')));

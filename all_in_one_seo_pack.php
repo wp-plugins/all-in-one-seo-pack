@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9.5
+Version: 0.5.9.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9.5";
+ 	var $version = "0.5.9.6";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -39,14 +39,12 @@ class All_in_One_SEO_Pack {
  	 * as description. Touch only if you know what you're doing.
  	 */
  	var $minimum_excerpt_length = 1;
-
+ 	
 	function start() {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		if (get_option('aiosp_rewrite_titles')) {
-			ob_start();
-		}
+		ob_start();
 	}
 
 	function wp_head() {
@@ -95,22 +93,33 @@ class All_in_One_SEO_Pack {
 		}
 		
 		// title
-		if (get_option('aiosp_rewrite_titles')) {
-			$header = ob_get_contents();
-			ob_end_clean();
-			$title = wp_title('', false);
+        $title = stripslashes(get_post_meta($post->ID, "title", true));
+		$header = ob_get_contents();
+		ob_end_clean();
+		
+		global $post;
+		if ($title) {
+			$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
+		} else if (get_option('aiosp_rewrite_titles')) {
 			global $s;
 			if (is_search() && isset($s) && !empty($s)) {
 				$title = attribute_escape(stripslashes($s));
+			} else if (is_single() || is_page()) {
+				global $post;
+	            $title = stripslashes(get_post_meta($post->ID, "title", true));
 			}		
-			if (isset($title) && !empty($title)) {
+			if (!$title) {
+				$title = wp_title('', false);
+			}
+			if ($title) {
 				$title .= ' | ' . get_bloginfo('name');
 				$title = trim($title);
 				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
 			}
-			gzip_compression();
-			print($header);
 		}
+		
+		gzip_compression();
+		print($header);
 
 		if ($meta_string != null) {
 			echo $meta_string;
@@ -197,9 +206,11 @@ class All_in_One_SEO_Pack {
 	    if (isset($awmp_edit) && !empty($awmp_edit)) {
 		    $keywords = $_POST["aiosp_keywords"];
 		    $description = $_POST["aiosp_description"];
+		    $title = $_POST["aiosp_title"];
 
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
+		    delete_post_meta($id, 'title');
 
 		    if (isset($keywords) && !empty($keywords)) {
 			    add_post_meta($id, 'keywords', $keywords);
@@ -207,12 +218,16 @@ class All_in_One_SEO_Pack {
 		    if (isset($description) && !empty($description)) {
 			    add_post_meta($id, 'description', $description);
 		    }
+		    if (isset($title) && !empty($title)) {
+			    add_post_meta($id, 'title', $title);
+		    }
 	    }
 	}
 
 	function add_meta_tags_textinput() {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
+	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
@@ -220,6 +235,10 @@ class All_in_One_SEO_Pack {
 		<th style="text-align:left;" colspan="2">
 		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">All in One SEO Pack Feedback</a>
 		</th>
+		</tr>
+		<tr>
+		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="50"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
@@ -233,6 +252,7 @@ class All_in_One_SEO_Pack {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
 	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
+	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
@@ -240,6 +260,10 @@ class All_in_One_SEO_Pack {
 		<th style="text-align:left;" colspan="2">
 		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">All in One SEO Pack Feedback</a>
 		</th>
+		</tr>
+		<tr>
+		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="50"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>

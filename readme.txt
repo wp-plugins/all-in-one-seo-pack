@@ -29,6 +29,9 @@ please visit *Options - All in One SEO* in your admin panel):
 
 * Your titles are rewritten. Actual post title comes first, then your blog name (separated with "|"). Not the other way round. You don't
 have to touch your template! Never ever have "Archive" appear before your precious post title!
+
+* You can also define your own post titles which can differ from the titles shown in your content.
+
 * "Filler Pages" like archives and categories are excluded from indexing to avoid duplicate content.
 
 *[Please leave feedback here!](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)*

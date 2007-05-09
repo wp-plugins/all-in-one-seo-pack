@@ -16,7 +16,8 @@ Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 * Automatically optimizing your **titles** and letting you specify your own ones
 * Avoiding indexing of duplicate content.
 
-* **[Download now](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
+**[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
+
 * [See what users are saying](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#comments)
 * [SEO Manual](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
 * [Get Help](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)

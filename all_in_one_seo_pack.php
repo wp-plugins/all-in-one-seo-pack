@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9.6
+Version: 0.5.9.6.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9.6";
+ 	var $version = "0.5.9.6.1";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -233,7 +233,7 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">All in One SEO Pack Feedback</a>
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
 		</th>
 		</tr>
 		<tr>
@@ -258,7 +258,7 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">All in One SEO Pack Feedback</a>
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
 		</th>
 		</tr>
 		<tr>
@@ -303,7 +303,7 @@ class All_in_One_SEO_Pack {
 <div id="dropmessage" class="updated" style="display:none;"></div>
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options'); ?></h2>
-<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">here</a>.') ?></p>
+<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">here</a>.') ?></p>
 <form name="dofollow" action="" method="post">
 <table>
 <tr>

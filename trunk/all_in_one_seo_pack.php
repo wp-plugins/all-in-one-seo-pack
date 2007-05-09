@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.5.9.6.1
+Version: 0.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.5.9.6.1";
+ 	var $version = "0.6";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -238,11 +238,11 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="50"/></td>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="50"/></td>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		</table>
 		<?php
@@ -263,15 +263,15 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="50"/></td>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="50"/></td>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:') ?></th>
-		<td><input value="<?php echo $description ?>" type="text" name="aiosp_description" size="50"/></td>
+		<td><input value="<?php echo $description ?>" type="text" name="aiosp_description" size="80"/></td>
 		</tr>
 		</table>
 		<?php

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6
+Version: 0.6.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6";
+ 	var $version = "0.6.1";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -93,11 +93,14 @@ class All_in_One_SEO_Pack {
 		}
 		
 		// title
-        $title = stripslashes(get_post_meta($post->ID, "title", true));
+		if (is_home()) {
+			$title = trim(stripslashes(get_option('aiosp_home_title')));
+		} else if (is_single()) {
+        	$title = stripslashes(get_post_meta($post->ID, "title", true));
+		}
 		$header = ob_get_contents();
 		ob_end_clean();
 		
-		global $post;
 		if ($title) {
 			$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
 		} else if (get_option('aiosp_rewrite_titles')) {
@@ -288,6 +291,7 @@ class All_in_One_SEO_Pack {
 		// update options
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
 			$message = $message_updated;
+			update_option('aiosp_home_title', $_POST['aiosp_home_title']);
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
 			update_option('aiosp_home_keywords', $_POST['aiosp_home_keywords']);
 			update_option('aiosp_max_words_excerpt', $_POST['aiosp_max_words_excerpt']);
@@ -306,6 +310,12 @@ class All_in_One_SEO_Pack {
 <p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">here</a>.') ?></p>
 <form name="dofollow" action="" method="post">
 <table>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Title:')?></td>
+<td>
+<textarea cols="60" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
+</td>
+</tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
 <td>
@@ -351,6 +361,7 @@ class All_in_One_SEO_Pack {
 }
 
 add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
+add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title'), 'yes');
 add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles'), 'yes');
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
 add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions'), 'yes');

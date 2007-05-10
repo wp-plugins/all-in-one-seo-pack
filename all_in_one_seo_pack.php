@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.1
+Version: 0.6.1.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.1";
+ 	var $version = "0.6.1.1";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -97,6 +97,8 @@ class All_in_One_SEO_Pack {
 			$title = trim(stripslashes(get_option('aiosp_home_title')));
 		} else if (is_single()) {
         	$title = stripslashes(get_post_meta($post->ID, "title", true));
+		} else if (is_category() && get_option('aiosp_use_category_description_as_title')) {
+			$title = category_description();
 		}
 		$header = ob_get_contents();
 		ob_end_clean();
@@ -108,9 +110,8 @@ class All_in_One_SEO_Pack {
 			if (is_search() && isset($s) && !empty($s)) {
 				$title = attribute_escape(stripslashes($s));
 			} else if (is_single() || is_page()) {
-				global $post;
 	            $title = stripslashes(get_post_meta($post->ID, "title", true));
-			}		
+			}
 			if (!$title) {
 				$title = wp_title('', false);
 			}
@@ -297,6 +298,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_max_words_excerpt', $_POST['aiosp_max_words_excerpt']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
+			update_option('aiosp_use_category_description_as_title', $_POST['aiosp_use_category_description_as_title']);
 			wp_cache_flush();
 		}
 
@@ -346,6 +348,12 @@ class All_in_One_SEO_Pack {
 <input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use Category Description as Title:')?></td>
+<td>
+<input type="checkbox" name="aiosp_use_category_description_as_title" <?php if (get_option('aiosp_use_category_description_as_title')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -365,6 +373,7 @@ add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title'), 'ye
 add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles'), 'yes');
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
 add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions'), 'yes');
+add_option("aiosp_use_category_description_as_title", 0, __('Use Category Description for Title'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

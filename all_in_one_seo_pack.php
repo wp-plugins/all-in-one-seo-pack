@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.1.1
+Version: 0.6.1.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.1.1";
+ 	var $version = "0.6.1.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -85,7 +85,8 @@ class All_in_One_SEO_Pack {
 			$meta_string .= sprintf("<meta name=\"keywords\" content=\"%s\"/>\n", $keywords);
 		}
 
-		if(!is_home() && !is_single() && !is_page()) {
+		if((is_category() && get_option('aiosp_category_noindex')) ||
+			(!is_category() && is_archive() && get_option('aiosp_archive_noindex'))) {
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
 			}
@@ -299,6 +300,8 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_use_category_description_as_title', $_POST['aiosp_use_category_description_as_title']);
+			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
+			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
 			wp_cache_flush();
 		}
 
@@ -331,12 +334,6 @@ class All_in_One_SEO_Pack {
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Max Number of Words in Auto-Generated Descriptions:')?></td>
-<td>
-<input size="60" name="aiosp_max_words_excerpt" value="<?php echo stripcslashes(get_option('aiosp_max_words_excerpt')); ?>"/>
-</td>
-</tr>
-<tr>
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Rewrite Titles:')?></td>
 <td>
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
@@ -352,6 +349,24 @@ class All_in_One_SEO_Pack {
 <th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use Category Description as Title:')?></td>
 <td>
 <input type="checkbox" name="aiosp_use_category_description_as_title" <?php if (get_option('aiosp_use_category_description_as_title')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use noindex for Categories:')?></td>
+<td>
+<input type="checkbox" name="aiosp_category_noindex" <?php if (get_option('aiosp_category_noindex')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use noindex for Archives:')?></td>
+<td>
+<input type="checkbox" name="aiosp_archive_noindex" <?php if (get_option('aiosp_archive_noindex')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Max Number of Words in Auto-Generated Descriptions:')?></td>
+<td>
+<input size="5" name="aiosp_max_words_excerpt" value="<?php echo stripcslashes(get_option('aiosp_max_words_excerpt')); ?>"/>
 </td>
 </tr>
 </table>
@@ -374,6 +389,8 @@ add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles')
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
 add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions'), 'yes');
 add_option("aiosp_use_category_description_as_title", 0, __('Use Category Description for Title'), 'yes');
+add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories'), 'yes');
+add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

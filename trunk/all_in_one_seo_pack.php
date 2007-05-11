@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.1.2
+Version: 0.6.1.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.1.2";
+ 	var $version = "0.6.1.3";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -312,59 +312,97 @@ class All_in_One_SEO_Pack {
 <div id="dropmessage" class="updated" style="display:none;"></div>
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options'); ?></h2>
-<p><?php _e('For feedback, help etc. please click <a title="Homepage for All in One SEO Plugin" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">here</a>.') ?></p>
+<p>
+<?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>') ?>
+| <?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>') ?>
+</p>
 <form name="dofollow" action="" method="post">
 <table>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Title:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Home Title')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#hometitle">
+<?php _e('Home Title:')?>
+</a>
+</td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Description:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Home Description')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homedescription">
+<?php _e('Home Description:')?>
+</a>
+</td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Home Keywords (comma separated):')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Home Keywords')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homekeywords">
+<?php _e('Home Keywords (comma separated):')?>
+</a>
+</td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Rewrite Titles:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Rewrite Titles')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#rewritetitles">
+<?php _e('Rewrite Titles:')?>
+</a>
+</td>
 <td>
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use Categories for META keywords:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Categories for META keywords')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
+<?php _e('Use Categories for META keywords:')?>
+</td>
 <td>
 <input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use Category Description as Title:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Category Description as Title')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usecategorydescriptionastitle">
+<?php _e('Use Category Description as Title:')?>
+</a>
+</td>
 <td>
 <input type="checkbox" name="aiosp_use_category_description_as_title" <?php if (get_option('aiosp_use_category_description_as_title')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use noindex for Categories:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option noindex for Categories')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforcategories">
+<?php _e('Use noindex for Categories:')?>
+</a>
+</td>
 <td>
 <input type="checkbox" name="aiosp_category_noindex" <?php if (get_option('aiosp_category_noindex')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Use noindex for Archives:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option noindex for Archives')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforarchives">
+<?php _e('Use noindex for Archives:')?>
+</a>
+</td>
 <td>
 <input type="checkbox" name="aiosp_archive_noindex" <?php if (get_option('aiosp_archive_noindex')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
-<th scope="row" style="text-align:right; vertical-align:top;"><?php _e('Max Number of Words in Auto-Generated Descriptions:')?></td>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Max Number of Words in Auto-Generated Descriptions')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#maxwordsdescription">
+<?php _e('Max Number of Words in Auto-Generated Descriptions:')?>
+</a>
+</td>
 <td>
 <input size="5" name="aiosp_max_words_excerpt" value="<?php echo stripcslashes(get_option('aiosp_max_words_excerpt')); ?>"/>
 </td>

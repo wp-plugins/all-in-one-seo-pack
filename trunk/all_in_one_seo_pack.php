@@ -44,7 +44,7 @@ class All_in_One_SEO_Pack {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		ob_start();
+		ob_start(array($this, 'rewrite_title'));
 	}
 
 	function wp_head() {
@@ -93,6 +93,12 @@ class All_in_One_SEO_Pack {
 			$meta_string = '<meta name="robots" content="noindex,follow" />';
 		}
 		
+		if ($meta_string != null) {
+			echo $meta_string;
+		}
+	}
+	
+	function rewrite_title($header) {
 		// title
 		if (is_home()) {
 			$title = trim(stripslashes(get_option('aiosp_home_title')));
@@ -101,8 +107,6 @@ class All_in_One_SEO_Pack {
 		} else if (is_category() && get_option('aiosp_use_category_description_as_title')) {
 			$title = category_description();
 		}
-		$header = ob_get_contents();
-		ob_end_clean();
 		
 		if ($title) {
 			$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
@@ -122,13 +126,7 @@ class All_in_One_SEO_Pack {
 				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
 			}
 		}
-		
-		gzip_compression();
-		print($header);
-
-		if ($meta_string != null) {
-			echo $meta_string;
-		}
+		return $header;
 	}
 	
 	/**

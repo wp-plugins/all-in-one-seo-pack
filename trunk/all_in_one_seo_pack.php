@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.1.4
+Version: 0.6.1.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.1.4";
+ 	var $version = "0.6.1.5";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -44,12 +44,14 @@ class All_in_One_SEO_Pack {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		ob_start(array($this, 'rewrite_title'));
+		ob_start();
 	}
 
 	function wp_head() {
 		global $post;
 		$meta_string = null;
+		
+		$this->rewrite_title();
 		
 		echo "<!-- all in one seo pack $this->version -->\n";
 		
@@ -98,7 +100,7 @@ class All_in_One_SEO_Pack {
 		}
 	}
 	
-	function rewrite_title($header) {
+	function rewrite_title() {
 		// title
 		if (is_home()) {
 			$title = trim(stripslashes(get_option('aiosp_home_title')));
@@ -107,6 +109,8 @@ class All_in_One_SEO_Pack {
 		} else if (is_category() && get_option('aiosp_use_category_description_as_title')) {
 			$title = category_description();
 		}
+		$header = ob_get_contents();
+		ob_end_clean();
 		
 		if ($title) {
 			$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
@@ -126,7 +130,9 @@ class All_in_One_SEO_Pack {
 				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
 			}
 		}
-		return $header;
+		
+		gzip_compression();
+		print($header);
 	}
 	
 	/**

@@ -117,7 +117,7 @@ class All_in_One_SEO_Pack {
 		} else if (get_option('aiosp_rewrite_titles')) {
 			global $s;
 			if (is_search() && isset($s) && !empty($s)) {
-				if (exists('attribute_escape')) {
+				if (function_exists('attribute_escape')) {
 					$title = attribute_escape(stripslashes($s));
 				} else {
 					$title = wp_specialchars(stripslashes($s), true);

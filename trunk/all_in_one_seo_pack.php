@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.1.9
+Version: 0.6.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.1.9";
+ 	var $version = "0.6.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -40,7 +40,7 @@ class All_in_One_SEO_Pack {
  	 */
  	var $minimum_excerpt_length = 1;
  	
-	function start() {
+	function plugins_loaded() {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
@@ -441,6 +441,7 @@ add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Arc
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
+add_action('plugins_loaded', array($aiosp, 'plugins_loaded'));
 
 add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
@@ -452,7 +453,5 @@ add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
-
-$aiosp->start();
 
 ?>

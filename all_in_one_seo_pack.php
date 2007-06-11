@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.2.1";
+ 	var $version = "0.6.2.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -48,6 +48,9 @@ class All_in_One_SEO_Pack {
 	}
 
 	function wp_head() {
+		if (is_feed()) {
+			return;
+		}
 		global $post;
 		$meta_string = null;
 		

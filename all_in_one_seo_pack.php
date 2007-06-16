@@ -4,12 +4,12 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.2.2
+Version: 0.6.2.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
 
-/* Copyright (C) 2007 Dirk Zimmermann (dirk AT uberdose DOT com)
+/* Copyright (C) 2007 Dirk Zimmermann (allinoneseopack AT uberdose DOT com)
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.2.2";
+ 	var $version = "0.6.2.3";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -45,6 +45,12 @@ class All_in_One_SEO_Pack {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
 		ob_start();
+	}
+
+	function init_textdomain() {
+		if(function_exists('load_plugin_textdomain')) {
+			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
+		}	
 	}
 
 	function wp_head() {
@@ -254,11 +260,11 @@ class All_in_One_SEO_Pack {
 		</th>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
+		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
+		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		</table>
@@ -275,19 +281,19 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack')?></a>
 		</th>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Title:') ?></th>
+		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):') ?></th>
+		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Description:') ?></th>
+		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $description ?>" type="text" name="aiosp_description" size="80"/></td>
 		</tr>
 		</table>
@@ -295,7 +301,7 @@ class All_in_One_SEO_Pack {
 	}
 
 	function admin_menu() {
-		add_submenu_page('options-general.php', __('All in One SEO'), __('All in One SEO'), 5, __FILE__, array($this, 'plugin_menu'));
+		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 5, __FILE__, array($this, 'plugin_menu'));
 	}
 	
 	function plugin_menu() {
@@ -324,17 +330,17 @@ class All_in_One_SEO_Pack {
 <?php endif; ?>
 <div id="dropmessage" class="updated" style="display:none;"></div>
 <div class="wrap">
-<h2><?php _e('All in One SEO Plugin Options'); ?></h2>
+<h2><?php _e('All in One SEO Plugin Options', 'all_in_one_seo_pack'); ?></h2>
 <p>
-<?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>') ?>
-| <?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>') ?>
+<?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>', 'all_in_one_seo_pack') ?>
+| <?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>', 'all_in_one_seo_pack') ?>
 </p>
 <form name="dofollow" action="" method="post">
 <table>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Title')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#hometitle">
-<?php _e('Home Title:')?>
+<a target="_blank" title="<?php _e('Help for Option Home Title', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#hometitle">
+<?php _e('Home Title:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -343,8 +349,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Description')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homedescription">
-<?php _e('Home Description:')?>
+<a target="_blank" title="<?php _e('Help for Option Home Description', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homedescription">
+<?php _e('Home Description:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -353,8 +359,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Keywords')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homekeywords">
-<?php _e('Home Keywords (comma separated):')?>
+<a target="_blank" title="<?php _e('Help for Option Home Keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homekeywords">
+<?php _e('Home Keywords (comma separated):', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -363,8 +369,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Rewrite Titles')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#rewritetitles">
-<?php _e('Rewrite Titles:')?>
+<a target="_blank" title="<?php _e('Help for Option Rewrite Titles', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#rewritetitles">
+<?php _e('Rewrite Titles:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -373,8 +379,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Categories for META keywords')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
-<?php _e('Use Categories for META keywords:')?>
+<a target="_blank" title="<?php _e('Help for Option Categories for META keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
+<?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
 <td>
 <input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
@@ -382,8 +388,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Category Description as Title')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usecategorydescriptionastitle">
-<?php _e('Use Category Description as Title:')?>
+<a target="_blank" title="<?php _e('Help for Option Category Description as Title', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usecategorydescriptionastitle">
+<?php _e('Use Category Description as Title:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -392,8 +398,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option noindex for Categories')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforcategories">
-<?php _e('Use noindex for Categories:')?>
+<a target="_blank" title="<?php _e('Help for Option noindex for Categories', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforcategories">
+<?php _e('Use noindex for Categories:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -402,8 +408,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option noindex for Archives')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforarchives">
-<?php _e('Use noindex for Archives:')?>
+<a target="_blank" title="<?php _e('Help for Option noindex for Archives', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforarchives">
+<?php _e('Use noindex for Archives:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -412,8 +418,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Autogenerate Descriptions')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#autogeneratedescriptions">
-<?php _e('Autogenerate Descriptions:')?>
+<a target="_blank" title="<?php _e('Help for Autogenerate Descriptions', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#autogeneratedescriptions">
+<?php _e('Autogenerate Descriptions:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -422,8 +428,8 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Max Number of Words in Auto-Generated Descriptions')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#maxwordsdescription">
-<?php _e('Max Number of Words in Auto-Generated Descriptions:')?>
+<a target="_blank" title="<?php _e('Help for Option Max Number of Words in Auto-Generated Descriptions', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#maxwordsdescription">
+<?php _e('Max Number of Words in Auto-Generated Descriptions:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
@@ -444,19 +450,21 @@ class All_in_One_SEO_Pack {
 
 }
 
-add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description'), 'yes');
-add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title'), 'yes');
-add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles'), 'yes');
-add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories'), 'yes');
-add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions'), 'yes');
-add_option("aiosp_use_category_description_as_title", 0, __('Use Category Description for Title'), 'yes');
-add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories'), 'yes');
-add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives'), 'yes');
-add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions'), 'yes');
+add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_use_category_description_as_title", 0, __('Use Category Description for Title', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
 add_action('plugins_loaded', array($aiosp, 'plugins_loaded'));
+
+add_action('init', array($aiosp, 'init_textdomain'));
 
 add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));

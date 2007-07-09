@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.3.2
+Version: 0.6.3.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.3.2";
+ 	var $version = "0.6.3.3";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -146,8 +146,14 @@ class All_in_One_SEO_Pack {
 				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
 			}
 		}
+
+		if (get_template() != 'semiologic') {
+			// invoke this on the default theme and nothing gets written
+			// invoke on semiologic and an error occurrs:
+			// "Warning: ob_start() [ref.outcontrol]: output handler 'ob_gzhandler' cannot be used twice in /Users/dirk/Documents/workspace/wp/wp-includes/functions.php on line 419"
+			gzip_compression();
+		}
 		
-		gzip_compression();
 		print($header);
 	}
 	

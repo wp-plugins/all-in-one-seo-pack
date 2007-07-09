@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.3.1
+Version: 0.6.3.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.3.1";
+ 	var $version = "0.6.3.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -172,19 +172,20 @@ class All_in_One_SEO_Pack {
 		return trim(stripslashes($text));
 	}
 	
+	/**
+	 * @return comma-separated list of unique keywords
+	 */
 	function get_all_keywords() {
 		global $posts;
 
+	    $keywords = array();
 	    if (is_array($posts)) {
 	        foreach ($posts as $post) {
 	            if ($post) {
 	            	if (get_option('aiosp_use_categories') && !is_page()) {
 		                $categories = get_the_category($post->ID);
 		                foreach ($categories as $category) {
-		                    if (isset($keywords) && !empty($keywords)) {
-		                        $keywords .= ',';
-		                    }
-		                	$keywords .= $category->cat_name;
+		                	$keywords[] = $category->cat_name;
 		                }
 	            	}
 
@@ -197,11 +198,7 @@ class All_in_One_SEO_Pack {
 							$tag = str_replace('_',' ', $tag);
 							$tag = str_replace('-',' ',$tag);
 							$tag = stripslashes($tag);
-
-		                    if (isset($keywords) && !empty($keywords)) {
-		                        $keywords .= ',';
-		                    }
-	                		$keywords .= $tag;
+	                		$keywords[] = $tag;
 	                	}
 	                }
 
@@ -210,10 +207,7 @@ class All_in_One_SEO_Pack {
 	                $id = $post->ID;
 		            $keywords_i = stripslashes(get_post_meta($post->ID, "keywords", true));
 	                if (isset($keywords_i) && !empty($keywords_i)) {
-	                    if (isset($keywords) && !empty($keywords)) {
-	                        $keywords .= ',';
-	                    }
-	                    $keywords .= $keywords_i;
+	                    $keywords[] = $keywords_i;
 	                }
 	            }
 	        }
@@ -223,7 +217,7 @@ class All_in_One_SEO_Pack {
 	}
 
 	function get_unique_keywords($keywords) {
-		$keywords_ar = array_unique(explode(',', $keywords));
+		$keywords_ar = array_unique($keywords);
 		return implode(',', $keywords_ar);
 	}
 	

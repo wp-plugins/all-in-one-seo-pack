@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.3.4
+Version: 0.6.3.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.3.4";
+ 	var $version = "0.6.3.5";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -84,6 +84,13 @@ class All_in_One_SEO_Pack {
 		
 		if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
 			$description = str_replace('"', '', $description);
+			
+			// replace newlines on mac / windows?
+			$description = str_replace("\r\n", ' ', $description);
+			
+			// maybe linux uses this alone
+			$description = str_replace("\n", ' ', $description);
+			
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
 			}
@@ -255,6 +262,7 @@ class All_in_One_SEO_Pack {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
 	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
+	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
@@ -266,6 +274,10 @@ class All_in_One_SEO_Pack {
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
+		</tr>
+		<tr>
+		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
+		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
@@ -293,12 +305,12 @@ class All_in_One_SEO_Pack {
 		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
+		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
+		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea></td>
 		</tr>
 		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $description ?>" type="text" name="aiosp_description" size="80"/></td>
+		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		</table>
 		<?php

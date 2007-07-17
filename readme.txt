@@ -1,6 +1,6 @@
 === All in One SEO Pack ===
 Contributors: uberdose
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40uberdose%2ecom&item_name=Donation%20to%20wp%2euberdose%2ecom&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
+Donate link: http://wp.uberdose.com/contribute/
 Tags: post,google,seo,meta,meta keywords,meta description,title
 Requires at least: 2.0.2
 Tested up to: 2.2

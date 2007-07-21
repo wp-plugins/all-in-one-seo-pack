@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 0.6.3.5
+Version: 0.6.3.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "0.6.3.5";
+ 	var $version = "0.6.3.6";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -348,8 +348,9 @@ class All_in_One_SEO_Pack {
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options', 'all_in_one_seo_pack'); ?></h2>
 <p>
-<?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>', 'all_in_one_seo_pack') ?>
-| <?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>', 'all_in_one_seo_pack') ?>
+<?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>', 'all_in_one_seo_pack') ?>
+| <?php _e('<a target="_blank" title="FAQ" href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/">FAQ</a>', 'all_in_one_seo_pack') ?>
+| <?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>', 'all_in_one_seo_pack') ?>
 </p>
 <form name="dofollow" action="" method="post">
 <table>

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.0
+Version: 1.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.0";
+ 	var $version = "1.1";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -40,11 +40,15 @@ class All_in_One_SEO_Pack {
  	 */
  	var $minimum_excerpt_length = 1;
  	
-	function plugins_loaded() {
+	function template_redirect() {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		ob_start();
+		ob_start(array($this, 'output_callback_for_title'));
+	}
+	
+	function output_callback_for_title($content) {
+		return $this->rewrite_title($content);
 	}
 
 	function init_textdomain() {
@@ -59,8 +63,6 @@ class All_in_One_SEO_Pack {
 		}
 		global $post;
 		$meta_string = null;
-		
-		$this->rewrite_title();
 		
 		echo "<!-- all in one seo pack $this->version -->\n";
 		
@@ -117,7 +119,7 @@ class All_in_One_SEO_Pack {
 		}
 	}
 	
-	function rewrite_title() {
+	function rewrite_title($header) {
 		global $post;
 
 		if (is_home()) {
@@ -127,8 +129,6 @@ class All_in_One_SEO_Pack {
 		} else if (is_category() && get_option('aiosp_use_category_description_as_title')) {
 			$title = category_description();
 		}
-		$header = ob_get_contents();
-		ob_end_clean();
 		
 		if ($title) {
 			$title = addslashes($title);
@@ -158,14 +158,7 @@ class All_in_One_SEO_Pack {
 			}
 		}
 
-		if (get_template() != 'semiologic') {
-			// invoke this on the default theme and nothing gets written
-			// invoke on semiologic and an error occurrs:
-			// "Warning: ob_start() [ref.outcontrol]: output handler 'ob_gzhandler' cannot be used twice in /Users/dirk/Documents/workspace/wp/wp-includes/functions.php on line 419"
-			gzip_compression();
-		}
-		
-		print($header);
+		return $header;
 	}
 	
 	function trim_excerpt_without_filters($text) {
@@ -485,7 +478,7 @@ add_option("aiosp_title_format", '%post_title% | %blog_title%', __('All in One S
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
-add_action('plugins_loaded', array($aiosp, 'plugins_loaded'));
+add_action('template_redirect', array($aiosp, 'template_redirect'));
 
 add_action('init', array($aiosp, 'init_textdomain'));
 

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.1
+Version: 1.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.1";
+ 	var $version = "1.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -389,6 +389,15 @@ class All_in_One_SEO_Pack {
 </td>
 <td>
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Post Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#posttitleformat">
+<?php _e('Post Title Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
 <input size="59" name="aiosp_title_format" value="<?php echo stripcslashes(get_option('aiosp_title_format')); ?>"/>
 </td>
 </tr>

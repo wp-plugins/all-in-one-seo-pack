@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.1.1
+Version: 1.2.1.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.1.1";
+ 	var $version = "1.2.1.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -150,7 +150,7 @@ class All_in_One_SEO_Pack {
 				$title = wp_title('', false);
 			}
 			if ($title) {
-	            $title_format = get_option('aiosp_title_format');
+	            $title_format = get_option('aiosp_post_title_format');
 	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
 	            $new_title = str_replace('%post_title%', $title, $new_title);
 				$title = $new_title;
@@ -329,7 +329,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_home_keywords', $_POST['aiosp_home_keywords']);
 			update_option('aiosp_max_words_excerpt', $_POST['aiosp_max_words_excerpt']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
-			update_option('aiosp_title_format', $_POST['aiosp_title_format']);
+			update_option('aiosp_post_title_format', $_POST['aiosp_post_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_use_category_description_as_title', $_POST['aiosp_use_category_description_as_title']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
@@ -400,7 +400,7 @@ class All_in_One_SEO_Pack {
 </a>
 </td>
 <td>
-<input size="59" name="aiosp_title_format" value="<?php echo stripcslashes(get_option('aiosp_title_format')); ?>"/>
+<input size="59" name="aiosp_post_title_format" value="<?php echo stripcslashes(get_option('aiosp_post_title_format')); ?>"/>
 </td>
 </tr>
 <tr>
@@ -496,7 +496,7 @@ add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Ca
 add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

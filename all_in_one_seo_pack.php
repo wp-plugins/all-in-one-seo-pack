@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.1.3
+Version: 1.2.1.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -27,7 +27,7 @@ Author URI: http://wp.uberdose.com/
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.1.3";
+ 	var $version = "1.2.1.4";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -334,7 +334,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_use_category_description_as_title', $_POST['aiosp_use_category_description_as_title']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
-			update_option('aiosp_tag_noindex', $_POST['aiosp_tag_noindex']);
+			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
 			update_option('aiosp_generate_descriptions', $_POST['aiosp_generate_descriptions']);
 			wp_cache_flush();
 		}
@@ -453,7 +453,7 @@ class All_in_One_SEO_Pack {
 </a>
 </td>
 <td>
-<input type="checkbox" name="aiosp_tag_noindex" <?php if (get_option('aiosp_tag_noindex')) echo "checked=\"1\""; ?>/>
+<input type="checkbox" name="aiosp_tags_noindex" <?php if (get_option('aiosp_tags_noindex')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>

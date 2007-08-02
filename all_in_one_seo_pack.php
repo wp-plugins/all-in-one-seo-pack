@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.2
+Version: 1.2.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.2";
+ 	var $version = "1.2.3";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -121,46 +121,53 @@ class All_in_One_SEO_Pack {
 		}
 	}
 	
+	function replace_title($content, $title) {
+		$title = trim(stripslashes(addslashes($title)));
+		$header = preg_replace_callback("/<title>.*<\/title>/",
+			create_function('$match_not_needed',"return '<title>$title</title>';"), $content);
+		return $header;
+	}
+	
 	function rewrite_title($header) {
-		global $post;
+		global $post, $s;
 
 		if (is_home()) {
-			$title = trim(stripslashes(get_option('aiosp_home_title')));
-		} else if (is_single() || is_page()) {
-        	$title = stripslashes(get_post_meta($post->ID, "title", true));
-		} else if (is_category() && get_option('aiosp_use_category_description_as_title')) {
-			$title = category_description();
-		}
-		
-		if ($title) {
-			$title = addslashes($title);
-			$header = preg_replace_callback("/<title>.*<\/title>/",
-				create_function('$match',"return '<title>$title</title>';"), $header);
-		} else if (get_option('aiosp_rewrite_titles')) {
-			global $s;
-			if (is_search() && isset($s) && !empty($s)) {
-				if (function_exists('attribute_escape')) {
-					$title = attribute_escape(stripslashes($s));
-				} else {
-					$title = wp_specialchars(stripslashes($s), true);
-				}
-			} else if (is_single() || is_page()) {
-	            $title = stripslashes(get_post_meta($post->ID, "title", true));
+			if (get_option('aiosp_home_title')) {
+				$header = $this->replace_title($header, get_option('aiosp_home_title'));
 			}
-			if (!$title) {
-				$title = wp_title('', false);
-			}
+		} else if (is_single()) {
+			$title = get_post_meta($post->ID, "title", true);
 			if ($title) {
+				$header = $this->replace_title($header, $title);
+			} else if (get_option('aiosp_rewrite_titles')) {
+	            $title = wp_title('', false);
 	            $title_format = get_option('aiosp_post_title_format');
 	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
 	            $new_title = str_replace('%post_title%', $title, $new_title);
 				$title = $new_title;
 				$title = trim($title);
-				$header = preg_replace("/<title>.*<\/title>/", "<title>$title</title>", $header);
+				$header = $this->replace_title($header, $title);
 			}
+		} else if (is_search() && isset($s) && !empty($s)) {
+			if (function_exists('attribute_escape')) {
+				$title = attribute_escape(stripslashes($s));
+			} else {
+				$title = wp_specialchars(stripslashes($s), true);
+			}
+			$header = $this->replace_title($header, $title);
+		} else if (is_category()) {
+			$title = category_description();
+			if (!$title) {
+				$title = single_cat_title('', false);
+			}
+			$header = $this->replace_title($header, $title);
+		} else if (is_page()) {
+			$title = wp_title('', false);
+			$header = $this->replace_title($header, $title);
 		}
-
+		
 		return $header;
+
 	}
 	
 	function trim_excerpt_without_filters($text) {
@@ -332,7 +339,6 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_post_title_format', $_POST['aiosp_post_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
-			update_option('aiosp_use_category_description_as_title', $_POST['aiosp_use_category_description_as_title']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
 			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
@@ -419,16 +425,6 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Category Description as Title', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usecategorydescriptionastitle">
-<?php _e('Use Category Description as Title:', 'all_in_one_seo_pack')?>
-</a>
-</td>
-<td>
-<input type="checkbox" name="aiosp_use_category_description_as_title" <?php if (get_option('aiosp_use_category_description_as_title')) echo "checked=\"1\""; ?>/>
-</td>
-</tr>
-<tr>
-<th scope="row" style="text-align:right; vertical-align:top;">
 <a target="_blank" title="<?php _e('Help for Option noindex for Categories', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforcategories">
 <?php _e('Use noindex for Categories:', 'all_in_one_seo_pack')?>
 </a>
@@ -496,7 +492,6 @@ add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title', 'all
 add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_use_category_description_as_title", 0, __('Use Category Description for Title', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Archives', 'all_in_one_seo_pack'), 'yes');

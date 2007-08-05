@@ -18,8 +18,9 @@ Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 
-* [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/)
 * [SEO Manual](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
+* [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/)
+* [FAQ](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)
 * [See what users are saying](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#comments)
 * [Get Help](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)
 
@@ -33,6 +34,4 @@ the top-level folder. Don't just upload all the php files and put them in `/wp-c
 
 == Frequently Asked Questions ==
 
-= Where can I leave feedback? =
-
-http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond
+Please read these [FAQs](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)

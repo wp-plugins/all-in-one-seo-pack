@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5
+Version: 1.2.5.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5";
+ 	var $version = "1.2.5.1";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -45,7 +45,7 @@ class All_in_One_SEO_Pack {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		if (get_option('aiosp_rewrite_titles')) {
+		if (get_option('aiosp_rewrite_titles') && !is_home()) {
 			ob_start(array($this, 'output_callback_for_title'));
 		}
 	}
@@ -328,7 +328,7 @@ class All_in_One_SEO_Pack {
 	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
 	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
 		?>
-		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
+		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
@@ -337,15 +337,15 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80" tabindex="1000"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea></td>
+		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
 		</tr>
 		</table>
 		<?php

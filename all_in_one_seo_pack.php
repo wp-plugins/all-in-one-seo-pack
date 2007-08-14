@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.2
+Version: 1.2.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.2";
+ 	var $version = "1.2.4";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -45,7 +45,7 @@ class All_in_One_SEO_Pack {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
-		if (get_option('aiosp_rewrite_titles') && !is_home()) {
+		if (get_option('aiosp_rewrite_titles')) {
 			ob_start(array($this, 'output_callback_for_title'));
 		}
 	}
@@ -139,7 +139,6 @@ class All_in_One_SEO_Pack {
 		$title = trim(addslashes(stripslashes($title)));
 		$header = preg_replace_callback("/<title>.*<\/title>/s",
 			create_function('$match_not_needed',"return '<title>$title</title>';"), $content);
-		$header = stripslashes($header);
 		return $header;
 	}
 	
@@ -188,11 +187,6 @@ class All_in_One_SEO_Pack {
 			if (!$title) {
 				$title = wp_title('', false);
 			}
-            $title_format = get_option('aiosp_page_title_format');
-            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $new_title = str_replace('%page_title%', $title, $new_title);
-			$title = $new_title;
-			$title = trim($title);
 			$header = $this->replace_title($header, $title);
 		}
 		
@@ -293,56 +287,6 @@ class All_in_One_SEO_Pack {
 	    }
 	}
 
-	function edit_category($id) {
-	    $awmp_edit = $_POST["aiosp_edit"];
-	    /*
-	    if (isset($awmp_edit) && !empty($awmp_edit)) {
-		    $keywords = $_POST["aiosp_keywords"];
-		    $description = $_POST["aiosp_description"];
-		    $title = $_POST["aiosp_title"];
-
-		    delete_post_meta($id, 'keywords');
-		    delete_post_meta($id, 'description');
-		    delete_post_meta($id, 'title');
-
-		    if (isset($keywords) && !empty($keywords)) {
-			    add_post_meta($id, 'keywords', $keywords);
-		    }
-		    if (isset($description) && !empty($description)) {
-			    add_post_meta($id, 'description', $description);
-		    }
-		    if (isset($title) && !empty($title)) {
-			    add_post_meta($id, 'title', $title);
-		    }
-	    }
-	    */
-	}
-
-	function edit_category_form() {
-	    global $post;
-	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
-	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
-	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
-		?>
-		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
-		<table class="editform" width="100%" cellspacing="2" cellpadding="5">
-		<tr>
-		<th width="33%" scope="row" valign="top">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
-		</th>
-		</tr>
-		<tr>
-		<th width="33%" scope="row" valign="top"><label for="aiosp_title"><?php _e('Title:', 'all_in_one_seo_pack') ?></label></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="70"/></td>
-		</tr>
-		<tr>
-		<th width="33%" scope="row" valign="top"><label for="aiosp_keywords"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></label></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="70"/></td>
-		</tr>
-		</table>
-		<?php
-	}
-
 	function add_meta_tags_textinput() {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
@@ -378,7 +322,7 @@ class All_in_One_SEO_Pack {
 	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
 	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
 		?>
-		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
+		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
@@ -387,15 +331,15 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80" tabindex="1000"/></td>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80"/></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea></td>
+		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
 		</table>
 		<?php
@@ -418,7 +362,6 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_max_words_excerpt', $_POST['aiosp_max_words_excerpt']);
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_post_title_format', $_POST['aiosp_post_title_format']);
-			update_option('aiosp_page_title_format', $_POST['aiosp_page_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -493,16 +436,6 @@ class All_in_One_SEO_Pack {
 </td>
 <td>
 <input size="59" name="aiosp_post_title_format" value="<?php echo stripcslashes(get_option('aiosp_post_title_format')); ?>"/>
-</td>
-</tr>
-<tr>
-<th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Page Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#pagetitleformat">
-<?php _e('Page Title Format:', 'all_in_one_seo_pack')?>
-</a>
-</td>
-<td>
-<input size="59" name="aiosp_page_title_format" value="<?php echo stripcslashes(get_option('aiosp_page_title_format')); ?>"/>
 </td>
 </tr>
 <tr>
@@ -587,8 +520,7 @@ add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Ca
 add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Post Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in One SEO Plugin Page Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));
@@ -599,13 +531,11 @@ add_action('init', array($aiosp, 'init_textdomain'));
 add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_page_form', array($aiosp, 'add_meta_tags_page_textinput'));
-//add_action('edit_category_form', array($aiosp, 'edit_category_form'));
 
 add_action('edit_post', array($aiosp, 'post_meta_tags'));
 add_action('publish_post', array($aiosp, 'post_meta_tags'));
 add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
-//add_action('edit_category', array($aiosp, 'edit_category'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
 

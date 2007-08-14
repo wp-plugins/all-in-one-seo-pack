@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.1
+Version: 1.2.5.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.1";
+ 	var $version = "1.2.5.2";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -293,6 +293,56 @@ class All_in_One_SEO_Pack {
 	    }
 	}
 
+	function edit_category($id) {
+	    $awmp_edit = $_POST["aiosp_edit"];
+	    /*
+	    if (isset($awmp_edit) && !empty($awmp_edit)) {
+		    $keywords = $_POST["aiosp_keywords"];
+		    $description = $_POST["aiosp_description"];
+		    $title = $_POST["aiosp_title"];
+
+		    delete_post_meta($id, 'keywords');
+		    delete_post_meta($id, 'description');
+		    delete_post_meta($id, 'title');
+
+		    if (isset($keywords) && !empty($keywords)) {
+			    add_post_meta($id, 'keywords', $keywords);
+		    }
+		    if (isset($description) && !empty($description)) {
+			    add_post_meta($id, 'description', $description);
+		    }
+		    if (isset($title) && !empty($title)) {
+			    add_post_meta($id, 'title', $title);
+		    }
+	    }
+	    */
+	}
+
+	function edit_category_form() {
+	    global $post;
+	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
+	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
+	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
+		?>
+		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
+		<table class="editform" width="100%" cellspacing="2" cellpadding="5">
+		<tr>
+		<th width="33%" scope="row" valign="top">
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
+		</th>
+		</tr>
+		<tr>
+		<th width="33%" scope="row" valign="top"><label for="aiosp_title"><?php _e('Title:', 'all_in_one_seo_pack') ?></label></th>
+		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="70"/></td>
+		</tr>
+		<tr>
+		<th width="33%" scope="row" valign="top"><label for="aiosp_keywords"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></label></th>
+		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="70"/></td>
+		</tr>
+		</table>
+		<?php
+	}
+
 	function add_meta_tags_textinput() {
 	    global $post;
 	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
@@ -549,11 +599,13 @@ add_action('init', array($aiosp, 'init_textdomain'));
 add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_page_form', array($aiosp, 'add_meta_tags_page_textinput'));
+//add_action('edit_category_form', array($aiosp, 'edit_category_form'));
 
 add_action('edit_post', array($aiosp, 'post_meta_tags'));
 add_action('publish_post', array($aiosp, 'post_meta_tags'));
 add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
+//add_action('edit_category', array($aiosp, 'edit_category'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
 

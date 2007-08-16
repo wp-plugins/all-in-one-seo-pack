@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.3
+Version: 1.2.5.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.3";
+ 	var $version = "1.2.5.4";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -40,6 +40,10 @@ class All_in_One_SEO_Pack {
  	 * as description. Touch only if you know what you're doing.
  	 */
  	var $minimum_excerpt_length = 1;
+ 	
+ 	var $table_prefix = "aiosp_";
+ 	
+ 	var $db_version = '0.1';
  	
 	function template_redirect() {
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
@@ -263,6 +267,14 @@ class All_in_One_SEO_Pack {
 	    }
 	    
 	    return $this->get_unique_keywords($keywords);
+	}
+	
+	function db_install() {
+		global $wpdb;
+			die("db_install");
+		$table_categories = $wpdb->prefix . $this->table_prefix . "categories";
+		if($wpdb->get_var("show tables like '$table_categories'") != $table_categories) {
+		}
 	}
 
 	function get_unique_keywords($keywords) {
@@ -591,6 +603,7 @@ add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in 
 add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in One SEO Plugin Page Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
+//add_action('activate_all-in-one-seo-pack/all_in_one_seo_pack.php', array($aiosp, 'db_install'));
 add_action('wp_head', array($aiosp, 'wp_head'));
 add_action('template_redirect', array($aiosp, 'template_redirect'));
 

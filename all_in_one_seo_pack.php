@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.4
+Version: 1.2.5.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.4";
+ 	var $version = "1.2.5.5";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -42,6 +42,8 @@ class All_in_One_SEO_Pack {
  	var $minimum_excerpt_length = 1;
  	
  	var $table_prefix = "aiosp_";
+ 	
+ 	var $table_categries;
  	
  	var $db_version = '0.1';
  	
@@ -58,10 +60,11 @@ class All_in_One_SEO_Pack {
 		return $this->rewrite_title($content);
 	}
 
-	function init_textdomain() {
+	function init() {
 		if(function_exists('load_plugin_textdomain')) {
 			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
-		}	
+		}
+		//$this->db_install();	
 	}
 
 	function wp_head() {
@@ -198,6 +201,13 @@ class All_in_One_SEO_Pack {
 			$title = $new_title;
 			$title = trim($title);
 			$header = $this->replace_title($header, $title);
+		} else if (function_exists('is_tag') && is_tag()) {
+			global $utw;
+			if ($utw) {
+				$tags = $utw->GetCurrentTagSet();
+				$tag = $tags[0]->tag;
+				$header = $this->replace_title($header, $tag);
+			}
 		}
 		
 		return $header;
@@ -271,9 +281,20 @@ class All_in_One_SEO_Pack {
 	
 	function db_install() {
 		global $wpdb;
-			die("db_install");
-		$table_categories = $wpdb->prefix . $this->table_prefix . "categories";
-		if($wpdb->get_var("show tables like '$table_categories'") != $table_categories) {
+		$this->table_categories = $wpdb->prefix . $this->table_prefix . "categories";
+		if(get_option('aiosp_db_version') != $this->db_version) {
+			$sql = "CREATE TABLE $this->table_categories (
+  				ID bigint(20) NOT NULL auto_increment,
+  				category_id bigint(20) NOT NULL default '0',
+  				meta_title text NOT NULL,
+  				meta_description text NOT NULL,
+  				meta_keywords text NOT NULL,
+  				PRIMARY KEY  (ID),
+  				KEY category_id (category_id));";
+
+			require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
+      		dbDelta($sql);
+      		update_option('aiosp_db_version', $this->db_version);
 		}
 	}
 
@@ -306,13 +327,23 @@ class All_in_One_SEO_Pack {
 	}
 
 	function edit_category($id) {
+		global $wpdb;
+		$id = $wpdb->escape($id);
 	    $awmp_edit = $_POST["aiosp_edit"];
-	    /*
 	    if (isset($awmp_edit) && !empty($awmp_edit)) {
-		    $keywords = $_POST["aiosp_keywords"];
-		    $description = $_POST["aiosp_description"];
-		    $title = $_POST["aiosp_title"];
-
+		    $keywords = $wpdb->escape($_POST["aiosp_keywords"]);
+		    $title = $wpdb->escape($_POST["aiosp_title"]);
+		    $old_category = $wpdb->get_row("select * from $this->table_categories where category_id=$id", OBJECT);
+		    if ($old_category) {
+		    	$wpdb->query("update $this->table_categories
+		    			set meta_title='$title', meta_keywords='$keywords'
+		    			where category_id=$id");
+		    } else {
+		    	$wpdb->query("insert into $this->table_categories(meta_title, meta_keywords, category_id)
+		    			values ('$title', '$keywords', $id");
+		    }
+		    //$wpdb->query("insert into $this->table_categories")
+	    	/*
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
 		    delete_post_meta($id, 'title');
@@ -326,8 +357,8 @@ class All_in_One_SEO_Pack {
 		    if (isset($title) && !empty($title)) {
 			    add_post_meta($id, 'title', $title);
 		    }
+		    */
 	    }
-	    */
 	}
 
 	function edit_category_form() {
@@ -603,11 +634,10 @@ add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in 
 add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in One SEO Plugin Page Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
-//add_action('activate_all-in-one-seo-pack/all_in_one_seo_pack.php', array($aiosp, 'db_install'));
 add_action('wp_head', array($aiosp, 'wp_head'));
 add_action('template_redirect', array($aiosp, 'template_redirect'));
 
-add_action('init', array($aiosp, 'init_textdomain'));
+add_action('init', array($aiosp, 'init'));
 
 add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
 add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.5
+Version: 1.2.5.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.5";
+ 	var $version = "1.2.5.6";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -48,6 +48,10 @@ class All_in_One_SEO_Pack {
  	var $db_version = '0.1';
  	
 	function template_redirect() {
+		if (is_feed()) {
+			return;
+		}
+
 		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
 			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
 		}
@@ -71,7 +75,6 @@ class All_in_One_SEO_Pack {
 		if (is_feed()) {
 			return;
 		}
-
 		if (get_option('aiosp_rewrite_titles')) {
 			// make the title rewrite as short as possible
 			$active_handlers = ob_list_handlers();
@@ -144,7 +147,7 @@ class All_in_One_SEO_Pack {
 	
 	function replace_title($content, $title) {
 		$title = trim(addslashes(stripslashes($title)));
-		$header = preg_replace_callback("/<title>.*<\/title>/s",
+		$header = preg_replace_callback("/<title>.*?<\/title>/s",
 			create_function('$match_not_needed',"return '<title>$title</title>';"), $content);
 		$header = stripslashes($header);
 		return $header;

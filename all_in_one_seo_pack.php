@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.6
+Version: 1.2.5.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.6";
+ 	var $version = "1.2.5.7";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -107,6 +107,8 @@ class All_in_One_SEO_Pack {
 			}
 		} else if (is_home()) {
 			$description = trim(stripslashes(get_option('aiosp_home_description')));
+		} else if (is_category()) {
+			$description = category_description();
 		}
 		
 		if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
@@ -188,10 +190,10 @@ class All_in_One_SEO_Pack {
 			}
 			$header = $this->replace_title($header, $title);
 		} else if (is_category() && !is_feed()) {
-			$title = category_description();
-			if (!$title) {
-				$title = single_cat_title('', false);
-			}
+			$category_name = ucwords(single_cat_title('', false));
+            $title_format = get_option('aiosp_category_title_format');
+            $title = str_replace('%category_title%', $category_name, $title_format);
+            $title = str_replace('%blog_title%', get_bloginfo('name'), $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
 			$title = get_post_meta($post->ID, "title", true);
@@ -465,6 +467,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_rewrite_titles', $_POST['aiosp_rewrite_titles']);
 			update_option('aiosp_post_title_format', $_POST['aiosp_post_title_format']);
 			update_option('aiosp_page_title_format', $_POST['aiosp_page_title_format']);
+			update_option('aiosp_category_title_format', $_POST['aiosp_category_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -553,6 +556,16 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Category Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorytitleformat">
+<?php _e('Category Title Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input size="59" name="aiosp_category_title_format" value="<?php echo stripcslashes(get_option('aiosp_category_title_format')); ?>"/>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a target="_blank" title="<?php _e('Help for Option Categories for META keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
@@ -635,6 +648,7 @@ add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Ar
 add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Post Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in One SEO Plugin Page Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_category_title_format", '%category_title% | %blog_title%', __('All in One SEO Plugin Category Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

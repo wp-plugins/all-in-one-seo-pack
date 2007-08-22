@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.5.7
+Version: 1.2.5.8
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.5.7";
+ 	var $version = "1.2.5.8";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -393,9 +393,9 @@ class All_in_One_SEO_Pack {
 
 	function add_meta_tags_textinput() {
 	    global $post;
-	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
-	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
-	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
+	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'keywords', true)));
+	    $title = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'title', true)));
+	    $description = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'description', true)));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
@@ -422,9 +422,9 @@ class All_in_One_SEO_Pack {
 
 	function add_meta_tags_page_textinput() {
 	    global $post;
-	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
-	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
-	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
+	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'keywords', true)));
+	    $description = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'description', true)));
+	    $title = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'title', true)));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
 		<table style="margin-bottom:40px; margin-top:30px;">

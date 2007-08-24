@@ -3,7 +3,7 @@ Contributors: uberdose
 Donate link: http://wp.uberdose.com/contribute/
 Tags: post,google,seo,meta,meta keywords,meta description,title
 Requires at least: 2.0.2
-Tested up to: 2.2
+Tested up to: 2.3
 Stable tag: trunk
 
 Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).

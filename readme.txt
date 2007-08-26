@@ -12,17 +12,15 @@ Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 **Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**) by
 
-* Generating **META tags** and letting you define them
-* Automatically optimizing your **titles** and letting you specify your own ones
+* Automatically optimizing your **titles** for search engines and letting you tweak them further
+* Generating **META tags** automatically *and* letting you define them
 * Avoiding indexing of duplicate content.
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 
-* [SEO Manual](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
+* [SEO Plugin](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
 * [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/)
 * [FAQ](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)
-* [See what users are saying](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#comments)
-* [Get Help](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)
 
 == Installation ==
 

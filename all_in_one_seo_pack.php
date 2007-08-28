@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.6.2
+Version: 1.2.6.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.6.2";
+ 	var $version = "1.2.6.3";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -71,6 +71,18 @@ class All_in_One_SEO_Pack {
 		//$this->db_install();	
 	}
 
+	function is_static_front_page() {
+		global $wp_query;
+		$post = $wp_query->get_queried_object();
+		return get_option('show_on_front') == 'page' && is_page() && $post->ID == get_option('page_on_front');
+	}
+	
+	function is_static_posts_page() {
+		global $wp_query;
+		$post = $wp_query->get_queried_object();
+		return get_option('show_on_front') == 'page' && is_home() && $post->ID == get_option('page_for_posts');
+	}
+	
 	function wp_head() {
 		if (is_feed()) {
 			return;
@@ -91,22 +103,24 @@ class All_in_One_SEO_Pack {
 		
 		echo "<!-- all in one seo pack $this->version -->\n";
 		
-		if (is_home() && get_option('aiosp_home_keywords')) {
+		if ((is_home() && !$this->is_static_posts_page() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
 			$keywords = trim(get_option('aiosp_home_keywords'));
 		} else {
 			$keywords = $this->get_all_keywords();
 		}
 
 		if (is_single() || is_page()) {
-            $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
-			if (!$description) {
-				$description = $this->trim_excerpt_without_filters_full_length($post->post_excerpt);
-				if (!$description && get_option("aiosp_generate_descriptions")) {
-					$description = $this->trim_excerpt_without_filters($post->post_content);
-				}				
-			}
+            if ($this->is_static_front_page()) {
+				$description = trim(stripslashes(get_option('aiosp_home_description')));
+            } else {
+            	$description = $this->get_post_description($post);
+            }
 		} else if (is_home()) {
-			$description = trim(stripslashes(get_option('aiosp_home_description')));
+			if ($this->is_static_posts_page()) {
+            	$description = $this->get_post_description(get_post(get_option('page_for_posts')));
+			} else {
+				$description = trim(stripslashes(get_option('aiosp_home_description')));
+			}
 		} else if (is_category()) {
 			$description = category_description();
 		}
@@ -147,6 +161,17 @@ class All_in_One_SEO_Pack {
 		}
 	}
 	
+	function get_post_description($post) {
+	    $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
+		if (!$description) {
+			$description = $this->trim_excerpt_without_filters_full_length($post->post_excerpt);
+			if (!$description && get_option("aiosp_generate_descriptions")) {
+				$description = $this->trim_excerpt_without_filters($post->post_content);
+			}				
+		}
+		return $description;
+	}
+	
 	function replace_title($content, $title) {
 		$title_tag_start = "<title>";
 		$title_tag_end = "</title>";
@@ -178,8 +203,20 @@ class All_in_One_SEO_Pack {
 		global $s;
 
 		if (is_home()) {
-			if (get_option('aiosp_home_title')) {
-				$header = $this->replace_title($header, get_option('aiosp_home_title'));
+			if ($this->is_static_posts_page()) {
+				$title = get_post_meta(get_option('page_for_posts'), "title", true);
+				if (!$title) {
+					$title = wp_title('', false);
+				}
+	            $title_format = get_option('aiosp_page_title_format');
+	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+	            $new_title = str_replace('%page_title%', $title, $new_title);
+				$title = trim($new_title);
+				$header = $this->replace_title($header, $title);
+			} else {
+				if (get_option('aiosp_home_title')) {
+					$header = $this->replace_title($header, get_option('aiosp_home_title'));
+				}
 			}
 		} else if (is_single()) {
 			$title = get_post_meta($post->ID, "title", true);
@@ -206,15 +243,21 @@ class All_in_One_SEO_Pack {
             $title = str_replace('%blog_title%', get_bloginfo('name'), $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
-			$title = get_post_meta($post->ID, "title", true);
-			if (!$title) {
-				$title = wp_title('', false);
+			if ($this->is_static_front_page()) {
+				if (get_option('aiosp_home_title')) {
+					$header = $this->replace_title($header, get_option('aiosp_home_title'));
+				}
+			} else {
+				$title = get_post_meta($post->ID, "title", true);
+				if (!$title) {
+					$title = wp_title('', false);
+				}
+	            $title_format = get_option('aiosp_page_title_format');
+	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+	            $new_title = str_replace('%page_title%', $title, $new_title);
+				$title = trim($new_title);
+				$header = $this->replace_title($header, $title);
 			}
-            $title_format = get_option('aiosp_page_title_format');
-            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $new_title = str_replace('%page_title%', $title, $new_title);
-			$title = trim($new_title);
-			$header = $this->replace_title($header, $title);
 		} else if (function_exists('is_tag') && is_tag()) {
 			global $utw;
 			if ($utw) {

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.6.4
+Version: 1.2.6.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.6.4";
+ 	var $version = "1.2.6.6";
  	
  	/**
  	 * Number of words to be used (max) for generating an excerpt.
@@ -225,7 +225,10 @@ class All_in_One_SEO_Pack {
 		} else if (is_single()) {
 			$title = get_post_meta($post->ID, "title", true);
 			if (!$title) {
-				$title = wp_title('', false);
+				$title = get_post_meta($post->ID, "title_tag", true);
+				if (!$title) {
+					$title = wp_title('', false);
+				}
 			}
             $title_format = get_option('aiosp_post_title_format');
             $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
@@ -235,10 +238,14 @@ class All_in_One_SEO_Pack {
 			$header = $this->replace_title($header, $title);
 		} else if (is_search() && isset($s) && !empty($s)) {
 			if (function_exists('attribute_escape')) {
-				$title = attribute_escape(stripslashes($s));
+				$search = attribute_escape(stripslashes($s));
 			} else {
-				$title = wp_specialchars(stripslashes($s), true);
+				$search = wp_specialchars(stripslashes($s), true);
 			}
+			$search = $this->capitalize($search);
+            $title_format = get_option('aiosp_search_title_format');
+            $title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+            $title = str_replace('%search%', $search, $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_category() && !is_feed()) {
 			$category_name = ucwords(single_cat_title('', false));
@@ -562,6 +569,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_category_title_format', $_POST['aiosp_category_title_format']);
 			update_option('aiosp_archive_title_format', $_POST['aiosp_archive_title_format']);
 			update_option('aiosp_tag_title_format', $_POST['aiosp_tag_title_format']);
+			update_option('aiosp_search_title_format', $_POST['aiosp_search_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -683,6 +691,17 @@ class All_in_One_SEO_Pack {
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Search Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#searchtitleformat">
+<?php _e('Search Title Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input size="59" name="aiosp_search_title_format" value="<?php echo stripcslashes(get_option('aiosp_search_title_format')); ?>"/>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a target="_blank" title="<?php _e('Help for Option Categories for META keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
@@ -768,6 +787,7 @@ add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in 
 add_option("aiosp_category_title_format", '%category_title% | %blog_title%', __('All in One SEO Plugin Category Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_archive_title_format", '%date% | %blog_title%', __('All in One SEO Plugin Archive Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', __('All in One SEO Plugin Tag Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_search_title_format", '%search% | %blog_title%', __('All in One SEO Plugin Search Title Format', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

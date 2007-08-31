@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.6.6
+Version: 1.2.6.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,18 +28,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.6.6";
+ 	var $version = "1.2.6.7";
  	
  	/**
- 	 * Number of words to be used (max) for generating an excerpt.
+ 	 * Max numbers of chars in auto-generated description.
  	 */
- 	var $maximum_excerpt_length = 25;
-
+ 	var $maximum_description_length = 160;
+ 	
  	/**
  	 * Minimum number of chars an excerpt should be so that it can be used
  	 * as description. Touch only if you know what you're doing.
  	 */
- 	var $minimum_excerpt_length = 1;
+ 	var $minimum_description_length = 1;
  	
  	var $table_prefix = "aiosp_";
  	
@@ -52,9 +52,6 @@ class All_in_One_SEO_Pack {
 			return;
 		}
 
-		if (get_option('aiosp_max_words_excerpt') && is_numeric(get_option('aiosp_max_words_excerpt'))) {
-			$this->maximum_excerpt_length = get_option('aiosp_max_words_excerpt');
-		}
 		if (get_option('aiosp_rewrite_titles')) {
 			ob_start(array($this, 'output_callback_for_title'));
 		}
@@ -125,7 +122,7 @@ class All_in_One_SEO_Pack {
 			$description = category_description();
 		}
 		
-		if (isset($description) && strlen($description) > $this->minimum_excerpt_length) {
+		if (isset($description) && strlen($description) > $this->minimum_description_length) {
 			$description = str_replace('"', '', $description);
 			
 			// replace newlines on mac / windows?
@@ -313,21 +310,19 @@ class All_in_One_SEO_Pack {
 	function trim_excerpt_without_filters($text) {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
-		$excerpt_length = $this->maximum_excerpt_length;
-		$words = explode(' ', $text, $excerpt_length + 1);
-		if (count($words) > $excerpt_length) {
-			array_pop($words);
-			array_push($words, '...');
-			$text = implode(' ', $words);
+		$max = $this->maximum_description_length;
+		if ($max < strlen($text)) {
+			while($text[$max] != ' ' && $max > $this->minimum_description_length) {
+				$max--;
+			}
 		}
+		$text = substr($text, 0, $max);
 		return trim(stripslashes($text));
 	}
 	
 	function trim_excerpt_without_filters_full_length($text) {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
-		$excerpt_length = $this->maximum_excerpt_length;
-		$words = explode(' ', $text, $excerpt_length + 1);
 		return trim(stripslashes($text));
 	}
 	
@@ -509,7 +504,9 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea></td>
+		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea><br/>
+		Most search engines use a maximum of 160 chars for the description.
+		</td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
@@ -538,7 +535,8 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea></td>
+		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea><br/>
+		Most search engines use a maximum of 160 chars for the description.</td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
@@ -749,16 +747,6 @@ class All_in_One_SEO_Pack {
 <input type="checkbox" name="aiosp_generate_descriptions" <?php if (get_option('aiosp_generate_descriptions')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
-<tr>
-<th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Max Number of Words in Auto-Generated Descriptions', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#maxwordsdescription">
-<?php _e('Max Number of Words in Auto-Generated Descriptions:', 'all_in_one_seo_pack')?>
-</a>
-</td>
-<td>
-<input size="5" name="aiosp_max_words_excerpt" value="<?php echo stripcslashes(get_option('aiosp_max_words_excerpt')); ?>"/>
-</td>
-</tr>
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -777,7 +765,6 @@ add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Descri
 add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_max_words_excerpt", 25, __('All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Archives', 'all_in_one_seo_pack'), 'yes');

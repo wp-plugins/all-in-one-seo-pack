@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.6.7
+Version: 1.2.6.8
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.6.7";
+ 	var $version = "1.2.6.8";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -47,11 +47,17 @@ class All_in_One_SEO_Pack {
  	
  	var $db_version = '0.1';
  	
+ 	var $debug = false;
+ 	
 	function template_redirect() {
 		if (is_feed()) {
 			return;
 		}
 
+		if (get_option('aiosp_debug_info')) {
+			$this->debug = true;
+		}
+		
 		if (get_option('aiosp_rewrite_titles')) {
 			ob_start(array($this, 'output_callback_for_title'));
 		}
@@ -181,6 +187,10 @@ class All_in_One_SEO_Pack {
 		$title = stripslashes(trim($title));
 		$start = strpos($content, "<title>");
 		$end = strpos($content, "</title>");
+		
+		if ($this->debug) {
+			$content .= "<!-- aiosp title: $start,$end -->";
+		}
 		
 		if ($start && $end) {
 			$header = substr($content, 0, $start + $len_start) . $title .  substr($content, $end);
@@ -573,6 +583,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
 			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
 			update_option('aiosp_generate_descriptions', $_POST['aiosp_generate_descriptions']);
+			update_option('aiosp_debug_info', $_POST['aiosp_debug_info']);
 			wp_cache_flush();
 		}
 
@@ -622,6 +633,16 @@ class All_in_One_SEO_Pack {
 </td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Option Debug Info', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#debuginfo">
+<?php _e('Debug Info:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input type="checkbox" name="aiosp_debug_info" <?php if (get_option('aiosp_debug_info')) echo "checked=\"1\""; ?>/>
 </td>
 </tr>
 <tr>
@@ -775,6 +796,7 @@ add_option("aiosp_category_title_format", '%category_title% | %blog_title%', __(
 add_option("aiosp_archive_title_format", '%date% | %blog_title%', __('All in One SEO Plugin Archive Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', __('All in One SEO Plugin Tag Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_search_title_format", '%search% | %blog_title%', __('All in One SEO Plugin Search Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_debug_info", 0, __('All in One SEO Plugin Debug Info', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

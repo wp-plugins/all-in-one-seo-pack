@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.6.9
+Version: 1.2.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.6.9";
+ 	var $version = "1.2.7";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -47,7 +47,13 @@ class All_in_One_SEO_Pack {
  	
  	var $db_version = '0.1';
  	
- 	var $debug = false;
+ 	var $ob_start_detected = false;
+ 	
+ 	var $title_start = -1;
+ 	
+ 	var $title_end = -1;
+ 	
+ 	var $orig_title = '';
  	
 	function template_redirect() {
 		if (is_feed()) {
@@ -71,7 +77,7 @@ class All_in_One_SEO_Pack {
 		if(function_exists('load_plugin_textdomain')) {
 			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
 		}
-		//$this->db_install();	
+		//$this->db_install();
 	}
 
 	function is_static_front_page() {
@@ -94,8 +100,10 @@ class All_in_One_SEO_Pack {
 			// make the title rewrite as short as possible
 			$active_handlers = ob_list_handlers();
 			if (sizeof($active_handlers) > 0 && $active_handlers[sizeof($active_handlers) - 1] == 'All_in_One_SEO_Pack::output_callback_for_title') {
-				// if we don't land here there *could* be trouble with another plugin :(
 				ob_end_flush();
+			} else {
+				// if we get here there *could* be trouble with another plugin :(
+				$this->ob_start_detected = true;
 			}
 		}
 		
@@ -104,7 +112,12 @@ class All_in_One_SEO_Pack {
 
 		$meta_string = null;
 		
-		echo "<!-- all in one seo pack $this->version -->\n";
+		echo "<!-- all in one seo pack $this->version ";
+		if ($this->ob_start_detected) {
+			echo "ob_start_detected ";
+		}
+		echo "[$this->title_start,$this->title_end,$this->orig_title] ";
+		echo "-->\n";
 		
 		if ((is_home() && !$this->is_static_posts_page() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
 			$keywords = trim(get_option('aiosp_home_keywords'));
@@ -188,10 +201,9 @@ class All_in_One_SEO_Pack {
 		$start = strpos($content, "<title>");
 		$end = strpos($content, "</title>");
 		
-		if ($this->debug) {
-			$debug = "\n<!-- aiosp title: $start,$end,$title -->\n";
-			$debug .= "<!-- old header\n$content\n\n-->";
-		}
+		$this->title_start = $start;
+		$this->title_end = $end;
+		$this->orig_title = $title;
 		
 		if ($start && $end) {
 			$header = substr($content, 0, $start + $len_start) . $title .  substr($content, $end);
@@ -199,11 +211,6 @@ class All_in_One_SEO_Pack {
 			$header = $content . "<title>$title</title>";
 		}
 		
-		if ($this->debug) {
-			$header .= "<!-- new header\n$header\n-->";
-			$header .= $debug . "\n";
-		}
-
 		return $header;
 	}
 	
@@ -643,16 +650,6 @@ class All_in_One_SEO_Pack {
 </tr>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Debug Info', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#debuginfo">
-<?php _e('Debug Info:', 'all_in_one_seo_pack')?>
-</a>
-</td>
-<td>
-<input type="checkbox" name="aiosp_debug_info" <?php if (get_option('aiosp_debug_info')) echo "checked=\"1\""; ?>/>
-</td>
-</tr>
-<tr>
-<th scope="row" style="text-align:right; vertical-align:top;">
 <a target="_blank" title="<?php _e('Help for Option Rewrite Titles', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#rewritetitles">
 <?php _e('Rewrite Titles:', 'all_in_one_seo_pack')?>
 </a>
@@ -802,7 +799,6 @@ add_option("aiosp_category_title_format", '%category_title% | %blog_title%', __(
 add_option("aiosp_archive_title_format", '%date% | %blog_title%', __('All in One SEO Plugin Archive Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', __('All in One SEO Plugin Tag Title Format', 'all_in_one_seo_pack'), 'yes');
 add_option("aiosp_search_title_format", '%search% | %blog_title%', __('All in One SEO Plugin Search Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_debug_info", 0, __('All in One SEO Plugin Debug Info', 'all_in_one_seo_pack'), 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

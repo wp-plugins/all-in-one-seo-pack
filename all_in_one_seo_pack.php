@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.7.2
+Version: 1.2.7.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.7.2";
+ 	var $version = "1.2.7.3";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -109,7 +109,6 @@ class All_in_One_SEO_Pack {
 		
 		global $wp_query;
 		$post = $wp_query->get_queried_object();
-
 		$meta_string = null;
 		
 		echo "<!-- all in one seo pack $this->version ";
@@ -124,7 +123,6 @@ class All_in_One_SEO_Pack {
 		} else {
 			$keywords = $this->get_all_keywords();
 		}
-
 		if (is_single() || is_page()) {
             if ($this->is_static_front_page()) {
 				$description = trim(stripslashes(get_option('aiosp_home_description')));
@@ -274,13 +272,7 @@ class All_in_One_SEO_Pack {
             $title = str_replace('%search%', $search, $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_category() && !is_feed()) {
-			$categories = get_the_category();
-			$category_description = '';
-			if (count($categories) > 0) {
-				$category = $categories[0];
-				$category_description = $category->category_description;
-			}
-			$header .= $category;
+			$category_description = category_description();
 			$category_name = ucwords(single_cat_title('', false));
             $title_format = get_option('aiosp_category_title_format');
             $title = str_replace('%category_title%', $category_name, $title_format);
@@ -524,9 +516,13 @@ class All_in_One_SEO_Pack {
 
 	function add_meta_tags_textinput() {
 	    global $post;
-	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'keywords', true)));
-	    $title = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'title', true)));
-	    $description = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'description', true)));
+	    $post_id = $post;
+	    if (is_object($post_id)) {
+	    	$post_id = $post_id->ID;
+	    }
+	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post_id, 'keywords', true)));
+	    $title = htmlspecialchars(stripslashes(get_post_meta($post_id, 'title', true)));
+	    $description = htmlspecialchars(stripslashes(get_post_meta($post_id, 'description', true)));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
@@ -584,7 +580,14 @@ class All_in_One_SEO_Pack {
 	}
 
 	function admin_menu() {
-		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 5, __FILE__, array($this, 'plugin_menu'));
+		$file = __FILE__;
+		
+		// hack for 1.5
+		global $wp_version;
+		if (substr($wp_version, 0, 3) == '1.5') {
+			$file = 'all-in-one-seo-pack/all_in_one_seo_pack.php';
+		}
+		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 5, $file, array($this, 'plugin_menu'));
 	}
 	
 	function plugin_menu() {
@@ -611,7 +614,9 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
 			update_option('aiosp_generate_descriptions', $_POST['aiosp_generate_descriptions']);
 			update_option('aiosp_debug_info', $_POST['aiosp_debug_info']);
-			wp_cache_flush();
+			if (function_exists('wp_cache_flush')) {
+				wp_cache_flush();
+			}
 		}
 
 ?>

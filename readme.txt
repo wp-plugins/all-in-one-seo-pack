@@ -2,7 +2,7 @@
 Contributors: uberdose
 Donate link: http://wp.uberdose.com/contribute/
 Tags: post,google,seo,meta,meta keywords,meta description,title
-Requires at least: 2.0.2
+Requires at least: 1.5
 Tested up to: 2.3
 Stable tag: trunk
 

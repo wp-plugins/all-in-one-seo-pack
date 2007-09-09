@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.7.4
+Version: 1.2.7.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.7.4";
+ 	var $version = "1.2.7.5";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -233,6 +233,7 @@ class All_in_One_SEO_Pack {
 	            $title_format = get_option('aiosp_page_title_format');
 	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
 	            $new_title = str_replace('%page_title%', $title, $new_title);
+	            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
 			} else {
@@ -255,6 +256,7 @@ class All_in_One_SEO_Pack {
 			}
             $title_format = get_option('aiosp_post_title_format');
             $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
             $new_title = str_replace('%post_title%', $title, $new_title);
             $new_title = str_replace('%category%', $category, $new_title);
 			$title = $new_title;
@@ -269,6 +271,7 @@ class All_in_One_SEO_Pack {
 			$search = $this->capitalize($search);
             $title_format = get_option('aiosp_search_title_format');
             $title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
             $title = str_replace('%search%', $search, $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_category() && !is_feed()) {
@@ -278,6 +281,7 @@ class All_in_One_SEO_Pack {
             $title = str_replace('%category_title%', $category_name, $title_format);
             $title = str_replace('%category_description%', $category_description, $title);
             $title = str_replace('%blog_title%', get_bloginfo('name'), $title);
+            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
 			if ($this->is_static_front_page()) {
@@ -291,6 +295,7 @@ class All_in_One_SEO_Pack {
 				}
 	            $title_format = get_option('aiosp_page_title_format');
 	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+	            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
 	            $new_title = str_replace('%page_title%', $title, $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
@@ -309,6 +314,7 @@ class All_in_One_SEO_Pack {
 	            $tag = $this->capitalize($tag);
 	            $title_format = get_option('aiosp_tag_title_format');
 	            $title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+	            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
 	            $title = str_replace('%tag%', $tag, $title);
 				$header = $this->replace_title($header, $title);
 			}
@@ -316,6 +322,7 @@ class All_in_One_SEO_Pack {
 			$date = wp_title('', false);
             $title_format = get_option('aiosp_archive_title_format');
             $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
             $new_title = str_replace('%date%', $date, $new_title);
 			$title = trim($new_title);
 			$header = $this->replace_title($header, $title);

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.8.5
+Version: 1.2.8.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.8.5";
+ 	var $version = "1.2.8.6";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -412,6 +412,15 @@ class All_in_One_SEO_Pack {
 	                $keywords_i = str_replace('"', '', $keywords_i);
 	                if (isset($keywords_i) && !empty($keywords_i)) {
 	                    $keywords[] = $keywords_i;
+	                }
+	                
+	                // autometa
+	                $autometa = stripslashes(get_post_meta($post->ID, "autometa", true));
+	                if (isset($autometa)) {
+	                	$autometa_array = explode(' ', $autometa);
+	                	foreach ($autometa_array as $e) {
+	                		$keywords[] = $e;
+	                	}
 	                }
 	            }
 	        }

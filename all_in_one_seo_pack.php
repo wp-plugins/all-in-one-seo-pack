@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.8.3
+Version: 1.2.8.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.8.3";
+ 	var $version = "1.2.8.4";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -535,7 +535,7 @@ class All_in_One_SEO_Pack {
 		<table class="editform" width="100%" cellspacing="2" cellpadding="5">
 		<tr>
 		<th width="33%" scope="row" valign="top">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a>
 		</th>
 		</tr>
 		<tr>
@@ -564,7 +564,7 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">All in One SEO Pack</a>
+		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a>
 		</th>
 		</tr>
 		<tr>
@@ -574,7 +574,7 @@ class All_in_One_SEO_Pack {
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
 		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea><br/>
-		Most search engines use a maximum of 160 chars for the description.
+		<?php _e('Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack') ?>
 		</td>
 		</tr>
 		<tr>
@@ -605,7 +605,7 @@ class All_in_One_SEO_Pack {
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
 		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea><br/>
-		Most search engines use a maximum of 160 chars for the description.</td>
+		<?php _e('Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack')?></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
@@ -663,13 +663,18 @@ class All_in_One_SEO_Pack {
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options', 'all_in_one_seo_pack'); ?></h2>
 <p>
-<?php _e("This is version $this->version. " .
-'<a target="_blank" title="All in One SEO Plugin Release History" href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/">Should I upgrade?</a>', 'all_in_one_seo_pack') ?>
+<?php _e("This is version ", 'all_in_one_seo_pack') ?><?php _e("$this->version. ", 'all_in_one_seo_pack') ?>
+<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
+href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
+</a>
 </p>
 <p>
-<?php _e('<a target="_blank" title="All in One SEO Plugin Help" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">Help</a>', 'all_in_one_seo_pack') ?>
-| <?php _e('<a target="_blank" title="FAQ" href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/">FAQ</a>', 'all_in_one_seo_pack') ?>
-| <?php _e('<a target="_blank" title="All in One SEO Plugin Feedback" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond">Feedback</a>', 'all_in_one_seo_pack') ?>
+<a target="_blank" title="<?php _e('All in One SEO Plugin Help', 'all_in_one_seo_pack') ?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">
+<?php _e('Help', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
+href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
+href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
 </p>
 <form name="dofollow" action="" method="post">
 <table>
@@ -840,20 +845,20 @@ class All_in_One_SEO_Pack {
 
 }
 
-add_option("aiosp_home_description", null, __('All in One SEO Plugin Home Description', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_home_title", null, __('All in One SEO Plugin Home Title', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_rewrite_titles", 1, __('All in One SEO Plugin Rewrite Titles', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_use_categories", 1, __('All in One SEO Plugin Use Categories', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_category_noindex", 1, __('All in One SEO Plugin Noindex for Categories', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_archive_noindex", 1, __('All in One SEO Plugin Noindex for Archives', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_tags_noindex", 1, __('All in One SEO Plugin Noindex for Tag Archives', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_generate_descriptions", 0, __('All in One SEO Plugin Autogenerate Descriptions', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_post_title_format", '%post_title% | %blog_title%', __('All in One SEO Plugin Post Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_page_title_format", '%page_title% | %blog_title%', __('All in One SEO Plugin Page Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_category_title_format", '%category_title% | %blog_title%', __('All in One SEO Plugin Category Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_archive_title_format", '%date% | %blog_title%', __('All in One SEO Plugin Archive Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_tag_title_format", '%tag% | %blog_title%', __('All in One SEO Plugin Tag Title Format', 'all_in_one_seo_pack'), 'yes');
-add_option("aiosp_search_title_format", '%search% | %blog_title%', __('All in One SEO Plugin Search Title Format', 'all_in_one_seo_pack'), 'yes');
+add_option("aiosp_home_description", null, 'All in One SEO Plugin Home Description', 'yes');
+add_option("aiosp_home_title", null, 'All in One SEO Plugin Home Title', 'yes');
+add_option("aiosp_rewrite_titles", 1, 'All in One SEO Plugin Rewrite Titles', 'yes');
+add_option("aiosp_use_categories", 1, 'All in One SEO Plugin Use Categories', 'yes');
+add_option("aiosp_category_noindex", 1, 'All in One SEO Plugin Noindex for Categories', 'yes');
+add_option("aiosp_archive_noindex", 1, 'All in One SEO Plugin Noindex for Archives', 'yes');
+add_option("aiosp_tags_noindex", 1, 'All in One SEO Plugin Noindex for Tag Archives', 'yes');
+add_option("aiosp_generate_descriptions", 0, 'All in One SEO Plugin Autogenerate Descriptions', 'yes');
+add_option("aiosp_post_title_format", '%post_title% | %blog_title%', 'All in One SEO Plugin Post Title Format', 'yes');
+add_option("aiosp_page_title_format", '%page_title% | %blog_title%', 'All in One SEO Plugin Page Title Format', 'yes');
+add_option("aiosp_category_title_format", '%category_title% | %blog_title%', 'All in One SEO Plugin Category Title Format', 'yes');
+add_option("aiosp_archive_title_format", '%date% | %blog_title%', 'All in One SEO Plugin Archive Title Format', 'yes');
+add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plugin Tag Title Format', 'yes');
+add_option("aiosp_search_title_format", '%search% | %blog_title%', 'All in One SEO Plugin Search Title Format', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

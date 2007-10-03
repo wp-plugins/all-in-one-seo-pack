@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.8.5
+Version: 1.2.8.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.8.5";
+ 	var $version = "1.2.8.6";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -73,7 +73,6 @@ class All_in_One_SEO_Pack {
 		if(function_exists('load_plugin_textdomain')) {
 			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
 		}
-		//$this->db_install();
 	}
 
 	function is_static_front_page() {
@@ -452,25 +451,6 @@ class All_in_One_SEO_Pack {
 	    return $this->get_unique_keywords($keywords);
 	}
 	
-	function db_install() {
-		global $wpdb;
-		$this->table_categories = $wpdb->prefix . $this->table_prefix . "categories";
-		if(get_option('aiosp_db_version') != $this->db_version) {
-			$sql = "CREATE TABLE $this->table_categories (
-  				ID bigint(20) NOT NULL auto_increment,
-  				category_id bigint(20) NOT NULL default '0',
-  				meta_title text NOT NULL,
-  				meta_description text NOT NULL,
-  				meta_keywords text NOT NULL,
-  				PRIMARY KEY  (ID),
-  				KEY category_id (category_id));";
-
-			require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-      		dbDelta($sql);
-      		update_option('aiosp_db_version', $this->db_version);
-		}
-	}
-
 	function get_unique_keywords($keywords) {
 		$keywords_ar = array_unique($keywords);
 		return implode(',', $keywords_ar);

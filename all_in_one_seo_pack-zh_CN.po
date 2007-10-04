@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: all in one seo pack\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-06-16 01:24-0800\n"
-"Last-Translator: 72pines <webmaster@72pines.com>\n"
-"Language-Team: 72pines\n"
+"PO-Revision-Date: 2007-10-04 17:17+0800\n"
+"Last-Translator: Leo <skyros@gmail.com>\n"
+"Language-Team: WordPress 中文团队\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,181 +13,302 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: C:\\Documents and Settings\\Leo\\Desktop\\all-in-one-seo-pack\n"
 
-#: all_in_one_seo_pack.php:263
-#: all_in_one_seo_pack.php:288
-msgid "Title:"
-msgstr "标题: "
-
-#: all_in_one_seo_pack.php:267
-#: all_in_one_seo_pack.php:292
-msgid "Keywords (comma separated):"
-msgstr "关键词 (半角的逗号分开)"
-
-#: all_in_one_seo_pack.php:284
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:547
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:576
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:607
 msgid "All in One SEO Pack"
-msgstr "All in One SEO"
+msgstr "All in One SEO Pack"
 
-#: all_in_one_seo_pack.php:296
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:551
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:580
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:611
+msgid "Title:"
+msgstr "标题："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:555
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:590
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:620
+msgid "Keywords (comma separated):"
+msgstr "关键词 (以英文逗号分隔)："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:584
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:615
 msgid "Description:"
-msgstr "站点描述: "
+msgstr "站点描述： "
 
-#: all_in_one_seo_pack.php:304
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:586
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:617
+msgid "Most search engines use a maximum of 160 chars for the description."
+msgstr "大多数搜索引擎对该描述的字数限制为 160 个字符"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:635
 msgid "All in One SEO"
 msgstr "All in One SEO"
 
-#: all_in_one_seo_pack.php:309
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:640
 msgid "All in One SEO Options Updated."
-msgstr "更新选项成功。"
+msgstr "选项已更新"
 
-#: all_in_one_seo_pack.php:333
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:673
 msgid "All in One SEO Plugin Options"
-msgstr "All in One SEO 选项"
+msgstr "All in One SEO 插件选项"
 
-#: all_in_one_seo_pack.php:335
-msgid "<a target=\"_blank\" title=\"All in One SEO Plugin Feedback\" href=\"http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond\">Feedback</a>"
-msgstr "<a target=\"_blank\" title=\"All in One SEO Plugin Feedback\" href=\"http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond\">反馈意见</a>"
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:675
+msgid "This is version "
+msgstr "当前版本："
 
-#: all_in_one_seo_pack.php:336
-msgid "<a target=\"_blank\" title=\"All in One SEO Plugin Help\" href=\"http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/\">Help</a>"
-msgstr "<a target=\"_blank\" title=\"All in One SEO Plugin Help\" href=\"http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/\">帮助文档</a>"
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:676
+msgid "All in One SEO Plugin Release History"
+msgstr "All in One SEO 插件版本历史"
 
-#: all_in_one_seo_pack.php:342
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:681
+msgid "All in One SEO Plugin Help"
+msgstr "All in One SEO 插件帮助"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:682
+msgid "Help"
+msgstr "帮助"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:683
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:684
+msgid "FAQ"
+msgstr "FAQ"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:685
+msgid "All in One SEO Plugin Feedback"
+msgstr "All in One SEO 插件反馈"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:686
+msgid "Feedback"
+msgstr "反馈"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:687
+msgid "All in One SEO Plugin Translations"
+msgstr "All in One SEO 插件翻译"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:688
+msgid "Translations"
+msgstr "翻译"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:694
 msgid "Help for Option Home Title"
-msgstr "首页标题选项的帮助"
+msgstr "帮助：首页标题选项"
 
-#: all_in_one_seo_pack.php:343
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:695
 msgid "Home Title:"
-msgstr "首页标题: "
+msgstr "首页标题： "
 
-#: all_in_one_seo_pack.php:352
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:704
 msgid "Help for Option Home Description"
-msgstr "首页描述: "
+msgstr "帮助：首页描述选项"
 
-#: all_in_one_seo_pack.php:353
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:705
 msgid "Home Description:"
-msgstr "首页描述: "
+msgstr "首页描述："
 
-#: all_in_one_seo_pack.php:362
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:714
 msgid "Help for Option Home Keywords"
-msgstr "首页关键词选项的帮助"
+msgstr "帮助：首页关键词选项"
 
-#: all_in_one_seo_pack.php:363
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:715
 msgid "Home Keywords (comma separated):"
-msgstr "首页关键词 (半角的逗号分开)"
+msgstr "首页关键词 (以英文逗号分隔) ："
 
-#: all_in_one_seo_pack.php:372
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:724
 msgid "Help for Option Rewrite Titles"
-msgstr "是否对所有文章使用 “标题名 | 博客名” 的优化格式: "
+msgstr "帮助：标题重写选项"
 
-#: all_in_one_seo_pack.php:373
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:725
 msgid "Rewrite Titles:"
-msgstr "是否对所有文章使用 “标题名 | 博客名” 的优化格式: "
+msgstr "重写标题："
 
-#: all_in_one_seo_pack.php:382
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:734
+msgid "Help for Post Title Format"
+msgstr "帮助：日志标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:735
+msgid "Post Title Format:"
+msgstr "日志标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:744
+msgid "Help for Page Title Format"
+msgstr "帮助：常规页面标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:745
+msgid "Page Title Format:"
+msgstr "常规页面标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:754
+msgid "Help for Category Title Format"
+msgstr "帮助：分类页面标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:755
+msgid "Category Title Format:"
+msgstr "分类页面标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:765
+msgid "Help for Archive Title Format"
+msgstr "帮助：存档页面标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:766
+msgid "Archive Title Format:"
+msgstr "存档页面标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:776
+msgid "Help for Tag Title Format"
+msgstr "帮助：标签页面标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:777
+msgid "Tag Title Format:"
+msgstr "标签页面标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:787
+msgid "Help for Search Title Format"
+msgstr "帮助：搜索页面标题格式"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:788
+msgid "Search Title Format:"
+msgstr "搜索页面标题格式："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:798
 msgid "Help for Option Categories for META keywords"
-msgstr "使用分类名作为关键字: "
+msgstr "帮助：使用分类名称作为关键词"
 
-#: all_in_one_seo_pack.php:383
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:799
 msgid "Use Categories for META keywords:"
-msgstr "使用分类名作为关键字: "
+msgstr "使用分类名称作为关键词："
 
-#: all_in_one_seo_pack.php:391
-#, fuzzy
-msgid "Help for Option Category Description as Title"
-msgstr "使用分类描述作为标题: "
-
-#: all_in_one_seo_pack.php:392
-msgid "Use Category Description as Title:"
-msgstr "使用分类描述作为标题: "
-
-#: all_in_one_seo_pack.php:401
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:807
 msgid "Help for Option noindex for Categories"
-msgstr "不让搜索引擎抓取分类页:"
+msgstr "帮助：禁止搜索引擎收录日志分类"
 
-#: all_in_one_seo_pack.php:402
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:808
 msgid "Use noindex for Categories:"
-msgstr "不让搜索引擎抓取分类页:"
+msgstr "禁止搜索引擎收录日志分类："
 
-#: all_in_one_seo_pack.php:411
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:817
 msgid "Help for Option noindex for Archives"
-msgstr "不让搜索引擎抓取档案页:"
+msgstr "帮助：禁止搜索引擎收录日志存档"
 
-#: all_in_one_seo_pack.php:412
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:818
 msgid "Use noindex for Archives:"
-msgstr "不让搜索引擎抓取档案页:"
+msgstr "禁止搜索引擎收录日志存档："
 
-#: all_in_one_seo_pack.php:421
-#, fuzzy
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:827
+msgid "Help for Option noindex for Tag Archives"
+msgstr "帮助：禁止搜索引擎收录标签存档"
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:828
+msgid "Use noindex for Tag Archives:"
+msgstr "禁止搜索引擎收录标签存档："
+
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:837
 msgid "Help for Autogenerate Descriptions"
-msgstr "自动生成文章描述: "
+msgstr "帮助：自动生成日志描述"
 
-#: all_in_one_seo_pack.php:422
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:838
 msgid "Autogenerate Descriptions:"
-msgstr "自动生成文章描述: "
+msgstr "自动生成日志描述："
 
-#: all_in_one_seo_pack.php:431
-#, fuzzy
-msgid "Help for Option Max Number of Words in Auto-Generated Descriptions"
-msgstr "自动生成文章描述时的字数限制: "
-
-#: all_in_one_seo_pack.php:432
-msgid "Max Number of Words in Auto-Generated Descriptions:"
-msgstr "自动生成文章描述时的字数限制: "
-
-#: all_in_one_seo_pack.php:443
+#: C:\Documents
+#: and
+#: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:849
 msgid "Update Options"
 msgstr "更新选项"
-
-#: all_in_one_seo_pack.php:453
-#, fuzzy
-msgid "All in One SEO Plugin Home Description"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:454
-#, fuzzy
-msgid "All in One SEO Plugin Home Title"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:455
-#, fuzzy
-msgid "All in One SEO Plugin Rewrite Titles"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:456
-#, fuzzy
-msgid "All in One SEO Plugin Use Categories"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:457
-#, fuzzy
-msgid "All in One SEO Plugin Maximum Number of Words in Auto-Generated Descriptions"
-msgstr "自动生成文章描述时的字数限制: "
-
-#: all_in_one_seo_pack.php:458
-#, fuzzy
-msgid "Use Category Description for Title"
-msgstr "使用分类描述作为标题: "
-
-#: all_in_one_seo_pack.php:459
-#, fuzzy
-msgid "All in One SEO Plugin Noindex for Categories"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:460
-#, fuzzy
-msgid "All in One SEO Plugin Noindex for Archives"
-msgstr "All in One SEO 选项"
-
-#: all_in_one_seo_pack.php:461
-#, fuzzy
-msgid "All in One SEO Plugin Autogenerate Descriptions"
-msgstr "All in One SEO 选项"
 

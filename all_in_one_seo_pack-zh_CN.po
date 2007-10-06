@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: all in one seo pack\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-10-04 17:17+0800\n"
+"PO-Revision-Date: 2007-10-05 20:35+0800\n"
 "Last-Translator: Leo <skyros@gmail.com>\n"
 "Language-Team: WordPress 中文团队\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "关键词 (以英文逗号分隔)："
 #: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:584
 #: Settings\Leo\Desktop\all-in-one-seo-pack/all_in_one_seo_pack.php:615
 msgid "Description:"
-msgstr "站点描述： "
+msgstr "描述： "
 
 #: C:\Documents
 #: and

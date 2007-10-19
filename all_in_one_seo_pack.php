@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.2.9.8
+Version: 1.2.9.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.2.9.8";
+ 	var $version = "1.2.9.9";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -554,6 +554,16 @@ class All_in_One_SEO_Pack {
 	    $title = htmlspecialchars(stripslashes(get_post_meta($post_id, 'title', true)));
 	    $description = htmlspecialchars(stripslashes(get_post_meta($post_id, 'description', true)));
 		?>
+		<SCRIPT LANGUAGE="JavaScript">
+		<!-- Begin
+		function countChars(field,cntfield,maxlimit) {
+		if (field.value.length > maxlimit)
+		field.value = field.value.substring(0, maxlimit);
+		else
+		cntfield.value = maxlimit - field.value.length;
+		}
+		//  End -->
+		</script>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
@@ -567,8 +577,11 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78"><?php echo $description ?></textarea><br/>
-		<?php _e('Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack') ?>
+		<td><textarea name="aiosp_description" rows="1" cols="78"
+		onKeyDown="countChars(document.post.aiosp_description,document.post.length1,160)"
+		onKeyUp="countChars(document.post.aiosp_description,document.post.length1,160)"><?php echo $description ?></textarea><br/>
+		<input readonly type="text" name="length1" size="3" maxlength="3" value="160" />
+		<?php _e(' characters left (most search engines use a maximum of 160 chars for the description)', 'all_in_one_seo_pack') ?>
 		</td>
 		</tr>
 		<tr>
@@ -585,6 +598,16 @@ class All_in_One_SEO_Pack {
 	    $description = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'description', true)));
 	    $title = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'title', true)));
 		?>
+		<SCRIPT LANGUAGE="JavaScript">
+		<!-- Begin
+		function countChars(field,cntfield,maxlimit) {
+		if (field.value.length > maxlimit)
+		field.value = field.value.substring(0, maxlimit);
+		else
+		cntfield.value = maxlimit - field.value.length;
+		}
+		//  End -->
+		</script>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
@@ -598,8 +621,11 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"><?php echo $description ?></textarea><br/>
-		<?php _e('Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack')?></td>
+		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"
+		onKeyDown="countChars(document.post.aiosp_description,document.post.length1,160)"
+		onKeyUp="countChars(document.post.aiosp_description,document.post.length1,160)"><?php echo $description ?></textarea><br/>
+		<input readonly type="text" name="length1" size="3" maxlength="3" value="160" />
+		<?php _e(' characters left (most search engines use a maximum of 160 chars for the description)', 'all_in_one_seo_pack')?></td>
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>

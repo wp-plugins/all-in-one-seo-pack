@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.2
+Version: 1.3.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.2";
+ 	var $version = "1.3.3";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -381,12 +381,26 @@ class All_in_One_SEO_Pack {
 	    if (is_array($posts)) {
 	        foreach ($posts as $post) {
 	            if ($post) {
-	            	if (get_option('aiosp_use_categories') && !is_page()) {
-		                $categories = get_the_category($post->ID);
-		                foreach ($categories as $category) {
-		                	$keywords[] = $category->cat_name;
-		                }
-	            	}
+
+	                // custom field keywords
+	                $keywords_a = $keywords_i = null;
+	                $description_a = $description_i = null;
+	                $id = $post->ID;
+		            $keywords_i = stripslashes(get_post_meta($post->ID, "keywords", true));
+	                $keywords_i = str_replace('"', '', $keywords_i);
+	                if (isset($keywords_i) && !empty($keywords_i)) {
+	                    $keywords[] = $keywords_i;
+	                }
+	                
+	                // WP 2.3 tags
+	                if (function_exists('get_the_tags')) {
+	                	$tags = get_the_tags($post->ID);
+	                	if ($tags && is_array($tags)) {
+		                	foreach ($tags as $tag) {
+		                		$keywords[] = $tag->name;
+		                	}
+	                	}
+	                }
 
 	                // Ultimate Tag Warrior integration
 	                global $utw;
@@ -401,26 +415,6 @@ class All_in_One_SEO_Pack {
 	                	}
 	                }
 	                
-	                // WP 2.3 tags
-	                if (function_exists('get_the_tags')) {
-	                	$tags = get_the_tags($post->ID);
-	                	if ($tags && is_array($tags)) {
-		                	foreach ($tags as $tag) {
-		                		$keywords[] = $tag->name;
-		                	}
-	                	}
-	                }
-
-	                // custom field keywords
-	                $keywords_a = $keywords_i = null;
-	                $description_a = $description_i = null;
-	                $id = $post->ID;
-		            $keywords_i = stripslashes(get_post_meta($post->ID, "keywords", true));
-	                $keywords_i = str_replace('"', '', $keywords_i);
-	                if (isset($keywords_i) && !empty($keywords_i)) {
-	                    $keywords[] = $keywords_i;
-	                }
-	                
 	                // autometa
 	                $autometa = stripslashes(get_post_meta($post->ID, "autometa", true));
 	                if (isset($autometa) && !empty($autometa)) {
@@ -429,6 +423,14 @@ class All_in_One_SEO_Pack {
 	                		$keywords[] = $e;
 	                	}
 	                }
+
+	            	if (get_option('aiosp_use_categories') && !is_page()) {
+		                $categories = get_the_category($post->ID);
+		                foreach ($categories as $category) {
+		                	$keywords[] = $category->cat_name;
+		                }
+	            	}
+
 	            }
 	        }
 	    }

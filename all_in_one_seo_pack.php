@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.4
+Version: 1.3.5.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.4";
+ 	var $version = "1.3.5.1";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -155,6 +155,16 @@ class All_in_One_SEO_Pack {
 			} else {
 				$meta_string = '';
 			}
+			
+			// description format
+            $description_format = get_option('aiosp_description_format');
+            if (!isset($description_format) || empty($description_format)) {
+            	$description_format = "%description%";
+            }
+            $description = str_replace('%description%', $description, $description_format);
+            $description = str_replace('%blog_title%', get_bloginfo('name'), $description);
+            $description = str_replace('%blog_description%', get_bloginfo('description'), $description);
+			
 			$meta_string .= sprintf("<meta name=\"description\" content=\"%s\"/>", $description);
 		}
 
@@ -669,6 +679,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_archive_title_format', $_POST['aiosp_archive_title_format']);
 			update_option('aiosp_tag_title_format', $_POST['aiosp_tag_title_format']);
 			update_option('aiosp_search_title_format', $_POST['aiosp_search_title_format']);
+			update_option('aiosp_description_format', $_POST['aiosp_description_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -811,6 +822,17 @@ href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a target="_blank" title="<?php _e('Help for Description Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#descriptionformat">
+<?php _e('Description Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input size="59" name="aiosp_description_format" value="<?php echo stripcslashes(get_option('aiosp_description_format')); ?>"/>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a target="_blank" title="<?php _e('Help for Option Categories for META keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
@@ -886,6 +908,7 @@ add_option("aiosp_category_title_format", '%category_title% | %blog_title%', 'Al
 add_option("aiosp_archive_title_format", '%date% | %blog_title%', 'All in One SEO Plugin Archive Title Format', 'yes');
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plugin Tag Title Format', 'yes');
 add_option("aiosp_search_title_format", '%search% | %blog_title%', 'All in One SEO Plugin Search Title Format', 'yes');
+add_option("aiosp_description_format", '%description%', 'All in One SEO Plugin Description Format', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

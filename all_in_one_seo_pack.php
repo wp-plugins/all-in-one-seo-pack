@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.5.2
+Version: 1.3.5.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.5.2";
+ 	var $version = "1.3.5.3";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -345,10 +345,34 @@ class All_in_One_SEO_Pack {
             $new_title = str_replace('%date%', $date, $new_title);
 			$title = trim($new_title);
 			$header = $this->replace_title($header, $title);
+		} else if (is_404()) {
+            $title_format = get_option('aiosp_404_title_format');
+            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+            $new_title = str_replace('%request_url%', $_SERVER['REQUEST_URI'], $new_title);
+            $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
+			$header = $this->replace_title($header, $new_title);
 		}
 		
 		return $header;
 
+	}
+	
+	/**
+	 * @return User-readable nice words for a given request.
+	 */
+	function request_as_words($request) {
+		$request = str_replace('.html', ' ', $request);
+		$request = str_replace('.htm', ' ', $request);
+		$request = str_replace('.', ' ', $request);
+		$request = str_replace('/', ' ', $request);
+		$request_a = explode(' ', $request);
+		$request_new = array();
+		foreach ($request_a as $token) {
+			$request_new[] = ucwords(trim($token));
+		}
+		$request = implode(' ', $request_new);
+		return $request;
 	}
 	
 	function capitalize($s) {
@@ -680,6 +704,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_tag_title_format', $_POST['aiosp_tag_title_format']);
 			update_option('aiosp_search_title_format', $_POST['aiosp_search_title_format']);
 			update_option('aiosp_description_format', $_POST['aiosp_description_format']);
+			update_option('aiosp_404_title_format', $_POST['aiosp_404_title_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -704,6 +729,17 @@ class All_in_One_SEO_Pack {
 href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
 </a>
 </p>
+<script type="text/javascript">
+<!--
+    function toggleVisibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+//-->
+</script>
 <p>
 <a target="_blank" title="<?php _e('All in One SEO Plugin Help', 'all_in_one_seo_pack') ?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">
 <?php _e('Help', 'all_in_one_seo_pack') ?></a>
@@ -716,170 +752,322 @@ href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><
 </p>
 <form name="dofollow" action="" method="post">
 <table>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Title', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#hometitle">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_home_title_tip');">
 <?php _e('Home Title:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
+<div style="text-align:left; display:none" id="aiosp_home_title_tip">
+<?php
+_e('As the name implies, this will be the title of your homepage. This is independent of any other option. If not set, the default blog title will get used.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Description', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homedescription">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_home_description_tip');">
 <?php _e('Home Description:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
+<div style="text-align:left; display:none" id="aiosp_home_description_tip">
+<?php
+_e('The META description for your homepage. Independent of any other options, the default is no META description at all if this is not set.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Home Keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#homekeywords">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_home_keywords_tip');">
 <?php _e('Home Keywords (comma separated):', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
+<div style="text-align:left; display:none" id="aiosp_home_keywords_tip">
+<?php
+_e('A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don’t stuff everything in here.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Rewrite Titles', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#rewritetitles">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_rewrite_titles_tip');">
 <?php _e('Rewrite Titles:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_rewrite_titles_tip">
+<?php
+_e('Note that this is all about the title tag. This is what you see in your browser’s window title bar. This is NOT visible on a page, only in the window title bar and of course in the source. If set, all page, post, category, search and archive page titles get rewritten. You can specify the format for most of them. For example: The default templates puts the title tag of posts like this: “Blog Archive >> Blog Name >> Post Title” (maybe I’ve overdone slightly). This is far from optimal. With the default post title format, Rewrite Title rewrites this to “Post Title | Blog Name”. If you have manually defined a title (in one of the text fields for All in One SEO Plugin input) this will become the title of your post in the format string.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Post Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#posttitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_post_title_format_tip');">
 <?php _e('Post Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_post_title_format" value="<?php echo stripcslashes(get_option('aiosp_post_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_post_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%post_title% - The original title of the post'); echo('</li>');
+echo('<li>'); _e('%category_title% - The (main) category of the post'); echo('</li>');
+echo('<li>'); _e('%category% - Alias for %category_title%'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Page Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#pagetitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_page_title_format_tip');">
 <?php _e('Page Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_page_title_format" value="<?php echo stripcslashes(get_option('aiosp_page_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_page_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%page_title% - The original title of the page'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Category Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorytitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_category_title_format_tip');">
 <?php _e('Category Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_category_title_format" value="<?php echo stripcslashes(get_option('aiosp_category_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_category_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%category_title% - The original title of the category'); echo('</li>');
+echo('<li>'); _e('%category_description% - The description of the category'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Archive Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#archivetitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_archive_title_format_tip');">
 <?php _e('Archive Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_archive_title_format" value="<?php echo stripcslashes(get_option('aiosp_archive_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_archive_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%date% - The original archive title given by wordpress, e.g. “2007″ or “2007 August”'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Tag Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#tagtitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_tag_title_format_tip');">
 <?php _e('Tag Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_tag_title_format" value="<?php echo stripcslashes(get_option('aiosp_tag_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_tag_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%tag% - The name of the tag'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Search Title Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#searchtitleformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_search_title_format_tip');">
 <?php _e('Search Title Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_search_title_format" value="<?php echo stripcslashes(get_option('aiosp_search_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_search_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%search% - What was searched for'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Description Format', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#descriptionformat">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_description_format_tip');">
 <?php _e('Description Format:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input size="59" name="aiosp_description_format" value="<?php echo stripcslashes(get_option('aiosp_description_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_description_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%description% - The original description as determined by the plugin, e.g. the excerpt if one is set or an auto-generated one if that option is set'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
 </td>
 </tr>
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option Categories for META keywords', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#categorymetakeywords">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_404_title_format_tip');">
+<?php _e('404 Title Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input size="59" name="aiosp_404_title_format" value="<?php echo stripcslashes(get_option('aiosp_404_title_format')); ?>"/>
+<div style="text-align:left; display:none" id="aiosp_404_title_format_tip">
+<?php
+_e('The following macros are supported:');
+echo('<ul>');
+echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
+echo('<li>'); _e('%request_url% - The original URL path, like "/url-that-does-not-exist/"'); echo('</li>');
+echo('<li>'); _e('%request_words% - The URL path in human readable form, like "Url That Does Not Exist"'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_use_categories_tip');">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
 <td>
 <input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_use_categories_tip">
+<?php
+_e('Check this if you want your categories for a given post used as the META keywords for this post (in addition to any keywords and tags you specify on the post edit page).');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option noindex for Categories', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforcategories">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_category_noindex_tip');">
 <?php _e('Use noindex for Categories:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input type="checkbox" name="aiosp_category_noindex" <?php if (get_option('aiosp_category_noindex')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_category_noindex_tip">
+<?php
+_e('Check this for excluding category pages from being crawled. Useful for avoiding duplicate content.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option noindex for Archives', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexforarchives">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_archive_noindex_tip');">
 <?php _e('Use noindex for Archives:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input type="checkbox" name="aiosp_archive_noindex" <?php if (get_option('aiosp_archive_noindex')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_archive_noindex_tip">
+<?php
+_e('Check this for excluding archive pages from being crawled. Useful for avoiding duplicate content.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Option noindex for Tag Archives', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#usenoindexfortagarchives">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_tags_noindex_tip');">
 <?php _e('Use noindex for Tag Archives:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input type="checkbox" name="aiosp_tags_noindex" <?php if (get_option('aiosp_tags_noindex')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_tags_noindex_tip">
+<?php
+_e('Check this for excluding tag pages from being crawled. Useful for avoiding duplicate content.');
+ ?>
+</div>
 </td>
 </tr>
+
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
-<a target="_blank" title="<?php _e('Help for Autogenerate Descriptions', 'all_in_one_seo_pack')?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/#autogeneratedescriptions">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_generate_descriptions_tip');">
 <?php _e('Autogenerate Descriptions:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <input type="checkbox" name="aiosp_generate_descriptions" <?php if (get_option('aiosp_generate_descriptions')) echo "checked=\"1\""; ?>/>
+<div style="text-align:left; display:none" id="aiosp_generate_descriptions_tip">
+<?php
+_e('Check this and your META descriptions will get autogenerated if there’s no excerpt.');
+ ?>
+</div>
 </td>
 </tr>
+
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -909,6 +1097,7 @@ add_option("aiosp_archive_title_format", '%date% | %blog_title%', 'All in One SE
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plugin Tag Title Format', 'yes');
 add_option("aiosp_search_title_format", '%search% | %blog_title%', 'All in One SEO Plugin Search Title Format', 'yes');
 add_option("aiosp_description_format", '%description%', 'All in One SEO Plugin Description Format', 'yes');
+add_option("aiosp_404_title_format", 'Nothing found for %request_words%', 'All in One SEO Plugin 404 Title Format', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

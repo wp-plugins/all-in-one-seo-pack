@@ -6,15 +6,21 @@ Requires at least: 1.5
 Tested up to: 2.3
 Stable tag: trunk
 
-Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
+Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==
 
-**Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**) by
+**Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
-* Automatically optimizing your **titles** for search engines and letting you tweak them further
-* Generating **META tags** automatically *and* letting you define them
-* Avoiding indexing of duplicate content.
+Some features:
+
+* Automatically optimizes your **titles** for search engines
+* Generates **META tags automatically**
+* Avoids the typical duplicate content found on Wordpress blogs
+* For Wordpress 2.3 you don't even have to look at the options, it works out-of-the-box. Just install.
+* You can override any title and set any META description and any META keywords you want.
+* You can fine-tune everything
+* Backward-Compatibility with many other plugins, like Auto Meta, Ultimate Tag Warrior and others.
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 

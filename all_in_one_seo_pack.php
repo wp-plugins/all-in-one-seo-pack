@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.5.4
+Version: 1.3.5.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.5.4";
+ 	var $version = "1.3.5.5";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -763,7 +763,7 @@ href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><
 <textarea cols="60" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
 <div style="text-align:left; display:none" id="aiosp_home_title_tip">
 <?php
-_e('As the name implies, this will be the title of your homepage. This is independent of any other option. If not set, the default blog title will get used.');
+_e('As the name implies, this will be the title of your homepage. This is independent of any other option. If not set, the default blog title will get used.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -779,7 +779,7 @@ _e('As the name implies, this will be the title of your homepage. This is indepe
 <textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
 <div style="text-align:left; display:none" id="aiosp_home_description_tip">
 <?php
-_e('The META description for your homepage. Independent of any other options, the default is no META description at all if this is not set.');
+_e('The META description for your homepage. Independent of any other options, the default is no META description at all if this is not set.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -795,7 +795,7 @@ _e('The META description for your homepage. Independent of any other options, th
 <textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
 <div style="text-align:left; display:none" id="aiosp_home_keywords_tip">
 <?php
-_e('A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don’t stuff everything in here.');
+_e('A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don’t stuff everything in here.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -811,7 +811,7 @@ _e('A comma separated list of your most important keywords for your site that wi
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_rewrite_titles_tip">
 <?php
-_e('Note that this is all about the title tag. This is what you see in your browser’s window title bar. This is NOT visible on a page, only in the window title bar and of course in the source. If set, all page, post, category, search and archive page titles get rewritten. You can specify the format for most of them. For example: The default templates puts the title tag of posts like this: “Blog Archive >> Blog Name >> Post Title” (maybe I’ve overdone slightly). This is far from optimal. With the default post title format, Rewrite Title rewrites this to “Post Title | Blog Name”. If you have manually defined a title (in one of the text fields for All in One SEO Plugin input) this will become the title of your post in the format string.');
+_e('Note that this is all about the title tag. This is what you see in your browser’s window title bar. This is NOT visible on a page, only in the window title bar and of course in the source. If set, all page, post, category, search and archive page titles get rewritten. You can specify the format for most of them. For example: The default templates puts the title tag of posts like this: “Blog Archive >> Blog Name >> Post Title” (maybe I’ve overdone slightly). This is far from optimal. With the default post title format, Rewrite Title rewrites this to “Post Title | Blog Name”. If you have manually defined a title (in one of the text fields for All in One SEO Plugin input) this will become the title of your post in the format string.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -827,13 +827,13 @@ _e('Note that this is all about the title tag. This is what you see in your brow
 <input size="59" name="aiosp_post_title_format" value="<?php echo stripcslashes(get_option('aiosp_post_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_post_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%post_title% - The original title of the post'); echo('</li>');
-echo('<li>'); _e('%category_title% - The (main) category of the post'); echo('</li>');
-echo('<li>'); _e('%category% - Alias for %category_title%'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%post_title% - The original title of the post', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%category_title% - The (main) category of the post', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%category% - Alias for %category_title%', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -850,11 +850,11 @@ echo('</ul>');
 <input size="59" name="aiosp_page_title_format" value="<?php echo stripcslashes(get_option('aiosp_page_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_page_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%page_title% - The original title of the page'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%page_title% - The original title of the page', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -871,12 +871,12 @@ echo('</ul>');
 <input size="59" name="aiosp_category_title_format" value="<?php echo stripcslashes(get_option('aiosp_category_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_category_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%category_title% - The original title of the category'); echo('</li>');
-echo('<li>'); _e('%category_description% - The description of the category'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%category_title% - The original title of the category', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%category_description% - The description of the category', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -893,11 +893,11 @@ echo('</ul>');
 <input size="59" name="aiosp_archive_title_format" value="<?php echo stripcslashes(get_option('aiosp_archive_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_archive_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%date% - The original archive title given by wordpress, e.g. “2007″ or “2007 August”'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%date% - The original archive title given by wordpress, e.g. “2007″ or “2007 August”', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -914,11 +914,11 @@ echo('</ul>');
 <input size="59" name="aiosp_tag_title_format" value="<?php echo stripcslashes(get_option('aiosp_tag_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_tag_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%tag% - The name of the tag'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%tag% - The name of the tag', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -935,11 +935,11 @@ echo('</ul>');
 <input size="59" name="aiosp_search_title_format" value="<?php echo stripcslashes(get_option('aiosp_search_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_search_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%search% - What was searched for'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%search% - What was searched for', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -956,11 +956,11 @@ echo('</ul>');
 <input size="59" name="aiosp_description_format" value="<?php echo stripcslashes(get_option('aiosp_description_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_description_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%description% - The original description as determined by the plugin, e.g. the excerpt if one is set or an auto-generated one if that option is set'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%description% - The original description as determined by the plugin, e.g. the excerpt if one is set or an auto-generated one if that option is set', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -977,12 +977,12 @@ echo('</ul>');
 <input size="59" name="aiosp_404_title_format" value="<?php echo stripcslashes(get_option('aiosp_404_title_format')); ?>"/>
 <div style="text-align:left; display:none" id="aiosp_404_title_format_tip">
 <?php
-_e('The following macros are supported:');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
-echo('<li>'); _e('%blog_title% - Your blog title'); echo('</li>');
-echo('<li>'); _e('%blog_description% - Your blog description'); echo('</li>');
-echo('<li>'); _e('%request_url% - The original URL path, like "/url-that-does-not-exist/"'); echo('</li>');
-echo('<li>'); _e('%request_words% - The URL path in human readable form, like "Url That Does Not Exist"'); echo('</li>');
+echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%request_url% - The original URL path, like "/url-that-does-not-exist/"', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%request_words% - The URL path in human readable form, like "Url That Does Not Exist"', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -998,7 +998,7 @@ echo('</ul>');
 <input type="checkbox" name="aiosp_use_categories" <?php if (get_option('aiosp_use_categories')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_use_categories_tip">
 <?php
-_e('Check this if you want your categories for a given post used as the META keywords for this post (in addition to any keywords and tags you specify on the post edit page).');
+_e('Check this if you want your categories for a given post used as the META keywords for this post (in addition to any keywords and tags you specify on the post edit page).', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1014,7 +1014,7 @@ _e('Check this if you want your categories for a given post used as the META key
 <input type="checkbox" name="aiosp_category_noindex" <?php if (get_option('aiosp_category_noindex')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_category_noindex_tip">
 <?php
-_e('Check this for excluding category pages from being crawled. Useful for avoiding duplicate content.');
+_e('Check this for excluding category pages from being crawled. Useful for avoiding duplicate content.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1030,7 +1030,7 @@ _e('Check this for excluding category pages from being crawled. Useful for avoid
 <input type="checkbox" name="aiosp_archive_noindex" <?php if (get_option('aiosp_archive_noindex')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_archive_noindex_tip">
 <?php
-_e('Check this for excluding archive pages from being crawled. Useful for avoiding duplicate content.');
+_e('Check this for excluding archive pages from being crawled. Useful for avoiding duplicate content.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1046,7 +1046,7 @@ _e('Check this for excluding archive pages from being crawled. Useful for avoidi
 <input type="checkbox" name="aiosp_tags_noindex" <?php if (get_option('aiosp_tags_noindex')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_tags_noindex_tip">
 <?php
-_e('Check this for excluding tag pages from being crawled. Useful for avoiding duplicate content.');
+_e('Check this for excluding tag pages from being crawled. Useful for avoiding duplicate content.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1062,7 +1062,7 @@ _e('Check this for excluding tag pages from being crawled. Useful for avoiding d
 <input type="checkbox" name="aiosp_generate_descriptions" <?php if (get_option('aiosp_generate_descriptions')) echo "checked=\"1\""; ?>/>
 <div style="text-align:left; display:none" id="aiosp_generate_descriptions_tip">
 <?php
-_e('Check this and your META descriptions will get autogenerated if there’s no excerpt.');
+_e('Check this and your META descriptions will get autogenerated if there’s no excerpt.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>

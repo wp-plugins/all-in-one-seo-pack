@@ -27,7 +27,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-msgid " characters left (most search engines use a maximum of 160 chars for the description)"
+msgid " characters. Most search engines use a maximum of 160 chars for the description."
 msgstr ""
 
 msgid "All in One SEO"

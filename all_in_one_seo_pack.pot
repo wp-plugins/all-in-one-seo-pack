@@ -177,7 +177,7 @@ msgstr ""
 msgid "Use noindex for Archives:"
 msgstr ""
 
-msgid "Check this for excluding archive pages from being crawled. Useful for avoiding duplicate content
+msgid "Check this for excluding archive pages from being crawled. Useful for avoiding duplicate content."
 msgstr ""
 
 msgid "Use noindex for Tag Archives:"

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.6.3
+Version: 1.3.6.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.6.3";
+ 	var $version = "1.3.6.4";
  	
  	/**
  	 * Max numbers of chars in auto-generated description.
@@ -112,7 +112,7 @@ class All_in_One_SEO_Pack {
 		$post = $wp_query->get_queried_object();
 		$meta_string = null;
 		
-		echo "<!-- all in one seo pack $this->version ";
+		echo "\n<!-- all in one seo pack $this->version ";
 		if ($this->ob_start_detected) {
 			echo "ob_start_detected ";
 		}
@@ -126,7 +126,7 @@ class All_in_One_SEO_Pack {
 		}
 		if (is_single() || is_page()) {
             if ($this->is_static_front_page()) {
-				$description = trim(stripslashes(get_option('aiosp_home_description')));
+				$description = trim(stripcslashes(get_option('aiosp_home_description')));
             } else {
             	$description = $this->get_post_description($post);
             }
@@ -134,7 +134,7 @@ class All_in_One_SEO_Pack {
 			if ($this->is_static_posts_page()) {
             	$description = $this->get_post_description(get_post(get_option('page_for_posts')));
 			} else {
-				$description = trim(stripslashes(get_option('aiosp_home_description')));
+				$description = trim(stripcslashes(get_option('aiosp_home_description')));
 			}
 		} else if (is_category()) {
 			$description = category_description();
@@ -191,10 +191,21 @@ class All_in_One_SEO_Pack {
 		if ($meta_string != null) {
 			echo "$meta_string\n";
 		}
+		
+		$page_meta = stripcslashes(get_option('aiosp_page_meta_tags'));
+		$post_meta = stripcslashes(get_option('aiosp_post_meta_tags'));
+		if (is_page() && isset($page_meta)) {
+			echo "$page_meta\n";
+		}
+		
+		if (is_single() && isset($post_meta)) {
+			echo "$post_meta\n";
+		}
+		
 	}
 	
 	function get_post_description($post) {
-	    $description = trim(stripslashes(get_post_meta($post->ID, "description", true)));
+	    $description = trim(stripcslashes(get_post_meta($post->ID, "description", true)));
 		if (!$description) {
 			$description = $this->trim_excerpt_without_filters_full_length($post->post_excerpt);
 			if (!$description && get_option("aiosp_generate_descriptions")) {
@@ -215,7 +226,7 @@ class All_in_One_SEO_Pack {
 		$title_tag_end = "</title>";
 		$len_start = strlen($title_tag_start);
 		$len_end = strlen($title_tag_end);
-		$title = stripslashes(trim($title));
+		$title = stripcslashes(trim($title));
 		$start = strpos($content, "<title>");
 		$end = strpos($content, "</title>");
 		
@@ -288,9 +299,9 @@ class All_in_One_SEO_Pack {
 			$header = $this->replace_title($header, $title);
 		} else if (is_search() && isset($s) && !empty($s)) {
 			if (function_exists('attribute_escape')) {
-				$search = attribute_escape(stripslashes($s));
+				$search = attribute_escape(stripcslashes($s));
 			} else {
-				$search = wp_specialchars(stripslashes($s), true);
+				$search = wp_specialchars(stripcslashes($s), true);
 			}
 			$search = $this->capitalize($search);
             $title_format = get_option('aiosp_search_title_format');
@@ -401,13 +412,13 @@ class All_in_One_SEO_Pack {
 			}
 		}
 		$text = substr($text, 0, $max);
-		return trim(stripslashes($text));
+		return trim(stripcslashes($text));
 	}
 	
 	function trim_excerpt_without_filters_full_length($text) {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
-		return trim(stripslashes($text));
+		return trim(stripcslashes($text));
 	}
 	
 	/**
@@ -425,7 +436,7 @@ class All_in_One_SEO_Pack {
 	                $keywords_a = $keywords_i = null;
 	                $description_a = $description_i = null;
 	                $id = $post->ID;
-		            $keywords_i = stripslashes(get_post_meta($post->ID, "keywords", true));
+		            $keywords_i = stripcslashes(get_post_meta($post->ID, "keywords", true));
 	                $keywords_i = str_replace('"', '', $keywords_i);
 	                if (isset($keywords_i) && !empty($keywords_i)) {
 	                    $keywords[] = $keywords_i;
@@ -449,13 +460,13 @@ class All_in_One_SEO_Pack {
 							$tag = $tag->tag;
 							$tag = str_replace('_',' ', $tag);
 							$tag = str_replace('-',' ',$tag);
-							$tag = stripslashes($tag);
+							$tag = stripcslashes($tag);
 	                		$keywords[] = $tag;
 	                	}
 	                }
 	                
 	                // autometa
-	                $autometa = stripslashes(get_post_meta($post->ID, "autometa", true));
+	                $autometa = stripcslashes(get_post_meta($post->ID, "autometa", true));
 	                if (isset($autometa) && !empty($autometa)) {
 	                	$autometa_array = explode(' ', $autometa);
 	                	foreach ($autometa_array as $e) {
@@ -488,7 +499,7 @@ class All_in_One_SEO_Pack {
 	                $keywords_a = $keywords_i = null;
 	                $description_a = $description_i = null;
 	                $id = $post->ID;
-		            $keywords_i = stripslashes(get_post_meta($post->ID, "keywords", true));
+		            $keywords_i = stripcslashes(get_post_meta($post->ID, "keywords", true));
 	                $keywords_i = str_replace('"', '', $keywords_i);
 	                if (isset($keywords_i) && !empty($keywords_i)) {
 	                    $keywords[] = $keywords_i;
@@ -568,9 +579,9 @@ class All_in_One_SEO_Pack {
 	 */
 	function edit_category_form() {
 	    global $post;
-	    $keywords = stripslashes(get_post_meta($post->ID, 'keywords', true));
-	    $title = stripslashes(get_post_meta($post->ID, 'title', true));
-	    $description = stripslashes(get_post_meta($post->ID, 'description', true));
+	    $keywords = stripcslashes(get_post_meta($post->ID, 'keywords', true));
+	    $title = stripcslashes(get_post_meta($post->ID, 'title', true));
+	    $description = stripcslashes(get_post_meta($post->ID, 'description', true));
 		?>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table class="editform" width="100%" cellspacing="2" cellpadding="5">
@@ -597,9 +608,9 @@ class All_in_One_SEO_Pack {
 	    if (is_object($post_id)) {
 	    	$post_id = $post_id->ID;
 	    }
-	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post_id, 'keywords', true)));
-	    $title = htmlspecialchars(stripslashes(get_post_meta($post_id, 'title', true)));
-	    $description = htmlspecialchars(stripslashes(get_post_meta($post_id, 'description', true)));
+	    $keywords = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'keywords', true)));
+	    $title = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'title', true)));
+	    $description = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'description', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -638,9 +649,9 @@ class All_in_One_SEO_Pack {
 
 	function add_meta_tags_page_textinput() {
 	    global $post;
-	    $keywords = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'keywords', true)));
-	    $description = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'description', true)));
-	    $title = htmlspecialchars(stripslashes(get_post_meta($post->ID, 'title', true)));
+	    $keywords = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'keywords', true)));
+	    $description = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'description', true)));
+	    $title = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'title', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -713,6 +724,8 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
 			update_option('aiosp_generate_descriptions', $_POST['aiosp_generate_descriptions']);
 			update_option('aiosp_debug_info', $_POST['aiosp_debug_info']);
+			update_option('aiosp_post_meta_tags', $_POST['aiosp_post_meta_tags']);
+			update_option('aiosp_page_meta_tags', $_POST['aiosp_page_meta_tags']);
 			if (function_exists('wp_cache_flush')) {
 				wp_cache_flush();
 			}
@@ -743,9 +756,7 @@ href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><p
 //-->
 </script>
 <p>
-<a target="_blank" title="<?php _e('All in One SEO Plugin Help', 'all_in_one_seo_pack') ?>" href="http://wp.uberdose.com/2007/05/11/all-in-one-seo-pack-help/">
-<?php _e('Help', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
+<a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
 href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
 href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
@@ -762,7 +773,7 @@ href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><
 </a>
 </td>
 <td>
-<textarea cols="60" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
+<textarea cols="57" rows="2" name="aiosp_home_title"><?php echo stripcslashes(get_option('aiosp_home_title')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_title_tip">
 <?php
 _e('As the name implies, this will be the title of your homepage. This is independent of any other option. If not set, the default blog title will get used.', 'all_in_one_seo_pack');
@@ -778,7 +789,7 @@ _e('As the name implies, this will be the title of your homepage. This is indepe
 </a>
 </td>
 <td>
-<textarea cols="60" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
+<textarea cols="57" rows="2" name="aiosp_home_description"><?php echo stripcslashes(get_option('aiosp_home_description')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_description_tip">
 <?php
 _e('The META description for your homepage. Independent of any other options, the default is no META description at all if this is not set.', 'all_in_one_seo_pack');
@@ -794,7 +805,7 @@ _e('The META description for your homepage. Independent of any other options, th
 </a>
 </td>
 <td>
-<textarea cols="60" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
+<textarea cols="57" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_keywords_tip">
 <?php
 _e('A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don’t stuff everything in here.', 'all_in_one_seo_pack');
@@ -1070,6 +1081,38 @@ _e('Check this and your META descriptions will get autogenerated if there’s no
 </td>
 </tr>
 
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_post_meta_tags_tip');">
+<?php _e('Additional Post Meta Tags:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_post_meta_tags"><?php echo stripcslashes(get_option('aiosp_post_meta_tags')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_post_meta_tags_tip">
+<?php
+_e('What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_page_meta_tags_tip');">
+<?php _e('Additional Page Meta Tags:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_page_meta_tags"><?php echo stripcslashes(get_option('aiosp_page_meta_tags')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_page_meta_tags_tip">
+<?php
+_e('What you enter here will be copied verbatim to your header on pages. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -1100,6 +1143,8 @@ add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plu
 add_option("aiosp_search_title_format", '%search% | %blog_title%', 'All in One SEO Plugin Search Title Format', 'yes');
 add_option("aiosp_description_format", '%description%', 'All in One SEO Plugin Description Format', 'yes');
 add_option("aiosp_404_title_format", 'Nothing found for %request_words%', 'All in One SEO Plugin 404 Title Format', 'yes');
+add_option("aiosp_post_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
+add_option("aiosp_page_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

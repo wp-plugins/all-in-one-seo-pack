@@ -189,6 +189,12 @@ msgstr ""
 msgid "Update Options"
 msgstr ""
 
+msgid "Additional Post Meta Tags:"
+msgstr ""
+
+msgid "Additional Page Meta Tags:"
+msgstr ""
+
 msgid "What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional meta tags you want here, even references to stylesheets."
 msgstr ""
 

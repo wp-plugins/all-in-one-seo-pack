@@ -33,7 +33,7 @@ class All_in_One_SEO_Pack {
  	/**
  	 * Max numbers of chars in auto-generated description.
  	 */
- 	var $maximum_description_length = 160;
+ 	var $maximum_description_length = 161;
  	
  	/**
  	 * Minimum number of chars an excerpt should be so that it can be used

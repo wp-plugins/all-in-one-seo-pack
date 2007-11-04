@@ -12,6 +12,8 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 **Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
+**[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
+
 Some features:
 
 * Automatically optimizes your **titles** for search engines
@@ -22,10 +24,7 @@ Some features:
 * You can fine-tune everything
 * Backward-Compatibility with many other plugins, like Auto Meta, Ultimate Tag Warrior and others.
 
-**[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
-
 * [Support](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)
-* [Wordpress SEO Pack Home](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
 * [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/)
 * [FAQ](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)
 

@@ -47,6 +47,8 @@ class All_in_One_SEO_Pack {
  	
  	var $title_end = -1;
  	
+ 	var $orig_title = '';
+ 	
 	function template_redirect() {
 		if (is_feed()) {
 			return;

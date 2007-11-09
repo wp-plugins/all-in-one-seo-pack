@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.1
+Version: 1.3.7.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.1";
+ 	var $version = "1.3.7.2";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -259,20 +259,20 @@ class All_in_One_SEO_Pack {
 
 		if (is_home()) {
 			if ($this->is_static_posts_page()) {
-				$title = get_post_meta(get_option('page_for_posts'), "title", true);
+				$title = $this->internationalize(get_post_meta(get_option('page_for_posts'), "title", true));
 				if (!$title) {
 					$title = $this->internationalize(wp_title('', false));
 				}
 				$this->pure_title = $title;
 	            $title_format = get_option('aiosp_page_title_format');
-	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
+	            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
 	            $new_title = str_replace('%page_title%', $title, $new_title);
-	            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+	            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
 			} else {
 				if ($this->internationalize(get_option('aiosp_home_title'))) {
-					$header = $this->replace_title($header, get_option('aiosp_home_title'));
+					$header = $this->replace_title($header, $this->internationalize(get_option('aiosp_home_title')));
 				}
 				$this->pure_title = get_option('aiosp_home_title');
 			}
@@ -291,8 +291,8 @@ class All_in_One_SEO_Pack {
 			}
 			$this->pure_title = $title;
             $title_format = get_option('aiosp_post_title_format');
-            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
             $new_title = str_replace('%post_title%', $title, $new_title);
             $new_title = str_replace('%category%', $category, $new_title);
             $new_title = str_replace('%category_title%', $category, $new_title);
@@ -308,8 +308,8 @@ class All_in_One_SEO_Pack {
 			$search = $this->capitalize($search);
 			$this->pure_title = $search;
             $title_format = get_option('aiosp_search_title_format');
-            $title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
+            $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+            $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
             $title = str_replace('%search%', $search, $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_category() && !is_feed()) {
@@ -319,24 +319,24 @@ class All_in_One_SEO_Pack {
             $title_format = get_option('aiosp_category_title_format');
             $title = str_replace('%category_title%', $category_name, $title_format);
             $title = str_replace('%category_description%', $category_description, $title);
-            $title = str_replace('%blog_title%', get_bloginfo('name'), $title);
-            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
+            $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title);
+            $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
 			if ($this->is_static_front_page()) {
 				if ($this->internationalize(get_option('aiosp_home_title'))) {
-					$this->pure_title = get_option('aiosp_home_title');
+					$this->pure_title = $this->internationalize(get_option('aiosp_home_title'));
 					$header = $this->replace_title($header, get_option('aiosp_home_title'));
 				}
 			} else {
-				$title = get_post_meta($post->ID, "title", true);
+				$title = $this->internationalize(get_post_meta($post->ID, "title", true));
 				if (!$title) {
 					$title = $this->internationalize(wp_title('', false));
 				}
 				$this->pure_title = $title;
 	            $title_format = get_option('aiosp_page_title_format');
-	            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-	            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+	            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+	            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
 	            $new_title = str_replace('%page_title%', $title, $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
@@ -355,8 +355,8 @@ class All_in_One_SEO_Pack {
 				$this->pure_title = $tag;
 	            $tag = $this->capitalize($tag);
 	            $title_format = get_option('aiosp_tag_title_format');
-	            $title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-	            $title = str_replace('%blog_description%', get_bloginfo('description'), $title);
+	            $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+	            $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
 	            $title = str_replace('%tag%', $tag, $title);
 				$header = $this->replace_title($header, $title);
 			}
@@ -364,15 +364,15 @@ class All_in_One_SEO_Pack {
 			$date = $this->internationalize(wp_title('', false));
 			$this->pure_title = $date;
             $title_format = get_option('aiosp_archive_title_format');
-            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
             $new_title = str_replace('%date%', $date, $new_title);
 			$title = trim($new_title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_404()) {
             $title_format = get_option('aiosp_404_title_format');
-            $new_title = str_replace('%blog_title%', get_bloginfo('name'), $title_format);
-            $new_title = str_replace('%blog_description%', get_bloginfo('description'), $new_title);
+            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
             $new_title = str_replace('%request_url%', $_SERVER['REQUEST_URI'], $new_title);
             $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
 			$this->pure_title = $new_title;
@@ -445,7 +445,7 @@ class All_in_One_SEO_Pack {
 	                $keywords_a = $keywords_i = null;
 	                $description_a = $description_i = null;
 	                $id = $post->ID;
-		            $keywords_i = stripcslashes(get_post_meta($post->ID, "keywords", true));
+		            $keywords_i = stripcslashes($this->internationalize(get_post_meta($post->ID, "keywords", true)));
 	                $keywords_i = str_replace('"', '', $keywords_i);
 	                if (isset($keywords_i) && !empty($keywords_i)) {
 	                    $keywords[] = $keywords_i;

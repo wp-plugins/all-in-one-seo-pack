@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.3
+Version: 1.3.7.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.3";
+ 	var $version = "1.3.7.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -156,7 +156,7 @@ class All_in_One_SEO_Pack {
             $description = str_replace('%description%', $description, $description_format);
             $description = str_replace('%blog_title%', get_bloginfo('name'), $description);
             $description = str_replace('%blog_description%', get_bloginfo('description'), $description);
-            $description = str_replace('%title%', $this->get_original_title(), $description);
+            $description = str_replace('%wp_title%', $this->get_original_title(), $description);
 			
 			$meta_string .= sprintf("<meta name=\"description\" content=\"%s\"/>", $description);
 		}
@@ -253,26 +253,13 @@ class All_in_One_SEO_Pack {
 		
 		// the_search_query() is not suitable, it cannot just return
 		global $s;
-
+		
 		$title = null;
-
+		
 		if (is_home()) {
-			if ($this->is_static_posts_page()) {
-				$title = $this->internationalize(get_post_meta(get_option('page_for_posts'), "title", true));
-				if (!$title) {
-					$title = $this->internationalize(wp_title('', false));
-				}
-			} else {
-				$title = $this->internationalize(get_option('aiosp_home_title'));
-			}
+			$title = $this->internationalize(wp_title('', false));
 		} else if (is_single()) {
-			$title = $this->internationalize(get_post_meta($post->ID, "title", true));
-			if (!$title) {
-				$title = $this->internationalize(get_post_meta($post->ID, "title_tag", true));
-				if (!$title) {
-					$title = $this->internationalize(wp_title('', false));
-				}
-			}
+			$title = $this->internationalize(wp_title('', false));
 		} else if (is_search() && isset($s) && !empty($s)) {
 			if (function_exists('attribute_escape')) {
 				$search = attribute_escape(stripcslashes($s));
@@ -286,22 +273,13 @@ class All_in_One_SEO_Pack {
 			$category_name = ucwords($this->internationalize(single_cat_title('', false)));
 			$title = $category_name;
 		} else if (is_page()) {
-			if ($this->is_static_front_page()) {
-				if ($this->internationalize(get_option('aiosp_home_title'))) {
-					$title = $this->internationalize(get_option('aiosp_home_title'));
-				}
-			} else {
-				$title = $this->internationalize(get_post_meta($post->ID, "title", true));
-				if (!$title) {
-					$title = $this->internationalize(wp_title('', false));
-				}
-			}
+			$title = $this->internationalize(wp_title('', false));
 		} else if (function_exists('is_tag') && is_tag()) {
 			global $utw;
 			if ($utw) {
 				$tags = $utw->GetCurrentTagSet();
 				$tag = $tags[0]->tag;
-	            $tag = str_replace('-', ' ', $tag);
+		        $tag = str_replace('-', ' ', $tag);
 			} else {
 				// wordpress > 2.3
 				$tag = $this->internationalize(wp_title('', false));
@@ -310,21 +288,20 @@ class All_in_One_SEO_Pack {
 				$title = $tag;
 			}
 		} else if (is_archive()) {
-			$date = $this->internationalize(wp_title('', false));
-			$title = $date;
+			$title = $this->internationalize(wp_title('', false));
 		} else if (is_404()) {
-            $title_format = get_option('aiosp_404_title_format');
-            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
-            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
-            $new_title = str_replace('%request_url%', $_SERVER['REQUEST_URI'], $new_title);
-            $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
-			$title = $new_title;
+		    $title_format = get_option('aiosp_404_title_format');
+		    $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+		    $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
+		    $new_title = str_replace('%request_url%', $_SERVER['REQUEST_URI'], $new_title);
+		    $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
+				$title = $new_title;
+			}
+			
+			return trim($title);
 		}
-		
-		return $title;
-	}
 	
-	function rewrite_title($header) {
+		function rewrite_title($header) {
 		global $wp_query;
 		if (!$wp_query) {
 			$header .= "<!-- no wp_query found! -->\n";
@@ -1056,7 +1033,7 @@ echo('<ul>');
 echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%description% - The original description as determined by the plugin, e.g. the excerpt if one is set or an auto-generated one if that option is set', 'all_in_one_seo_pack'); echo('</li>');
-echo('<li>'); _e('%title% - The original wordpress title, e.g. post_title for posts', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%wp_title% - The original wordpress title, e.g. post_title for posts', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>

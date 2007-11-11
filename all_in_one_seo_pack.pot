@@ -201,6 +201,6 @@ msgstr ""
 msgid "What you enter here will be copied verbatim to your header on pages. You can enter whatever additional meta tags you want here, even references to stylesheets."
 msgstr ""
 
-msgid "%title% - The original wordpress title, e.g. post_title for posts"
+msgid "%wp_title% - The original wordpress title, e.g. post_title for posts"
 msgstr ""
 

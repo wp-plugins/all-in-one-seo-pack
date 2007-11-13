@@ -204,3 +204,14 @@ msgstr ""
 msgid "%wp_title% - The original wordpress title, e.g. post_title for posts"
 msgstr ""
 
+msgid "Upgraded to newest version. Please revisit the options page to make sure you see the newest version."
+msgstr ""
+
+msgid "Upgrade failed."
+msgstr ""
+
+msgid "(Remember: Backup early, backup often!)"
+msgstr ""
+
+msgid "Please make sure that %s is writable."
+msgstr ""

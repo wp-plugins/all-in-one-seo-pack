@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.4
+Version: 1.3.7.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.4";
+ 	var $version = "1.3.7.5";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -47,6 +47,12 @@ class All_in_One_SEO_Pack {
  	/** The title before rewriting */
  	var $orig_title = '';
  	
+ 	/** Temp filename for the latest version. */
+ 	var $upgrade_filename = 'temp.zip';
+ 	
+ 	/** Where to extract the downloaded newest version. */
+ 	var $upgrade_folder;
+ 	
 	function template_redirect() {
 		if (is_feed()) {
 			return;
@@ -62,9 +68,12 @@ class All_in_One_SEO_Pack {
 	}
 
 	function init() {
-		if(function_exists('load_plugin_textdomain')) {
+		if (function_exists('load_plugin_textdomain')) {
 			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
 		}
+		
+		$this->upgrade_filename = dirname(__FILE__) . '/' . $this->upgrade_filename;
+		$this->upgrade_folder = dirname(__FILE__);
 	}
 
 	function is_static_front_page() {
@@ -575,6 +584,72 @@ class All_in_One_SEO_Pack {
 		return implode(',', $keywords_ar);
 	}
 	
+	function get_url($filename)	{
+		if (function_exists('file_get_contents')) {
+			$file = @file_get_contents($filename);
+		} else {
+	        $curl = curl_init($filename);
+	        curl_setopt($curl, CURLOPT_HEADER, 0);
+	        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	        $file = curl_exec($curl);
+	    }
+	    return $file;
+	}
+	
+	function download_newest_version() {
+		$success = true;
+	    $file = $this->get_url("http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip");
+	    $fh = fopen($this->upgrade_filename, 'w');
+	    if (!fwrite($fh, $file)) {
+	    	$success = false;
+	    }
+	    fclose($fh);
+	    return $success;
+	}
+
+	function install_newest_version() {
+		$success = $this->download_newest_version();
+	    if ($success) {
+		    $success = $this->extract_plugin();
+		    unlink($this->upgrade_filename);
+	    }
+	    return $success;
+	}
+
+	function extract_plugin() {
+	    if (!class_exists('PclZip')) {
+	        require_once ('pclzip.lib.php');
+	    }
+	    $archive = new PclZip($this->upgrade_filename);
+	    $files = $archive->extract(PCLZIP_OPT_STOP_ON_ERROR, PCLZIP_OPT_REPLACE_NEWER, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_OPT_PATH, $this->upgrade_folder);
+	    if (is_array($files)) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+	}
+	
+	function is_directory_writable($directory) {
+		$filename = $directory . '/' . 'tmp_file_' . time();
+		$fh = @fopen($filename, 'w');
+		if (!$fh) {
+			return false;
+		}
+		
+		$written = fwrite($fh, "test");
+		fclose($fh);
+		unlink($filename);
+		if ($written) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function is_upgrade_directory_writable() {
+		return $this->is_directory_writable($this->upgrade_folder);
+	}
+
 	function post_meta_tags($id) {
 	    $awmp_edit = $_POST["aiosp_edit"];
 	    if (isset($awmp_edit) && !empty($awmp_edit)) {
@@ -788,6 +863,12 @@ class All_in_One_SEO_Pack {
 			if (function_exists('wp_cache_flush')) {
 				wp_cache_flush();
 			}
+		} elseif ($_POST['aiosp_upgrade']) {
+			$message = __("Upgraded to newest version. Please revisit the options page to make sure you see the newest version.", 'all_in_one_seo_pack');
+			$success = $this->install_newest_version();
+			if (!$success) {
+				$message = __("Upgrade failed.", 'all_in_one_seo_pack');
+			}
 		}
 
 ?>
@@ -798,11 +879,33 @@ class All_in_One_SEO_Pack {
 <div class="wrap">
 <h2><?php _e('All in One SEO Plugin Options', 'all_in_one_seo_pack'); ?></h2>
 <p>
-<?php _e("This is version ", 'all_in_one_seo_pack') ?><?php _e("$this->version. ", 'all_in_one_seo_pack') ?>
-<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
-href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
+<?php _e("This is version ", 'all_in_one_seo_pack') ?><?php _e("$this->version ", 'all_in_one_seo_pack') ?>
+&nbsp;<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
+href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><?php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
 </a>
+| <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
+href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
+href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
+href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
 </p>
+<p>
+<?php
+$canwrite = $this->is_upgrade_directory_writable();
+//$canwrite = false;
+?>
+<form name="dofollow" action="" method="post">
+<input type="submit" <?php if (!$canwrite) echo(' disabled="disabled" ');?> name="aiosp_upgrade" value="<?php _e('One Click Upgrade', 'all_in_one_seo_pack')?> &raquo;" />
+<strong><?php _e("(Remember: Backup early, backup often!)") ?></strong>
+</form>
+<p></p>
+
+<?php if (!$canwrite) {
+	echo("<p><strong>"); echo(sprintf(__("Please make sure that %s is writable."), $this->upgrade_folder)); echo("</p></strong>");
+} ?>
+</p>
+
 <script type="text/javascript">
 <!--
     function toggleVisibility(id) {
@@ -814,14 +917,6 @@ href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><p
     }
 //-->
 </script>
-<p>
-<a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
-</p>
 <form name="dofollow" action="" method="post">
 <table>
 

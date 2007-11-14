@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.5
+Version: 1.3.7.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.5";
+ 	var $version = "1.3.7.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -897,12 +897,12 @@ $canwrite = $this->is_upgrade_directory_writable();
 ?>
 <form name="dofollow" action="" method="post">
 <input type="submit" <?php if (!$canwrite) echo(' disabled="disabled" ');?> name="aiosp_upgrade" value="<?php _e('One Click Upgrade', 'all_in_one_seo_pack')?> &raquo;" />
-<strong><?php _e("(Remember: Backup early, backup often!)") ?></strong>
+<strong><?php _e("(Remember: Backup early, backup often!), 'all_in_one_seo_pack'") ?></strong>
 </form>
 <p></p>
 
 <?php if (!$canwrite) {
-	echo("<p><strong>"); echo(sprintf(__("Please make sure that %s is writable."), $this->upgrade_folder)); echo("</p></strong>");
+	echo("<p><strong>"); echo(sprintf(__("Please make sure that %s is writable.", 'all_in_one_seo_pack'), $this->upgrade_folder)); echo("</p></strong>");
 } ?>
 </p>
 

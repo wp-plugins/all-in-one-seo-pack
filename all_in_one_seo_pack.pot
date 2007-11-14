@@ -1,5 +1,3 @@
-msgid ""
-msgstr ""
 "Project-Id-Version: all in one seo pack\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2007-10-26 15:54+0800\n"
@@ -215,3 +213,25 @@ msgstr ""
 
 msgid "Please make sure that %s is writable."
 msgstr ""
+
+msgid "One Click Upgrade"
+msgstr ""
+
+msgid "Should I upgrade?"
+msgstr ""
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "All in One SEO Plugin Feedback"
+msgstr ""
+
+msgid "All in One SEO Plugin Translations"
+msgstr ""
+
+msgid "All in One SEO Plugin Release History"
+msgstr ""
+

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.6
+Version: 1.3.7.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.6";
+ 	var $version = "1.3.7.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -126,6 +126,7 @@ class All_in_One_SEO_Pack {
 			$keywords = $this->get_all_keywords();
 		}
 		if (is_single() || is_page()) {
+			$aiosp_meta = $this->get_additional_meta($post);
             if ($this->is_static_front_page()) {
 				$description = trim(stripcslashes($this->internationalize(get_option('aiosp_home_description'))));
             } else {
@@ -190,18 +191,31 @@ class All_in_One_SEO_Pack {
 			$meta_string .= '<meta name="robots" content="noindex,follow" />';
 		}
 		
-		if ($meta_string != null) {
-			echo "$meta_string\n";
-		}
-		
 		$page_meta = stripcslashes(get_option('aiosp_page_meta_tags'));
 		$post_meta = stripcslashes(get_option('aiosp_post_meta_tags'));
-		if (is_page() && isset($page_meta)) {
-			echo "$page_meta\n";
+		if (is_page() && isset($page_meta) && !empty($page_meta)) {
+			if (isset($meta_string)) {
+				$meta_string .= "\n";
+			}
+			echo "\n$page_meta";
 		}
 		
-		if (is_single() && isset($post_meta)) {
-			echo "$post_meta\n";
+		if (is_single() && isset($post_meta) && !empty($post_meta)) {
+			if (isset($meta_string)) {
+				$meta_string .= "\n";
+			}
+			echo $meta_string .= "$post_meta";
+		}
+		
+		if (isset($aiosp_meta) && isset($aiosp_meta) && !empty($aiosp_meta)) {
+			if (isset($meta_string)) {
+				$meta_string .= "\n";
+			}
+			$meta_string .= "$aiosp_meta";
+		}
+		
+		if ($meta_string != null) {
+			echo "$meta_string\n";
 		}
 		
 	}
@@ -215,6 +229,11 @@ class All_in_One_SEO_Pack {
 			}				
 		}
 		return $description;
+	}
+	
+	function get_additional_meta($post) {
+	    $aiosp_meta = trim(stripcslashes(get_post_meta($post->ID, "aiosp_meta", true)));
+		return $aiosp_meta;
 	}
 	
 	function replace_title($content, $title) {
@@ -656,10 +675,12 @@ class All_in_One_SEO_Pack {
 		    $keywords = $_POST["aiosp_keywords"];
 		    $description = $_POST["aiosp_description"];
 		    $title = $_POST["aiosp_title"];
+		    $aiosp_meta = $_POST["aiosp_meta"];
 
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
 		    delete_post_meta($id, 'title');
+		    delete_post_meta($id, 'aiosp_meta');
 
 		    if (isset($keywords) && !empty($keywords)) {
 			    add_post_meta($id, 'keywords', $keywords);
@@ -669,6 +690,9 @@ class All_in_One_SEO_Pack {
 		    }
 		    if (isset($title) && !empty($title)) {
 			    add_post_meta($id, 'title', $title);
+		    }
+		    if (isset($aiosp_meta) && !empty($aiosp_meta)) {
+			    add_post_meta($id, 'aiosp_meta', $aiosp_meta);
 		    }
 	    }
 	}
@@ -745,6 +769,7 @@ class All_in_One_SEO_Pack {
 	    $keywords = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'keywords', true)));
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'title', true)));
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'description', true)));
+	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -757,7 +782,7 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a>
+		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a>
 		</th>
 		</tr>
 		<tr>
@@ -777,15 +802,24 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
+		<tr>
+		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
+		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
+		</tr>
 		</table>
 		<?php
 	}
 
 	function add_meta_tags_page_textinput() {
 	    global $post;
+	    $post_id = $post;
+	    if (is_object($post_id)) {
+	    	$post_id = $post_id->ID;
+	    }
 	    $keywords = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'keywords', true)));
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'description', true)));
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'title', true)));
+	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -798,7 +832,7 @@ class All_in_One_SEO_Pack {
 		<table style="margin-bottom:40px; margin-top:30px;">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack')?></a>
+		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack')?></a>
 		</th>
 		</tr>
 		<tr>
@@ -816,6 +850,10 @@ class All_in_One_SEO_Pack {
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
+		</tr>
+		<tr>
+		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
+		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
 		</tr>
 		</table>
 		<?php
@@ -897,7 +935,7 @@ $canwrite = $this->is_upgrade_directory_writable();
 ?>
 <form name="dofollow" action="" method="post">
 <input type="submit" <?php if (!$canwrite) echo(' disabled="disabled" ');?> name="aiosp_upgrade" value="<?php _e('One Click Upgrade', 'all_in_one_seo_pack')?> &raquo;" />
-<strong><?php _e("(Remember: Backup early, backup often!), 'all_in_one_seo_pack'") ?></strong>
+<strong><?php _e("(Remember: Backup early, backup often!)", 'all_in_one_seo_pack') ?></strong>
 </form>
 <p></p>
 

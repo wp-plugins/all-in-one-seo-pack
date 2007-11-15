@@ -205,7 +205,7 @@ msgstr ""
 msgid "Upgraded to newest version. Please revisit the options page to make sure you see the newest version."
 msgstr ""
 
-msgid "Upgrade failed."
+msgid "Upgrade failed"
 msgstr ""
 
 msgid "(Remember: Backup early, backup often!)"

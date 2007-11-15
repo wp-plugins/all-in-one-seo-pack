@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.7
+Version: 1.3.7.8
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.7";
+ 	var $version = "1.3.7.8";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -52,6 +52,9 @@ class All_in_One_SEO_Pack {
  	
  	/** Where to extract the downloaded newest version. */
  	var $upgrade_folder;
+ 	
+ 	/** Any error in upgrading. */
+ 	var $upgrade_error;
  	
 	function template_redirect() {
 		if (is_feed()) {
@@ -630,7 +633,7 @@ class All_in_One_SEO_Pack {
 		$success = $this->download_newest_version();
 	    if ($success) {
 		    $success = $this->extract_plugin();
-		    unlink($this->upgrade_filename);
+		    //unlink($this->upgrade_filename);
 	    }
 	    return $success;
 	}
@@ -644,6 +647,7 @@ class All_in_One_SEO_Pack {
 	    if (is_array($files)) {
 	    	return true;
 	    } else {
+	    	$this->upgrade_error = $archive->errorInfo();
 	    	return false;
 	    }
 	}
@@ -905,7 +909,12 @@ class All_in_One_SEO_Pack {
 			$message = __("Upgraded to newest version. Please revisit the options page to make sure you see the newest version.", 'all_in_one_seo_pack');
 			$success = $this->install_newest_version();
 			if (!$success) {
-				$message = __("Upgrade failed.", 'all_in_one_seo_pack');
+				$message = __("Upgrade failed", 'all_in_one_seo_pack');
+				if (isset($this->upgrade_error) && !empty($this->upgrade_error)) {
+					$message .= ": " . $this->upgrade_error;
+				} else {
+					$message .= ".";
+				}
 			}
 		}
 

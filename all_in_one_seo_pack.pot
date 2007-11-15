@@ -220,18 +220,3 @@ msgstr ""
 msgid "Should I upgrade?"
 msgstr ""
 
-msgid "FAQ"
-msgstr ""
-
-msgid "Feedback"
-msgstr ""
-
-msgid "All in One SEO Plugin Feedback"
-msgstr ""
-
-msgid "All in One SEO Plugin Translations"
-msgstr ""
-
-msgid "All in One SEO Plugin Release History"
-msgstr ""
-

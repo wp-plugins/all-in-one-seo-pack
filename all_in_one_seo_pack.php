@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.8
+Version: 1.3.7.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.8";
+ 	var $version = "1.3.7.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -210,12 +210,14 @@ class All_in_One_SEO_Pack {
 			echo $meta_string .= "$post_meta";
 		}
 		
+		/*
 		if (isset($aiosp_meta) && isset($aiosp_meta) && !empty($aiosp_meta)) {
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
 			}
 			$meta_string .= "$aiosp_meta";
 		}
+		*/
 		
 		if ($meta_string != null) {
 			echo "$meta_string\n";
@@ -684,7 +686,7 @@ class All_in_One_SEO_Pack {
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
 		    delete_post_meta($id, 'title');
-		    delete_post_meta($id, 'aiosp_meta');
+		    //delete_post_meta($id, 'aiosp_meta');
 
 		    if (isset($keywords) && !empty($keywords)) {
 			    add_post_meta($id, 'keywords', $keywords);
@@ -695,9 +697,11 @@ class All_in_One_SEO_Pack {
 		    if (isset($title) && !empty($title)) {
 			    add_post_meta($id, 'title', $title);
 		    }
+		    /*
 		    if (isset($aiosp_meta) && !empty($aiosp_meta)) {
 			    add_post_meta($id, 'aiosp_meta', $aiosp_meta);
 		    }
+		    */
 	    }
 	}
 
@@ -806,10 +810,12 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
 		</tr>
+		<!--
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
 		</tr>
+		-->
 		</table>
 		<?php
 	}
@@ -855,10 +861,12 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
 		</tr>
+		<!--
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
 		</tr>
+		-->
 		</table>
 		<?php
 	}

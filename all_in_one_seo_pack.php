@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.7.9
+Version: 1.3.8
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.7.9";
+ 	var $version = "1.3.8";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -55,6 +55,9 @@ class All_in_One_SEO_Pack {
  	
  	/** Any error in upgrading. */
  	var $upgrade_error;
+ 	
+ 	/** Which zip to download in order to upgrade .*/
+ 	var $upgrade_url = 'http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip';
  	
 	function template_redirect() {
 		if (is_feed()) {
@@ -608,26 +611,35 @@ class All_in_One_SEO_Pack {
 		return implode(',', $keywords_ar);
 	}
 	
-	function get_url($filename)	{
+	function get_url($url)	{
 		if (function_exists('file_get_contents')) {
-			$file = @file_get_contents($filename);
+			$file = file_get_contents($url);
 		} else {
-	        $curl = curl_init($filename);
+	        $curl = curl_init($url);
 	        curl_setopt($curl, CURLOPT_HEADER, 0);
 	        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	        $file = curl_exec($curl);
+	        curl_close($curl);
 	    }
 	    return $file;
 	}
 	
 	function download_newest_version() {
 		$success = true;
-	    $file = $this->get_url("http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip");
-	    $fh = fopen($this->upgrade_filename, 'w');
-	    if (!fwrite($fh, $file)) {
-	    	$success = false;
+	    $file = $this->get_url($this->upgrade_url);
+	    if (strlen($file) < 100) {
+	    	$this->upgrade_error = "Could not download distribution ($this->upgrade_url): $file";
+			$success = false;
+	    } else if ($file === false) {
+	    	$this->upgrade_error = "Could not download distribution ($this->upgrade_url)";
+			$success = false;
+	    } else {
+		    $fh = fopen($this->upgrade_filename, 'w');
+		    if (!fwrite($fh, $file)) {
+		    	$success = false;
+		    }
+		    fclose($fh);
 	    }
-	    fclose($fh);
 	    return $success;
 	}
 

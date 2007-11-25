@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.8.4
+Version: 1.3.8.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.8.4";
+ 	var $version = "1.3.8.5";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -628,23 +628,25 @@ class All_in_One_SEO_Pack {
 	    return $file;
 	}
 	
-	/* TODO internationalize */
 	function download_newest_version() {
 		$success = true;
-	    $file = $this->get_url($this->upgrade_url);
-	    if (strlen($file) < 100) {
-	    	$this->upgrade_error = "Could not download distribution ($this->upgrade_url): $file";
+	    $file_content = $this->get_url($this->upgrade_url);
+	    if ($file_content === false) {
+	    	$this->upgrade_error = sprintf(__("Could not download distribution (%s)"), $this->upgrade_url);
 			$success = false;
-	    } else if ($file === false) {
-	    	$this->upgrade_error = "Could not download distribution ($this->upgrade_url)";
+	    } else if (strlen($file_content) < 100) {
+	    	$this->upgrade_error = sprintf(__("Could not download distribution (%s): %s"), $this->upgrade_url, $file_content);
 			$success = false;
 	    } else {
 		    $fh = @fopen($this->upgrade_filename, 'w');
+		    $fh = false;
 		    if (!$fh) {
-		    	$this->upgrade_error = "Could not open $this->upgrade_filename for writing.";
+		    	$this->upgrade_error = sprintf(__("Could not open %s for writing"), $this->upgrade_filename);
+		    	$this->upgrade_error .= "<br/>";
+		    	$this->upgrade_error .= sprintf(__("Please make sure %s is writable"), $this->upgrade_folder);
 		    	$success = false;
-		    } else if (!@fwrite($fh, $file)) {
-		    	$this->upgrade_error = "Could not write to $this->upgrade_filename.";
+		    } else if (!@fwrite($fh, $file_content)) {
+		    	$this->upgrade_error = sprintf(__("Could not write to %s"), $this->upgrade_filename);
 		    	$success = false;
 		    }
 		    if ($success) {

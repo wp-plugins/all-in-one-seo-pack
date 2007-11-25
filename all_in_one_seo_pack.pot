@@ -223,3 +223,18 @@ msgstr ""
 msgid "Additional META:"
 msgstr ""
 
+msgid "Could not download distribution (%s)"
+msgstr ""
+
+msgid "Could not download distribution (%s): %s"
+msgstr ""
+
+msgid "Could not open %s for writing"
+msgstr ""
+
+msgid "Please make sure %s is writable"
+msgstr ""
+
+msgid "Could not write to %s"
+msgstr ""
+

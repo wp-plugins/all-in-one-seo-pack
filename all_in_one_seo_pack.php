@@ -639,7 +639,6 @@ class All_in_One_SEO_Pack {
 			$success = false;
 	    } else {
 		    $fh = @fopen($this->upgrade_filename, 'w');
-		    $fh = false;
 		    if (!$fh) {
 		    	$this->upgrade_error = sprintf(__("Could not open %s for writing"), $this->upgrade_filename);
 		    	$this->upgrade_error .= "<br/>";

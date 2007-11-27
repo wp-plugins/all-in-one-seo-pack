@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.8.6
+Version: 1.3.8.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.8.6";
+ 	var $version = "1.3.8.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -65,8 +65,18 @@ class All_in_One_SEO_Pack {
 	}
 	
 	function template_redirect() {
+		global $wp_query;
+		$post = $wp_query->get_queried_object();
+
 		if (is_feed()) {
 			return;
+		}
+
+		if (is_single() || is_page()) {
+		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', false)));
+		    if ($aiosp_disable) {
+		    	return;
+		    }
 		}
 
 		if (get_option('aiosp_rewrite_titles')) {
@@ -100,6 +110,18 @@ class All_in_One_SEO_Pack {
 		if (is_feed()) {
 			return;
 		}
+
+		global $wp_query;
+		$post = $wp_query->get_queried_object();
+		$meta_string = null;
+		
+		if (is_single() || is_page()) {
+		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', false)));
+		    if ($aiosp_disable) {
+		    	return;
+		    }
+		}
+
 		if (get_option('aiosp_rewrite_titles')) {
 			// make the title rewrite as short as possible
 			if (function_exists('ob_list_handlers')) {
@@ -120,10 +142,6 @@ class All_in_One_SEO_Pack {
 				}
 			}
 		}
-		
-		global $wp_query;
-		$post = $wp_query->get_queried_object();
-		$meta_string = null;
 		
 		echo "\n<!-- all in one seo pack $this->version ";
 		if ($this->ob_start_detected) {
@@ -710,10 +728,12 @@ class All_in_One_SEO_Pack {
 		    $description = $_POST["aiosp_description"];
 		    $title = $_POST["aiosp_title"];
 		    $aiosp_meta = $_POST["aiosp_meta"];
+		    $aiosp_disable = $_POST["aiosp_disable"];
 
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
 		    delete_post_meta($id, 'title');
+		    delete_post_meta($id, 'aiosp_disable');
 		    //delete_post_meta($id, 'aiosp_meta');
 
 		    if (isset($keywords) && !empty($keywords)) {
@@ -724,6 +744,9 @@ class All_in_One_SEO_Pack {
 		    }
 		    if (isset($title) && !empty($title)) {
 			    add_post_meta($id, 'title', $title);
+		    }
+		    if (isset($aiosp_disable) && !empty($aiosp_disable)) {
+			    add_post_meta($id, 'aiosp_disable', $aiosp_disable);
 		    }
 		    /*
 		    if (isset($aiosp_meta) && !empty($aiosp_meta)) {
@@ -806,6 +829,7 @@ class All_in_One_SEO_Pack {
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'title', true)));
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'description', true)));
 	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
+	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', false)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -836,8 +860,18 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></td>
+		<th><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></th>
 		</tr>
+
+		<tr>
+		<th scope="row" style="text-align:right; vertical-align:top;">
+		<?php _e('Disable on this page/post:', 'all_in_one_seo_pack')?>
+		</th>
+		<td>
+		<input type="checkbox" name="aiosp_disable" <?php if ($aiosp_disable) echo "checked=\"1\""; ?>/>
+		</td>
+		</tr>
+
 		<!--
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
@@ -858,6 +892,7 @@ class All_in_One_SEO_Pack {
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'description', true)));
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'title', true)));
 	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
+	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', false)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -889,6 +924,16 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
 		</tr>
+
+		<tr>
+		<th scope="row" style="text-align:right; vertical-align:top;">
+		<?php _e('Disable on this page/post:', 'all_in_one_seo_pack')?>
+		</th>
+		<td>
+		<input type="checkbox" name="aiosp_disable" <?php if ($aiosp_disable) echo "checked=\"1\""; ?>/>
+		</td>
+		</tr>
+
 		<!--
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>

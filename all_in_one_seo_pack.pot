@@ -238,3 +238,6 @@ msgstr ""
 msgid "Could not write to %s"
 msgstr ""
 
+msgid "Disable on this page/post:"
+msgstr ""
+

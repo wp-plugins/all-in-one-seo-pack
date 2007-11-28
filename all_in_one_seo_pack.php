@@ -661,7 +661,7 @@ class All_in_One_SEO_Pack {
 		    $fh = @fopen($this->upgrade_filename, 'w');
 		    if (!$fh) {
 		    	$this->upgrade_error = sprintf(__("Could not open %s for writing"), $this->upgrade_filename);
-		    	$this->upgrade_error .= "<br/>";
+		    	$this->upgrade_error .= "<br />";
 		    	$this->upgrade_error .= sprintf(__("Please make sure %s is writable"), $this->upgrade_folder);
 		    	$success = false;
 		    } else if (!@fwrite($fh, $file_content)) {
@@ -853,7 +853,7 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
 		<td><textarea name="aiosp_description" rows="1" cols="78"
 		onKeyDown="countChars(document.post.aiosp_description,document.post.length1)"
-		onKeyUp="countChars(document.post.aiosp_description,document.post.length1)"><?php echo $description ?></textarea><br/>
+		onKeyUp="countChars(document.post.aiosp_description,document.post.length1)"><?php echo $description ?></textarea><br />
 		<input readonly type="text" name="length1" size="3" maxlength="3" value="<?php echo strlen($description);?>" />
 		<?php _e(' characters. Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack') ?>
 		</td>
@@ -916,7 +916,7 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
 		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"
 		onKeyDown="countChars(document.post.aiosp_description,document.post.length1)"
-		onKeyUp="countChars(document.post.aiosp_description,document.post.length1)"><?php echo $description ?></textarea><br/>
+		onKeyUp="countChars(document.post.aiosp_description,document.post.length1)"><?php echo $description ?></textarea><br />
 		<input readonly type="text" name="length1" size="3" maxlength="3" value="<?php echo strlen($description);?>" />
 		<?php _e(' characters. Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack')?></td>
 		</tr>

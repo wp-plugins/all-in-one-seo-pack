@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.8.8
+Version: 1.3.8.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.8.8";
+ 	var $version = "1.3.8.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -59,7 +59,20 @@ class All_in_One_SEO_Pack {
  	/** Which zip to download in order to upgrade .*/
  	var $upgrade_url = 'http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip';
  	
+ 	/** Filename of log file. */
+ 	var $log_file;
+ 	
+ 	/** Flag whether there should be logging. */
+ 	var $do_log;
+ 	
 	function All_in_One_SEO_Pack() {
+		$this->log_file = dirname(__FILE__) . '/all_in_one_seo_pack.log';
+		if (get_option('aiosp_do_log')) {
+			$this->do_log = true;
+		} else {
+			$this->do_log = false;
+		}
+
 		$this->upgrade_filename = dirname(__FILE__) . '/' . $this->upgrade_filename;
 		$this->upgrade_folder = dirname(__FILE__);
 	}
@@ -648,6 +661,12 @@ class All_in_One_SEO_Pack {
 	    return $file;
 	}
 	
+	function log($message) {
+		if ($this->do_log) {
+			error_log(date('Y-m-d H:i:s') . " " . $message . "\n", 3, $this->log_file);
+		}
+	}
+
 	function download_newest_version() {
 		$success = true;
 	    $file_content = $this->get_url($this->upgrade_url);
@@ -658,15 +677,21 @@ class All_in_One_SEO_Pack {
 	    	$this->upgrade_error = sprintf(__("Could not download distribution (%s): %s"), $this->upgrade_url, $file_content);
 			$success = false;
 	    } else {
+	    	$this->log(sprintf("filesize of download ZIP: %d", strlen($file_content)));
 		    $fh = @fopen($this->upgrade_filename, 'w');
+		    $this->log("fh is $fh");
 		    if (!$fh) {
 		    	$this->upgrade_error = sprintf(__("Could not open %s for writing"), $this->upgrade_filename);
 		    	$this->upgrade_error .= "<br />";
 		    	$this->upgrade_error .= sprintf(__("Please make sure %s is writable"), $this->upgrade_folder);
 		    	$success = false;
-		    } else if (!@fwrite($fh, $file_content)) {
-		    	$this->upgrade_error = sprintf(__("Could not write to %s"), $this->upgrade_filename);
-		    	$success = false;
+		    } else {
+		    	$bytes_written = @fwrite($fh, $file_content);
+			    $this->log("wrote $bytes_written bytes");
+		    	if (!$bytes_written) {
+			    	$this->upgrade_error = sprintf(__("Could not write to %s"), $this->upgrade_filename);
+			    	$success = false;
+		    	}
 		    }
 		    if ($success) {
 		    	fclose($fh);
@@ -689,7 +714,9 @@ class All_in_One_SEO_Pack {
 	        require_once ('pclzip.lib.php');
 	    }
 	    $archive = new PclZip($this->upgrade_filename);
+	    //$this->log("archive is $archive");
 	    $files = $archive->extract(PCLZIP_OPT_STOP_ON_ERROR, PCLZIP_OPT_REPLACE_NEWER, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_OPT_PATH, $this->upgrade_folder);
+	    $this->log("files is $files");
 	    if (is_array($files)) {
 	    	return true;
 	    } else {
@@ -983,6 +1010,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_debug_info', $_POST['aiosp_debug_info']);
 			update_option('aiosp_post_meta_tags', $_POST['aiosp_post_meta_tags']);
 			update_option('aiosp_page_meta_tags', $_POST['aiosp_page_meta_tags']);
+			update_option('aiosp_do_log', $_POST['aiosp_do_log']);
 			if (function_exists('wp_cache_flush')) {
 				wp_cache_flush();
 			}
@@ -1396,6 +1424,22 @@ _e('What you enter here will be copied verbatim to your header on pages. You can
 </td>
 </tr>
 
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'auto_social')?>" onclick="toggleVisibility('aiosp_do_log_tip');">
+<?php _e('Log important events:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input type="checkbox" name="aiosp_do_log" <?php if (get_option('aiosp_do_log')) echo "checked=\"1\""; ?>/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_do_log_tip">
+<?php
+_e('Check this and SEO pack will create a log of important events (all_in_one_seo_pack.log) in its plugin directory which might help debugging it. Make sure this directory is writable.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
@@ -1428,6 +1472,7 @@ add_option("aiosp_description_format", '%description%', 'All in One SEO Plugin D
 add_option("aiosp_404_title_format", 'Nothing found for %request_words%', 'All in One SEO Plugin 404 Title Format', 'yes');
 add_option("aiosp_post_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
 add_option("aiosp_page_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
+add_option("aiosp_do_log", null, 'All in One SEO Plugin write log file', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

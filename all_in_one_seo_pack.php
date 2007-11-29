@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.3.8.9
+Version: 1.3.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.3.8.9";
+ 	var $version = "1.3.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -704,7 +704,7 @@ class All_in_One_SEO_Pack {
 		$success = $this->download_newest_version();
 	    if ($success) {
 		    $success = $this->extract_plugin();
-		    //unlink($this->upgrade_filename);
+		    unlink($this->upgrade_filename);
 	    }
 	    return $success;
 	}
@@ -714,10 +714,12 @@ class All_in_One_SEO_Pack {
 	        require_once ('pclzip.lib.php');
 	    }
 	    $archive = new PclZip($this->upgrade_filename);
-	    //$this->log("archive is $archive");
 	    $files = $archive->extract(PCLZIP_OPT_STOP_ON_ERROR, PCLZIP_OPT_REPLACE_NEWER, PCLZIP_OPT_REMOVE_ALL_PATH, PCLZIP_OPT_PATH, $this->upgrade_folder);
 	    $this->log("files is $files");
 	    if (is_array($files)) {
+	    	$num_extracted = sizeof($files);
+		    $this->log("extracted $num_extracted files to $this->upgrade_folder");
+		    $this->log(print_r($files, true));
 	    	return true;
 	    } else {
 	    	$this->upgrade_error = $archive->errorInfo();

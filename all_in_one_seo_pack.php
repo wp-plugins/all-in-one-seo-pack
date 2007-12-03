@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4
+Version: 1.4.1
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4";
+ 	var $version = "1.4.1";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -169,7 +169,6 @@ class All_in_One_SEO_Pack {
 			$keywords = $this->get_all_keywords();
 		}
 		if (is_single() || is_page()) {
-			$aiosp_meta = $this->get_additional_meta($post);
             if ($this->is_static_front_page()) {
 				$description = trim(stripcslashes($this->internationalize(get_option('aiosp_home_description'))));
             } else {
@@ -250,15 +249,6 @@ class All_in_One_SEO_Pack {
 			$meta_string .= "$post_meta";
 		}
 		
-		/*
-		if (isset($aiosp_meta) && isset($aiosp_meta) && !empty($aiosp_meta)) {
-			if (isset($meta_string)) {
-				$meta_string .= "\n";
-			}
-			$meta_string .= "$aiosp_meta";
-		}
-		*/
-		
 		if ($meta_string != null) {
 			echo "$meta_string\n";
 		}
@@ -274,11 +264,6 @@ class All_in_One_SEO_Pack {
 			}				
 		}
 		return $description;
-	}
-	
-	function get_additional_meta($post) {
-	    $aiosp_meta = trim(stripcslashes(get_post_meta($post->ID, "aiosp_meta", true)));
-		return $aiosp_meta;
 	}
 	
 	function replace_title($content, $title) {

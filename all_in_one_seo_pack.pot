@@ -244,3 +244,6 @@ msgstr ""
 msgid "Log important events:"
 msgstr ""
 
+msgid "Check this if you want your categories for a given post used as the META keywords for this post (in addition to any keywords and tags you specify on the post edit page)."
+msgstr ""
+

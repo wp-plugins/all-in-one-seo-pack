@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.1
+Version: 1.4.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.1";
+ 	var $version = "1.4.2";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -123,7 +123,7 @@ class All_in_One_SEO_Pack {
 		if (is_feed()) {
 			return;
 		}
-
+		
 		global $wp_query;
 		$post = $wp_query->get_queried_object();
 		$meta_string = null;
@@ -161,7 +161,7 @@ class All_in_One_SEO_Pack {
 			echo "ob_start_detected ";
 		}
 		echo "[$this->title_start,$this->title_end,$this->orig_title] ";
-		echo "-->\n";
+		echo "-->";
 		
 		if ((is_home() && !$this->is_static_posts_page() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
 			$keywords = trim($this->internationalize(get_option('aiosp_home_keywords')));
@@ -184,7 +184,7 @@ class All_in_One_SEO_Pack {
 			$description = $this->internationalize(category_description());
 		}
 		
-		if (isset($description) && strlen($description) > $this->minimum_description_length) {
+		if (isset($description) && (strlen($description) > $this->minimum_description_length) && !(is_home() && is_paged())) {
 			$description = trim(strip_tags($description));
 			$description = str_replace('"', '', $description);
 			
@@ -209,11 +209,11 @@ class All_in_One_SEO_Pack {
             $description = str_replace('%blog_title%', get_bloginfo('name'), $description);
             $description = str_replace('%blog_description%', get_bloginfo('description'), $description);
             $description = str_replace('%wp_title%', $this->get_original_title(), $description);
-			
-			$meta_string .= sprintf("<meta name=\"description\" content=\"%s\" />", $description);
+            
+            $meta_string .= sprintf("\n<meta name=\"description\" content=\"%s\" />", $description);
 		}
 
-		if (isset ($keywords) && !empty($keywords)) {
+		if (isset ($keywords) && !empty($keywords) && !(is_home() && is_paged())) {
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
 			}
@@ -251,6 +251,8 @@ class All_in_One_SEO_Pack {
 		
 		if ($meta_string != null) {
 			echo "$meta_string\n";
+		} else {
+			echo "\n";
 		}
 		
 	}
@@ -315,7 +317,7 @@ class All_in_One_SEO_Pack {
 		$title = null;
 		
 		if (is_home()) {
-			$title = $this->internationalize(wp_title('', false));
+			$title = get_option('blogname');
 		} else if (is_single()) {
 			$title = $this->internationalize(wp_title('', false));
 		} else if (is_search() && isset($s) && !empty($s)) {
@@ -384,7 +386,12 @@ class All_in_One_SEO_Pack {
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
 			} else {
-				if ($this->internationalize(get_option('aiosp_home_title'))) {
+				if (is_paged()) {
+					global $paged;
+					$title = $this->internationalize(get_option('aiosp_home_title'));
+					$title .= " Part $paged";
+					$header = $this->replace_title($header, $title);
+				} else if ($this->internationalize(get_option('aiosp_home_title'))) {
 					$header = $this->replace_title($header, $this->internationalize(get_option('aiosp_home_title')));
 				}
 			}

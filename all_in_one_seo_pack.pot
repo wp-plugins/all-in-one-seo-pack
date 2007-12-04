@@ -241,3 +241,6 @@ msgstr ""
 msgid "Disable on this page/post:"
 msgstr ""
 
+msgid "Log important events:"
+msgstr ""
+

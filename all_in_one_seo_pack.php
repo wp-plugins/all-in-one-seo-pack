@@ -1,10 +1,14 @@
+1.4.3
+paged title format as option
+archives, tags and categories have paged titles now
+
 <?php
 
 /*
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.2
+Version: 1.4.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.2";
+ 	var $version = "1.4.3";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -361,6 +365,23 @@ class All_in_One_SEO_Pack {
 			return trim($title);
 		}
 	
+		function paged_title($title) {
+			// the page number if paged
+			global $paged;
+
+			if (is_paged()) {
+				$part = $this->internationalize(get_option('aiosp_paged_format'));
+				if (!isset($part) || empty($part) || !$part) {
+					// reasonable default
+					$part = _e("Part %page%", 'all_in_one_seo_pack');
+				}
+				$part = " " . trim($part);
+				$part = str_replace('%page%', $paged, $part);
+				$title .= $part;
+			}
+			return $title;
+		}
+
 		function rewrite_title($header) {
 		global $wp_query;
 		if (!$wp_query) {
@@ -386,14 +407,9 @@ class All_in_One_SEO_Pack {
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
 			} else {
-				if (is_paged()) {
-					global $paged;
-					$title = $this->internationalize(get_option('aiosp_home_title'));
-					$title .= " Part $paged";
-					$header = $this->replace_title($header, $title);
-				} else if ($this->internationalize(get_option('aiosp_home_title'))) {
-					$header = $this->replace_title($header, $this->internationalize(get_option('aiosp_home_title')));
-				}
+				$title = $this->internationalize(get_option('aiosp_home_title'));
+				$title = $this->paged_title($title);
+				$header = $this->replace_title($header, $title);
 			}
 		} else if (is_single()) {
 			$categories = get_the_category();
@@ -437,6 +453,7 @@ class All_in_One_SEO_Pack {
             $title = str_replace('%category_description%', $category_description, $title);
             $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title);
             $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
+            $title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
 			if ($this->is_static_front_page()) {
@@ -471,6 +488,7 @@ class All_in_One_SEO_Pack {
 	            $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
 	            $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
 	            $title = str_replace('%tag%', $tag, $title);
+	            $title = $this->paged_title($title);
 				$header = $this->replace_title($header, $title);
 			}
 		} else if (is_archive()) {
@@ -480,6 +498,7 @@ class All_in_One_SEO_Pack {
             $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
             $new_title = str_replace('%date%', $date, $new_title);
 			$title = trim($new_title);
+            $title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_404()) {
             $title_format = get_option('aiosp_404_title_format');
@@ -996,6 +1015,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_search_title_format', $_POST['aiosp_search_title_format']);
 			update_option('aiosp_description_format', $_POST['aiosp_description_format']);
 			update_option('aiosp_404_title_format', $_POST['aiosp_404_title_format']);
+			update_option('aiosp_paged_format', $_POST['aiosp_paged_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
@@ -1309,6 +1329,26 @@ echo('</ul>');
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_paged_format_tip');">
+<?php _e('Paged Format:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input size="59" name="aiosp_paged_format" value="<?php echo stripcslashes(get_option('aiosp_paged_format')); ?>"/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_paged_format_tip">
+<?php
+_e('This string gets appended/prepended to titles when they are for paged index pages (like home or archive pages).', 'all_in_one_seo_pack');
+_e('The following macros are supported:', 'all_in_one_seo_pack');
+echo('<ul>');
+echo('<li>'); _e('%page% - The page number', 'all_in_one_seo_pack'); echo('</li>');
+echo('</ul>');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_use_categories_tip');">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
@@ -1463,6 +1503,7 @@ add_option("aiosp_archive_title_format", '%date% | %blog_title%', 'All in One SE
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plugin Tag Title Format', 'yes');
 add_option("aiosp_search_title_format", '%search% | %blog_title%', 'All in One SEO Plugin Search Title Format', 'yes');
 add_option("aiosp_description_format", '%description%', 'All in One SEO Plugin Description Format', 'yes');
+add_option("aiosp_paged_format", ' - Part %page%', 'All in One SEO Plugin Paged Format', 'yes');
 add_option("aiosp_404_title_format", 'Nothing found for %request_words%', 'All in One SEO Plugin 404 Title Format', 'yes');
 add_option("aiosp_post_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
 add_option("aiosp_page_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');

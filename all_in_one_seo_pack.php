@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.2
+Version: 1.4.3.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.2";
+ 	var $version = "1.4.3.3";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -361,24 +361,23 @@ class All_in_One_SEO_Pack {
 			return trim($title);
 		}
 	
-		function paged_title($title) {
-			// the page number if paged
-			global $paged;
+	function paged_title($title) {
+		// the page number if paged
+		global $paged;
 
-			if (is_paged()) {
-				$part = $this->internationalize(get_option('aiosp_paged_format'));
-				if (!isset($part) || empty($part) || !$part) {
-					// reasonable default
-					$part = _e("Part %page%", 'all_in_one_seo_pack');
-				}
+		if (is_paged()) {
+			$part = $this->internationalize(get_option('aiosp_paged_format'));
+			if (isset($part) || !empty($part)) {
 				$part = " " . trim($part);
 				$part = str_replace('%page%', $paged, $part);
+				$this->log("paged_title() [$title] [$part]");
 				$title .= $part;
 			}
-			return $title;
 		}
+		return $title;
+	}
 
-		function rewrite_title($header) {
+	function rewrite_title($header) {
 		global $wp_query;
 		if (!$wp_query) {
 			$header .= "<!-- no wp_query found! -->\n";

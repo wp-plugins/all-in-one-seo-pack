@@ -259,3 +259,9 @@ msgstr ""
 msgid "Part %page%"
 msgstr ""
 
+msgid "Log important events:"
+msgstr ""
+
+msgid "Check this and SEO pack will create a log of important events (all_in_one_seo_pack.log) in its plugin directory which might help debugging it. Make sure this directory is writable."
+msgstr ""
+

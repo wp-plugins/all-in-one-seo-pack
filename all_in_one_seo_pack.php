@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.3
+Version: 1.4.3.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.3";
+ 	var $version = "1.4.3.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -147,11 +147,11 @@ class All_in_One_SEO_Pack {
 				strtolower('All_in_One_SEO_Pack::output_callback_for_title')) {
 				ob_end_flush();
 			} else {
+				$this->log("another plugin interfering?");
 				// if we get here there *could* be trouble with another plugin :(
 				$this->ob_start_detected = true;
-				echo "\n";
 				foreach (ob_list_handlers() as $handler) {
-					echo "<!-- all in one seo pack output handler $handler -->\n";
+					$this->log("detected output handler $handler");
 				}
 			}
 		}
@@ -994,10 +994,14 @@ class All_in_One_SEO_Pack {
 		if (substr($wp_version, 0, 3) == '1.5') {
 			$file = 'all-in-one-seo-pack/all_in_one_seo_pack.php';
 		}
-		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 5, $file, array($this, 'plugin_menu'));
+		//add_menu_page(__('All in One SEO Title', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 0, $file, array($this, 'dashboard_menu'));
+		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 0, $file, array($this, 'options_menu'));
 	}
 	
-	function plugin_menu() {
+	function dashboard_menu() {
+	}
+
+	function options_menu() {
 		$message = null;
 		$message_updated = __("All in One SEO Options Updated.", 'all_in_one_seo_pack');
 		
@@ -1486,7 +1490,7 @@ _e('Check this and SEO pack will create a log of important events (all_in_one_se
 </div>
 <?php
 	
-	} // plugin_menu
+	} // options_menu
 
 }
 

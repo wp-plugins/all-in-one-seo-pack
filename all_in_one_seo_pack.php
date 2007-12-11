@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.5
+Version: 1.4.3.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.5";
+ 	var $version = "1.4.3.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -117,6 +117,16 @@ class All_in_One_SEO_Pack {
 		global $wp_query;
 		$post = $wp_query->get_queried_object();
 		return get_option('show_on_front') == 'page' && is_home() && $post->ID == get_option('page_for_posts');
+	}
+	
+	function get_base() {
+   		 return '/'.end(explode('/', str_replace(array('\\','/all_in_one_seo_pack.php'),array('/',''),__FILE__)));
+	}
+
+	function admin_head() {
+		$home = get_settings('siteurl');
+		$stylesheet = $home.'/wp-content/plugins' . $this->get_base() . '/css/all_in_one_seo_pack.css';
+		echo('<link rel="stylesheet" href="' . $stylesheet . '" type="text/css" media="screen" />');
 	}
 	
 	function wp_head() {
@@ -996,14 +1006,38 @@ class All_in_One_SEO_Pack {
 		if (substr($wp_version, 0, 3) == '1.5') {
 			$file = 'all-in-one-seo-pack/all_in_one_seo_pack.php';
 		}
-		//add_menu_page(__('All in One SEO Title', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 0, $file, array($this, 'dashboard_menu'));
-		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 0, $file, array($this, 'options_menu'));
+		//add_management_page(__('All in One SEO Title', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 10, $file, array($this, 'management_panel'));
+		add_submenu_page('options-general.php', __('All in One SEO', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 10, $file, array($this, 'options_panel'));
 	}
 	
-	function dashboard_menu() {
+	function management_panel() {
+		$message = null;
+		$base_url = "edit.php?page=" . __FILE__;
+		//echo($base_url);
+		$type = $_REQUEST['type'];
+		if (!isset($type)) {
+			$type = "posts";
+		}
+?>
+
+  <ul class="aiosp_menu">
+    <li><a href="<?php echo $base_url ?>&type=posts">Posts</a>
+    </li>
+    <li><a href="<?php echo $base_url ?>&type=pages">Pages</a>
+    </li>
+  </ul>
+  
+<?php
+
+		if ($type == "posts") {
+			echo("posts");
+		} elseif ($type == "pages") {
+			echo("pages");
+		}
+
 	}
 
-	function options_menu() {
+	function options_panel() {
 		$message = null;
 		$message_updated = __("All in One SEO Options Updated.", 'all_in_one_seo_pack');
 		
@@ -1492,7 +1526,7 @@ _e('Check this and SEO pack will create a log of important events (all_in_one_se
 </div>
 <?php
 	
-	} // options_menu
+	} // options_panel
 
 }
 
@@ -1535,5 +1569,6 @@ add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 //add_action('edit_category', array($aiosp, 'edit_category'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
+//add_action('admin_head', array($aiosp, 'admin_head'));
 
 ?>

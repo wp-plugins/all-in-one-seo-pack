@@ -10,7 +10,7 @@ Author URI: http://wp.uberdose.com/
 */
 
 /*
-Copyright (C) 2007 uberdose (seopack AT uberdose DOT com)
+Copyright (C) 2007 uberdose.com (seopack AT uberdose DOT com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.6
+Version: 1.4.3.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.6";
+ 	var $version = "1.4.3.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -752,6 +752,11 @@ class All_in_One_SEO_Pack {
 	    }
 	}
 	
+	/** crude approximization of whether current user is an admin */
+	function is_admin() {
+		return current_user_can('level_8');
+	}
+	
 	function is_directory_writable($directory) {
 		$filename = $directory . '/' . 'tmp_file_' . time();
 		$fh = @fopen($filename, 'w');
@@ -787,7 +792,9 @@ class All_in_One_SEO_Pack {
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
 		    delete_post_meta($id, 'title');
-		    delete_post_meta($id, 'aiosp_disable');
+		    if ($this->is_admin()) {
+		    	delete_post_meta($id, 'aiosp_disable');
+		    }
 		    //delete_post_meta($id, 'aiosp_meta');
 
 		    if (isset($keywords) && !empty($keywords)) {
@@ -799,7 +806,7 @@ class All_in_One_SEO_Pack {
 		    if (isset($title) && !empty($title)) {
 			    add_post_meta($id, 'title', $title);
 		    }
-		    if (isset($aiosp_disable) && !empty($aiosp_disable)) {
+		    if (isset($aiosp_disable) && !empty($aiosp_disable) && $this->is_admin()) {
 			    add_post_meta($id, 'aiosp_disable', $aiosp_disable);
 		    }
 		    /*
@@ -892,11 +899,12 @@ class All_in_One_SEO_Pack {
 		}
 		//  End -->
 		</script>
+        <fieldset id="seodiv" class="dbx-box">
+        <h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
-		<table style="margin-bottom:40px; margin-top:30px;">
+		<table style="margin-bottom:40px">
 		<tr>
 		<th style="text-align:left;" colspan="2">
-		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a>
 		</th>
 		</tr>
 		<tr>
@@ -917,6 +925,7 @@ class All_in_One_SEO_Pack {
 		<th><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80"/></th>
 		</tr>
 
+		<?php if ($this->is_admin()) { ?>
 		<tr>
 		<th scope="row" style="text-align:right; vertical-align:top;">
 		<?php _e('Disable on this page/post:', 'all_in_one_seo_pack')?>
@@ -925,6 +934,7 @@ class All_in_One_SEO_Pack {
 		<input type="checkbox" name="aiosp_disable" <?php if ($aiosp_disable) echo "checked=\"1\""; ?>/>
 		</td>
 		</tr>
+		<?php } ?>
 
 		<!--
 		<tr>
@@ -933,6 +943,8 @@ class All_in_One_SEO_Pack {
 		</tr>
 		-->
 		</table>
+        </fieldset>
+
 		<?php
 	}
 
@@ -955,13 +967,10 @@ class All_in_One_SEO_Pack {
 		}
 		//  End -->
 		</script>
+        <fieldset id="seodiv" class="dbx-box">
+        <h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
-		<table style="margin-bottom:40px; margin-top:30px;">
-		<tr>
-		<th style="text-align:left;" colspan="2">
-		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack')?></a>
-		</th>
-		</tr>
+		<table style="margin-bottom:40px;">
 		<tr>
 		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80" tabindex="1000"/></td>
@@ -979,6 +988,7 @@ class All_in_One_SEO_Pack {
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
 		</tr>
 
+		<?php if ($this->is_admin()) { ?>
 		<tr>
 		<th scope="row" style="text-align:right; vertical-align:top;">
 		<?php _e('Disable on this page/post:', 'all_in_one_seo_pack')?>
@@ -987,6 +997,7 @@ class All_in_One_SEO_Pack {
 		<input type="checkbox" name="aiosp_disable" <?php if ($aiosp_disable) echo "checked=\"1\""; ?>/>
 		</td>
 		</tr>
+		<?php } ?>
 
 		<!--
 		<tr>
@@ -995,6 +1006,7 @@ class All_in_One_SEO_Pack {
 		</tr>
 		-->
 		</table>
+		</fieldset>
 		<?php
 	}
 

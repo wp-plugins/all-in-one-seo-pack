@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.8
+Version: 1.4.3.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.8";
+ 	var $version = "1.4.3.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -86,7 +86,7 @@ class All_in_One_SEO_Pack {
 		}
 
 		if (is_single() || is_page()) {
-		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', false)));
+		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', true)));
 		    if ($aiosp_disable) {
 		    	return;
 		    }
@@ -139,7 +139,7 @@ class All_in_One_SEO_Pack {
 		$meta_string = null;
 		
 		if (is_single() || is_page()) {
-		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', false)));
+		    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'aiosp_disable', true)));
 		    if ($aiosp_disable) {
 		    	return;
 		    }
@@ -893,7 +893,7 @@ class All_in_One_SEO_Pack {
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'title', true)));
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'description', true)));
 	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
-	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', false)));
+	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin
@@ -961,7 +961,7 @@ class All_in_One_SEO_Pack {
 	    $description = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'description', true)));
 	    $title = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'title', true)));
 	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
-	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', false)));
+	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', true)));
 		?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin

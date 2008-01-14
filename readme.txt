@@ -1,7 +1,7 @@
 === All in One SEO Pack ===
 Contributors: uberdose
 Donate link: http://wp.uberdose.com/contribute/
-Tags: post,google,seo,meta,meta keywords,meta description,title
+Tags: post,google,seo,meta,meta keywords,meta description,title,posts,plugin
 Requires at least: 1.5
 Tested up to: 2.3.1
 Stable tag: trunk

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.3.9
+Version: 1.4.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.3.9";
+ 	var $version = "1.4.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -170,7 +170,7 @@ class All_in_One_SEO_Pack {
 		if ($this->ob_start_detected) {
 			echo "ob_start_detected ";
 		}
-		echo "[$this->title_start,$this->title_end,$this->orig_title] ";
+		echo "[$this->title_start,$this->title_end] ";
 		echo "-->";
 		
 		if ((is_home() && !$this->is_static_posts_page() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
@@ -553,6 +553,10 @@ class All_in_One_SEO_Pack {
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
 		$max = $this->maximum_description_length;
+		
+		// suggestion from Andrew
+		//$text = preg_replace("/<\?.*?\?>/", "", $text);
+		
 		if ($max < strlen($text)) {
 			while($text[$max] != ' ' && $max > $this->minimum_description_length) {
 				$max--;

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.5.1
+Version: 1.4.5.2
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.5.1";
+ 	var $version = "1.4.5.2";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -275,6 +275,10 @@ class All_in_One_SEO_Pack {
 				$description = $this->trim_excerpt_without_filters($this->internationalize($post->post_content));
 			}				
 		}
+		
+		// "internal whitespace trim"
+		$description = preg_replace("/\s+/", " ", $description);
+		
 		return $description;
 	}
 	
@@ -906,8 +910,15 @@ class All_in_One_SEO_Pack {
 		}
 		//  End -->
 		</script>
-        <fieldset id="seodiv" class="dbx-box">
-        <h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
+
+		<div class="dbx-b-ox-wrapper">
+		<fieldset id="seodiv" class="dbx-box">
+		<div class="dbx-h-andle-wrapper">
+		<h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
+		</div>
+		<div class="dbx-c-ontent-wrapper">
+		<div class="dbx-content">
+		
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px">
 		<tr>
@@ -943,77 +954,12 @@ class All_in_One_SEO_Pack {
 		</tr>
 		<?php } ?>
 
-		<!--
-		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
-		</tr>
-		-->
 		</table>
-        </fieldset>
-
-		<?php
-	}
-
-	function add_meta_tags_page_textinput() {
-	    global $post;
-	    $post_id = $post;
-	    if (is_object($post_id)) {
-	    	$post_id = $post_id->ID;
-	    }
-	    $keywords = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'keywords', true)));
-	    $description = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'description', true)));
-	    $title = htmlspecialchars(stripcslashes(get_post_meta($post->ID, 'title', true)));
-	    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_meta', true)));
-	    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, 'aiosp_disable', true)));
-		?>
-		<SCRIPT LANGUAGE="JavaScript">
-		<!-- Begin
-		function countChars(field,cntfield) {
-		cntfield.value = field.value.length;
-		}
-		//  End -->
-		</script>
-        <fieldset id="seodiv" class="dbx-box">
-        <h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
-		<input value="aiosp_edit" type="hidden" name="aiosp_edit"/>
-		<table style="margin-bottom:40px;">
-		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Title:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $title ?>" type="text" name="aiosp_title" size="80" tabindex="1000"/></td>
-		</tr>
-		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Description:', 'all_in_one_seo_pack') ?></th>
-		<td><textarea name="aiosp_description" rows="1" cols="78" tabindex="1001"
-		onKeyDown="countChars(document.post.aiosp_description,document.post.length1)"
-		onKeyUp="countChars(document.post.aiosp_description,document.post.length1)"><?php echo $description ?></textarea><br />
-		<input readonly type="text" name="length1" size="3" maxlength="3" value="<?php echo strlen($description);?>" />
-		<?php _e(' characters. Most search engines use a maximum of 160 chars for the description.', 'all_in_one_seo_pack')?></td>
-		</tr>
-		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="80" tabindex="1002"/></td>
-		</tr>
-
-		<?php if ($this->is_admin()) { ?>
-		<tr>
-		<th scope="row" style="text-align:right; vertical-align:top;">
-		<?php _e('Disable on this page/post:', 'all_in_one_seo_pack')?>
-		</th>
-		<td>
-		<input type="checkbox" name="aiosp_disable" <?php if ($aiosp_disable) echo "checked=\"1\""; ?>/>
-		</td>
-		</tr>
-		<?php } ?>
-
-		<!--
-		<tr>
-		<th scope="row" style="text-align:right;"><?php _e('Additional META:', 'all_in_one_seo_pack') ?></th>
-		<td><input value="<?php echo $aiosp_meta ?>" type="text" name="aiosp_meta" size="80"/></td>
-		</tr>
-		-->
-		</table>
+		
+		</div>
 		</fieldset>
+		</div>
+
 		<?php
 	}
 
@@ -1576,18 +1522,14 @@ add_action('template_redirect', array($aiosp, 'template_redirect'));
 
 add_action('init', array($aiosp, 'init'));
 
-add_action('simple_edit_form', array($aiosp, 'add_meta_tags_textinput'));
-add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
-add_action('edit_page_form', array($aiosp, 'add_meta_tags_page_textinput'));
-//add_action('edit_category_form', array($aiosp, 'edit_category_form'));
+add_action('dbx_post_advanced', array($aiosp, 'add_meta_tags_textinput'));
+add_action('dbx_page_advanced', array($aiosp, 'add_meta_tags_textinput'));
 
 add_action('edit_post', array($aiosp, 'post_meta_tags'));
 add_action('publish_post', array($aiosp, 'post_meta_tags'));
 add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
-//add_action('edit_category', array($aiosp, 'edit_category'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
-//add_action('admin_head', array($aiosp, 'admin_head'));
 
 ?>

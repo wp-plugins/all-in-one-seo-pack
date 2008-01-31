@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.5.3
+Version: 1.4.5.4
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.5.3";
+ 	var $version = "1.4.5.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -261,10 +261,9 @@ class All_in_One_SEO_Pack {
 		
 		if ($meta_string != null) {
 			echo "$meta_string\n";
-		} else {
-			echo "\n";
 		}
 		
+		echo "<!-- /all in one seo pack -->\n";
 	}
 	
 	function get_post_description($post) {
@@ -405,6 +404,9 @@ class All_in_One_SEO_Pack {
 		
 		// the_search_query() is not suitable, it cannot just return
 		global $s;
+		
+		// simple tagging support
+		global $STagging;
 
 		if (is_home()) {
 			if ($this->is_static_posts_page()) {
@@ -497,6 +499,17 @@ class All_in_One_SEO_Pack {
 				// wordpress > 2.3
 				$tag = $this->internationalize(wp_title('', false));
 			}
+			if ($tag) {
+	            $tag = $this->capitalize($tag);
+	            $title_format = get_option('aiosp_tag_title_format');
+	            $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
+	            $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
+	            $title = str_replace('%tag%', $tag, $title);
+	            $title = $this->paged_title($title);
+				$header = $this->replace_title($header, $title);
+			}
+		} else if (isset($STagging) && $STagging->is_tag_view()) {
+			$tag = $STagging->search_tag;
 			if ($tag) {
 	            $tag = $this->capitalize($tag);
 	            $title_format = get_option('aiosp_tag_title_format');

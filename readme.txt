@@ -1,24 +1,30 @@
 === All in One SEO Pack ===
 Contributors: uberdose
 Donate link: http://wp.uberdose.com/contribute/
-Tags: post,google,seo,meta,meta keywords,meta description,title
+Tags: post,google,seo,meta,meta keywords,meta description,title,posts,plugin
 Requires at least: 1.5
-Tested up to: 2.3
+Tested up to: 2.3.2
 Stable tag: trunk
 
-Optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
+Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==
 
-**Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**) by
-
-* Automatically optimizing your **titles** for search engines and letting you tweak them further
-* Generating **META tags** automatically *and* letting you define them
-* Avoiding indexing of duplicate content.
+**Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 
-* [SEO Plugin](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/)
+Some features:
+
+* Automatically optimizes your **titles** for search engines
+* Generates **META tags automatically**
+* Avoids the typical duplicate content found on Wordpress blogs
+* For Wordpress 2.3 you don't even have to look at the options, it works out-of-the-box. Just install.
+* You can override any title and set any META description and any META keywords you want.
+* You can fine-tune everything
+* Backward-Compatibility with many other plugins, like Auto Meta, Ultimate Tag Warrior and others.
+
+* [Support](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)
 * [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/)
 * [FAQ](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)
 

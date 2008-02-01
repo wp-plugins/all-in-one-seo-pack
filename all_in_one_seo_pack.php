@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.5.4
+Version: 1.4.5.5
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.5.4";
+ 	var $version = "1.4.5.5";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -171,7 +171,7 @@ class All_in_One_SEO_Pack {
 			echo "ob_start_detected ";
 		}
 		echo "[$this->title_start,$this->title_end] ";
-		echo "-->";
+		echo "-->\n";
 		
 		if ((is_home() && !$this->is_static_posts_page() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
 			$keywords = trim($this->internationalize(get_option('aiosp_home_keywords')));
@@ -205,7 +205,7 @@ class All_in_One_SEO_Pack {
 			$description = str_replace("\n", ' ', $description);
 			
 			if (isset($meta_string)) {
-				$meta_string .= "\n";
+				//$meta_string .= "\n";
 			} else {
 				$meta_string = '';
 			}
@@ -220,7 +220,7 @@ class All_in_One_SEO_Pack {
             $description = str_replace('%blog_description%', get_bloginfo('description'), $description);
             $description = str_replace('%wp_title%', $this->get_original_title(), $description);
             
-            $meta_string .= sprintf("\n<meta name=\"description\" content=\"%s\" />", $description);
+            $meta_string .= sprintf("<meta name=\"description\" content=\"%s\" />", $description);
 		}
 
 		if (isset ($keywords) && !empty($keywords) && !(is_home() && is_paged())) {
@@ -380,8 +380,11 @@ class All_in_One_SEO_Pack {
 	function paged_title($title) {
 		// the page number if paged
 		global $paged;
+		
+		// simple tagging support
+		global $STagging;
 
-		if (is_paged()) {
+		if (is_paged() || (isset($STagging) && $STagging->is_tag_view() && $paged)) {
 			$part = $this->internationalize(get_option('aiosp_paged_format'));
 			if (isset($part) || !empty($part)) {
 				$part = " " . trim($part);
@@ -508,7 +511,7 @@ class All_in_One_SEO_Pack {
 	            $title = $this->paged_title($title);
 				$header = $this->replace_title($header, $title);
 			}
-		} else if (isset($STagging) && $STagging->is_tag_view()) {
+		} else if (isset($STagging) && $STagging->is_tag_view()) { // simple tagging support
 			$tag = $STagging->search_tag;
 			if ($tag) {
 	            $tag = $this->capitalize($tag);

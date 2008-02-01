@@ -28,6 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
+ 	// re-check-in
  	var $version = "1.4.5.4.1";
  	
  	/** Max numbers of chars in auto-generated description */

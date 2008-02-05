@@ -34,7 +34,10 @@ Some features:
 the top-level folder. Don't just upload all the php files and put them in `/wp-content/plugins/`.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Visit your SEO options (*Options - All in One SEO*)
-1. That's it! Don't forget to write good excerpts :)
+1. That's it!
+
+For upgrading please use the built-in one-click updater (*Options - All in One SEO*).
+If you have to upgrade manually simply repeat the installation steps.
 
 == Frequently Asked Questions ==
 

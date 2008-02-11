@@ -533,7 +533,7 @@ class All_in_One_SEO_Pack {
 	 * @return User-readable nice words for a given request.
 	 */
 	function request_as_words($request) {
-		$request = htmlentities($request);
+		$request = htmlspecialchars($request);
 		$request = str_replace('.html', ' ', $request);
 		$request = str_replace('.htm', ' ', $request);
 		$request = str_replace('.', ' ', $request);

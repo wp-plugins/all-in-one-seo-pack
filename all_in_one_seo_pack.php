@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.5.8
+Version: 1.4.5.9
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.5.8";
+ 	var $version = "1.4.5.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -417,6 +417,8 @@ class All_in_One_SEO_Pack {
 			$title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_single()) {
+			// we're not in the loop :(
+			$authordata = get_userdata($post->post_author);
 			$categories = get_the_category();
 			$category = '';
 			if (count($categories) > 0) {
@@ -435,6 +437,10 @@ class All_in_One_SEO_Pack {
             $new_title = str_replace('%post_title%', $title, $new_title);
             $new_title = str_replace('%category%', $category, $new_title);
             $new_title = str_replace('%category_title%', $category, $new_title);
+            $new_title = str_replace('%post_author_login%', $authordata->user_login, $new_title);
+            $new_title = str_replace('%post_author_nicename%', $authordata->user_nicename, $new_title);
+            $new_title = str_replace('%post_author_firstname%', ucwords($authordata->first_name), $new_title);
+            $new_title = str_replace('%post_author_lastname%', ucwords($authordata->last_name), $new_title);
 			$title = $new_title;
 			$title = trim($title);
 			$header = $this->replace_title($header, $title);
@@ -461,6 +467,8 @@ class All_in_One_SEO_Pack {
             $title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_page()) {
+			// we're not in the loop :(
+			$authordata = get_userdata($post->post_author);
 			if ($this->is_static_front_page()) {
 				if ($this->internationalize(get_option('aiosp_home_title'))) {
 					$header = $this->replace_title($header, $this->internationalize(get_option('aiosp_home_title')));
@@ -474,6 +482,10 @@ class All_in_One_SEO_Pack {
 	            $new_title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
 	            $new_title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $new_title);
 	            $new_title = str_replace('%page_title%', $title, $new_title);
+	            $new_title = str_replace('%page_author_login%', $authordata->user_login, $new_title);
+	            $new_title = str_replace('%page_author_nicename%', $authordata->user_nicename, $new_title);
+	            $new_title = str_replace('%page_author_firstname%', ucwords($authordata->first_name), $new_title);
+	            $new_title = str_replace('%page_author_lastname%', ucwords($authordata->last_name), $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
 			}
@@ -1185,6 +1197,10 @@ echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_p
 echo('<li>'); _e('%post_title% - The original title of the post', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%category_title% - The (main) category of the post', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%category% - Alias for %category_title%', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%post_author_login% - This post's author' login", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%post_author_nicename% - This post's author' nicename", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%post_author_firstname% - This post's author' first name (capitalized)", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%post_author_lastname% - This post's author' last name (capitalized)", 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -1206,6 +1222,10 @@ echo('<ul>');
 echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%page_title% - The original title of the page', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%page_author_login% - This page's author' login", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%page_author_nicename% - This page's author' nicename", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%page_author_firstname% - This page's author' first name (capitalized)", 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e("%page_author_lastname% - This page's author' last name (capitalized)", 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>

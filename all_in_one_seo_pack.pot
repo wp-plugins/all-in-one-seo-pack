@@ -255,3 +255,27 @@ msgstr ""
 msgid "Check this and SEO pack will create a log of important events (all_in_one_seo_pack.log) in its plugin directory which might help debugging it. Make sure this directory is writable."
 msgstr ""
 
+msgid "%page_author_login% - This page's author' login"
+msgstr ""
+
+msgid "%page_author_nicename% - This page's author' nicename"
+msgstr ""
+
+msgid "%page_author_firstname% - This page's author' first name (capitalized)"
+msgstr ""
+
+msgid "%page_author_lastname% - This page's author' last name (capitalized)"
+msgstr ""
+
+msgid "%post_author_login% - This post's author' login"
+msgstr ""
+
+msgid "%post_author_nicename% - This post's author' nicename"
+msgstr ""
+
+msgid "%post_author_firstname% - This post's author' first name (capitalized)"
+msgstr ""
+
+msgid "%post_author_lastname% - This post's author' last name (capitalized)"
+msgstr ""
+

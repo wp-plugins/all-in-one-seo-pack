@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.5.9
+Version: 1.4.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.5.9";
+ 	var $version = "1.4.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -243,6 +243,7 @@ class All_in_One_SEO_Pack {
 		
 		$page_meta = stripcslashes(get_option('aiosp_page_meta_tags'));
 		$post_meta = stripcslashes(get_option('aiosp_post_meta_tags'));
+		$home_meta = stripcslashes(get_option('aiosp_home_meta_tags'));
 		if (is_page() && isset($page_meta) && !empty($page_meta)) {
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
@@ -255,6 +256,13 @@ class All_in_One_SEO_Pack {
 				$meta_string .= "\n";
 			}
 			$meta_string .= "$post_meta";
+		}
+		
+		if (is_home() && !empty($home_meta)) {
+			if (isset($meta_string)) {
+				$meta_string .= "\n";
+			}
+			$meta_string .= "$home_meta";
 		}
 		
 		if ($meta_string != null) {
@@ -1050,6 +1058,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_debug_info', $_POST['aiosp_debug_info']);
 			update_option('aiosp_post_meta_tags', $_POST['aiosp_post_meta_tags']);
 			update_option('aiosp_page_meta_tags', $_POST['aiosp_page_meta_tags']);
+			update_option('aiosp_home_meta_tags', $_POST['aiosp_home_meta_tags']);
 			update_option('aiosp_do_log', $_POST['aiosp_do_log']);
 			if (function_exists('wp_cache_flush')) {
 				wp_cache_flush();
@@ -1494,6 +1503,22 @@ _e('What you enter here will be copied verbatim to your header on pages. You can
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_home_meta_tags_tip');">
+<?php _e('Additional Home Meta Tags:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_home_meta_tags"><?php echo stripcslashes(get_option('aiosp_home_meta_tags')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_home_meta_tags_tip">
+<?php
+_e('What you enter here will be copied verbatim to your header on the home page. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'auto_social')?>" onclick="toggleVisibility('aiosp_do_log_tip');">
 <?php _e('Log important events:', 'all_in_one_seo_pack')?>
 </a>
@@ -1541,6 +1566,7 @@ add_option("aiosp_paged_format", ' - Part %page%', 'All in One SEO Plugin Paged 
 add_option("aiosp_404_title_format", 'Nothing found for %request_words%', 'All in One SEO Plugin 404 Title Format', 'yes');
 add_option("aiosp_post_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
 add_option("aiosp_page_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
+add_option("aiosp_home_meta_tags", '', 'All in One SEO Plugin Additional Home Meta Tags', 'yes');
 add_option("aiosp_do_log", null, 'All in One SEO Plugin write log file', 'yes');
 
 $aiosp = new All_in_One_SEO_Pack();

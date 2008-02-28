@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.1
+Version: 1.4.6.3
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -25,10 +25,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/*
+ * what:
+ * feedback link now points to post page, not #respond
+ * download link back to old-style
+ */
  
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.6.1";
+ 	var $version = "1.4.6.3";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -57,7 +63,7 @@ class All_in_One_SEO_Pack {
  	var $upgrade_error;
  	
  	/** Which zip to download in order to upgrade .*/
- 	var $upgrade_url = 'http://wordpress.org/extend/plugins/all-in-one-seo-pack/all-in-one-seo-pack.zip';
+ 	var $upgrade_url = 'http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip';
  	
  	/** Filename of log file. */
  	var $log_file;
@@ -320,6 +326,9 @@ class All_in_One_SEO_Pack {
 		}
 		if (function_exists('polyglot_filter')) {
 			$in = polyglot_filter($in);
+		}
+		if (function_exists('qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage')) {
+			$in = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($in);
 		}
 		return $in;
 	}
@@ -1091,7 +1100,7 @@ href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><?
 | <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
 href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
+href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
 </p>

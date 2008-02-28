@@ -26,12 +26,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
- * what:
- * feedback link now points to post page, not #respond
- * download link back to old-style
- */
- 
 class All_in_One_SEO_Pack {
 	
  	var $version = "1.4.6.3";

@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.5
+Version: 1.4.6.6
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.6.5";
+ 	var $version = "1.4.6.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -950,19 +950,20 @@ class All_in_One_SEO_Pack {
 
 		<?php if (substr($this->wp_version, 0, 3) == '2.5') { ?>
 		<div id="postaiosp" class="postbox closed">
-		<h3><a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
+		<h3><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></h3>
 		<div class="inside">
 		<div id="postaiosp">
 		<?php } else { ?>
 		<div class="dbx-b-ox-wrapper">
 		<fieldset id="seodiv" class="dbx-box">
 		<div class="dbx-h-andle-wrapper">
-		<h3 class="dbx-handle"><a style="color:white" target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></a></h3>
+		<h3 class="dbx-handle"><?php _e('All in One SEO Pack', 'all_in_one_seo_pack') ?></h3>
 		</div>
 		<div class="dbx-c-ontent-wrapper">
 		<div class="dbx-content">
 		<?php } ?>
 		
+		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">Click here for Support</a>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px">
 		<tr>
@@ -1597,8 +1598,13 @@ add_action('template_redirect', array($aiosp, 'template_redirect'));
 
 add_action('init', array($aiosp, 'init'));
 
-add_action('dbx_post_advanced', array($aiosp, 'add_meta_tags_textinput'));
-add_action('dbx_page_advanced', array($aiosp, 'add_meta_tags_textinput'));
+if (substr($aiosp->wp_version, 0, 3) == '2.5') {
+	add_action('edit_form_advanced', array($aiosp, 'add_meta_tags_textinput'));
+	add_action('edit_page_form', array($aiosp, 'add_meta_tags_textinput'));
+} else {
+	add_action('dbx_post_advanced', array($aiosp, 'add_meta_tags_textinput'));
+	add_action('dbx_page_advanced', array($aiosp, 'add_meta_tags_textinput'));
+}
 
 add_action('edit_post', array($aiosp, 'post_meta_tags'));
 add_action('publish_post', array($aiosp, 'post_meta_tags'));

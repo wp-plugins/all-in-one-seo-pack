@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.6
+Version: 1.4.6.7
 Author: uberdose
 Author URI: http://wp.uberdose.com/
 */
@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.6.6";
+ 	var $version = "1.4.6.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -289,7 +289,7 @@ class All_in_One_SEO_Pack {
 		}
 		
 		// "internal whitespace trim"
-		$description = preg_replace("/\s+/", " ", $description);
+		$description = preg_replace("/\s\s+/", " ", $description);
 		
 		return $description;
 	}
@@ -963,7 +963,7 @@ class All_in_One_SEO_Pack {
 		<div class="dbx-content">
 		<?php } ?>
 		
-		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/">Click here for Support</a>
+		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('Click here for Support', 'all_in_one_seo_pack') ?></a>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px">
 		<tr>
@@ -1145,6 +1145,9 @@ $canwrite = $this->is_upgrade_directory_writable();
     }
 //-->
 </script>
+
+<h3><?php _e('Click on option titles to get help!', 'all_in_one_seo_pack') ?></h3>
+
 <form name="dofollow" action="" method="post">
 <table class="form-table">
 
@@ -1190,7 +1193,7 @@ _e('The META description for your homepage. Independent of any other options, th
 <textarea cols="57" rows="2" name="aiosp_home_keywords"><?php echo stripcslashes(get_option('aiosp_home_keywords')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_keywords_tip">
 <?php
-_e('A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don’t stuff everything in here.', 'all_in_one_seo_pack');
+_e("A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don't stuff everything in here.", 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1206,7 +1209,7 @@ _e('A comma separated list of your most important keywords for your site that wi
 <input type="checkbox" name="aiosp_rewrite_titles" <?php if (get_option('aiosp_rewrite_titles')) echo "checked=\"1\""; ?>/>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_rewrite_titles_tip">
 <?php
-_e('Note that this is all about the title tag. This is what you see in your browser’s window title bar. This is NOT visible on a page, only in the window title bar and of course in the source. If set, all page, post, category, search and archive page titles get rewritten. You can specify the format for most of them. For example: The default templates puts the title tag of posts like this: “Blog Archive >> Blog Name >> Post Title” (maybe I’ve overdone slightly). This is far from optimal. With the default post title format, Rewrite Title rewrites this to “Post Title | Blog Name”. If you have manually defined a title (in one of the text fields for All in One SEO Plugin input) this will become the title of your post in the format string.', 'all_in_one_seo_pack');
+_e("Note that this is all about the title tag. This is what you see in your browser's window title bar. This is NOT visible on a page, only in the window title bar and of course in the source. If set, all page, post, category, search and archive page titles get rewritten. You can specify the format for most of them. For example: The default templates puts the title tag of posts like this: “Blog Archive >> Blog Name >> Post Title” (maybe I've overdone slightly). This is far from optimal. With the default post title format, Rewrite Title rewrites this to “Post Title | Blog Name”. If you have manually defined a title (in one of the text fields for All in One SEO Plugin input) this will become the title of your post in the format string.", 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1300,7 +1303,7 @@ _e('The following macros are supported:', 'all_in_one_seo_pack');
 echo('<ul>');
 echo('<li>'); _e('%blog_title% - Your blog title', 'all_in_one_seo_pack'); echo('</li>');
 echo('<li>'); _e('%blog_description% - Your blog description', 'all_in_one_seo_pack'); echo('</li>');
-echo('<li>'); _e('%date% - The original archive title given by wordpress, e.g. “2007″ or “2007 August”', 'all_in_one_seo_pack'); echo('</li>');
+echo('<li>'); _e('%date% - The original archive title given by wordpress, e.g. "2007" or "2007 August"', 'all_in_one_seo_pack'); echo('</li>');
 echo('</ul>');
  ?>
 </div>
@@ -1486,7 +1489,7 @@ _e('Check this for excluding tag pages from being crawled. Useful for avoiding d
 <input type="checkbox" name="aiosp_generate_descriptions" <?php if (get_option('aiosp_generate_descriptions')) echo "checked=\"1\""; ?>/>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_generate_descriptions_tip">
 <?php
-_e('Check this and your META descriptions will get autogenerated if there’s no excerpt.', 'all_in_one_seo_pack');
+_e("Check this and your META descriptions will get autogenerated if there's no excerpt.", 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1495,14 +1498,14 @@ _e('Check this and your META descriptions will get autogenerated if there’s no
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_post_meta_tags_tip');">
-<?php _e('Additional Post Meta Tags:', 'all_in_one_seo_pack')?>
+<?php _e('Additional Post Headers:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="57" rows="2" name="aiosp_post_meta_tags"><?php echo stripcslashes(get_option('aiosp_post_meta_tags')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_post_meta_tags_tip">
 <?php
-_e('What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+_e('What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional headers you want here, even references to stylesheets.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1511,14 +1514,14 @@ _e('What you enter here will be copied verbatim to your header on post pages. Yo
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_page_meta_tags_tip');">
-<?php _e('Additional Page Meta Tags:', 'all_in_one_seo_pack')?>
+<?php _e('Additional Page Headers:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="57" rows="2" name="aiosp_page_meta_tags"><?php echo stripcslashes(get_option('aiosp_page_meta_tags')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_page_meta_tags_tip">
 <?php
-_e('What you enter here will be copied verbatim to your header on pages. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+_e('What you enter here will be copied verbatim to your header on pages. You can enter whatever additional headers you want here, even references to stylesheets.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -1527,14 +1530,14 @@ _e('What you enter here will be copied verbatim to your header on pages. You can
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_home_meta_tags_tip');">
-<?php _e('Additional Home Meta Tags:', 'all_in_one_seo_pack')?>
+<?php _e('Additional Home Headers:', 'all_in_one_seo_pack')?>
 </a>
 </td>
 <td>
 <textarea cols="57" rows="2" name="aiosp_home_meta_tags"><?php echo stripcslashes(get_option('aiosp_home_meta_tags')); ?></textarea>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_meta_tags_tip">
 <?php
-_e('What you enter here will be copied verbatim to your header on the home page. You can enter whatever additional meta tags you want here, even references to stylesheets.', 'all_in_one_seo_pack');
+_e('What you enter here will be copied verbatim to your header on the home page. You can enter whatever additional headers you want here, even references to stylesheets.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>

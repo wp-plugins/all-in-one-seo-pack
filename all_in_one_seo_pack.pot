@@ -183,16 +183,16 @@ msgstr ""
 msgid "Update Options"
 msgstr ""
 
-msgid "Additional Post Meta Tags:"
+msgid "Additional Post Headers:"
 msgstr ""
 
-msgid "Additional Page Meta Tags:"
+msgid "Additional Page Headers:"
 msgstr ""
 
-msgid "What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional meta tags you want here, even references to stylesheets."
+msgid "What you enter here will be copied verbatim to your header on post pages. You can enter whatever additional headers you want here, even references to stylesheets."
 msgstr ""
 
-msgid "What you enter here will be copied verbatim to your header on pages. You can enter whatever additional meta tags you want here, even references to stylesheets."
+msgid "What you enter here will be copied verbatim to your header on pages. You can enter whatever additional headers you want here, even references to stylesheets."
 msgstr ""
 
 msgid "%wp_title% - The original wordpress title, e.g. post_title for posts"
@@ -279,8 +279,15 @@ msgstr ""
 msgid "%post_author_lastname% - This post's author' last name (capitalized)"
 msgstr ""
 
-msgid "Additional Home Meta Tags:"
+msgid "Additional Home Headers:"
 msgstr ""
 
-msgid "What you enter here will be copied verbatim to your header on the home page. You can enter whatever additional meta tags you want here, even references to stylesheets."
+msgid "What you enter here will be copied verbatim to your header on the home page. You can enter whatever additional headers you want here, even references to stylesheets."
 msgstr ""
+
+msgid "Click here for Support"
+msgstr ""
+
+msgid "You can click on option titles to get help!"
+msgstr ""
+

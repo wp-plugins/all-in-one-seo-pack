@@ -33,7 +33,7 @@ Some features:
 1. Unzip into your `/wp-content/plugins/` directory. If you're uploading it make sure to upload
 the top-level folder. Don't just upload all the php files and put them in `/wp-content/plugins/`.
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Visit your SEO options (*Options - All in One SEO*)
+1. Visit your SEO options (*Options - All in One SEO*) for Wordpress 2.3.x, (*Settings - All in One SEO*) for Wordpress 2.5.x 
 1. That's it!
 
 For upgrading please use the built-in one-click updater (*Options - All in One SEO*).

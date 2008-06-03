@@ -6,9 +6,9 @@ Requires at least: 1.5
 Tested up to: 2.5
 Stable tag: trunk
 
-Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
+**This plugin is no longer supported or maintained.**
 
-**This plugin is no longer supported.**
+Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==
 

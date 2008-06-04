@@ -6,11 +6,11 @@ Requires at least: 1.5
 Tested up to: 2.5
 Stable tag: trunk
 
-This plugin is no longer supported or maintained.
-
 Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==
+
+**This plugin is no longer supported or maintained.**
 
 **Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
@@ -42,5 +42,4 @@ If you have to upgrade manually simply repeat the installation steps.
 
 == Frequently Asked Questions ==
 
-Please read these **[FAQs](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)** before requesting
-**[Support](http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/#respond)**
+Please read these **[FAQs](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)**.

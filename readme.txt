@@ -1,7 +1,7 @@
 === All in One SEO Pack ===
-Contributors: uberdose
-Donate link: http://wp.uberdose.com/contribute/
-Tags: post,google,seo,meta,meta keywords,meta description,title,posts,plugin
+Contributors: hallsofmontezuma, uberdose
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
+Tags: post,google,seo,meta,meta keywords,meta description,title,posts,plugin, search engine optimization
 Requires at least: 1.5
 Tested up to: 2.5
 Stable tag: trunk
@@ -10,12 +10,11 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 == Description ==
 
-**This plugin is no longer supported or maintained.**
-
 **Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 
+[Support](http://semperfiwebdesign.com/contact/) |
 [Version History](http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/) |
 [FAQ](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)
 
@@ -42,4 +41,5 @@ If you have to upgrade manually simply repeat the installation steps.
 
 == Frequently Asked Questions ==
 
-Please read these **[FAQs](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)**.
+Please read these **[FAQs](http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/)** before requesting
+**[Support](http://semperfiwebdesign.com/contact/)**

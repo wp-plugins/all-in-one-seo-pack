@@ -2,15 +2,16 @@
 
 /*
 Plugin Name: All in One SEO Pack
-Plugin URI: http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/
+Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.8
-Author: uberdose
-Author URI: http://wp.uberdose.com/
+Version: 1.4.6.9
+Author: Michael Torbert
+Author URI: http://semperfiwebdesign.com
 */
 
 /*
-Copyright (C) 2008 uberdose.com (seopack AT uberdose DOT com)
+Copyright (C) 2008 Michael Torbert, semperfiwebdesign.com (michael AT semperfiwebdesign DOT com)
+Original code by uberdose of uberdose.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

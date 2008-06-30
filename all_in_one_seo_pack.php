@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.9
+Version: 1.4.6.10
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.6.8";
+ 	var $version = "1.4.6.10";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -717,7 +717,7 @@ class All_in_One_SEO_Pack {
 	function get_unique_keywords($keywords) {
 		$small_keywords = array();
 		foreach ($keywords as $word) {
-			$small_keywords[] = strtolower($word);
+			$small_keywords[] = mb_strtolower($word);
 		}
 		$keywords_ar = array_unique($small_keywords);
 		return implode(',', $keywords_ar);
@@ -965,7 +965,7 @@ class All_in_One_SEO_Pack {
 		<div class="dbx-content">
 		<?php } ?>
 		
-		<a target="__blank" href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('Click here for Support', 'all_in_one_seo_pack') ?></a>
+		<a target="__blank" href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/all-in-one-seo-pack/"><?php _e('Click here for Support', 'all_in_one_seo_pack') ?></a>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		<table style="margin-bottom:40px">
 		<tr>
@@ -1109,14 +1109,16 @@ class All_in_One_SEO_Pack {
 <p>
 <?php _e("This is version ", 'all_in_one_seo_pack') ?><?php _e("$this->version ", 'all_in_one_seo_pack') ?>
 &nbsp;<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
-href="http://wp.uberdose.com/2007/07/27/all-in-one-seo-pack-release-history/"><?php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
+href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-pack-release-history/"><?php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
 </a>
 | <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/07/11/all-in-one-seo-pack-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
+href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/03/24/all-in-one-seo-pack/"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
+href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/all-in-one-seo-pack/"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
-href="http://wp.uberdose.com/2007/10/02/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
+href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php echo 'Donate' ?>"
+href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><?php echo 'Donate' ?></a>
 </p>
 <p>
 <?php
@@ -1567,6 +1569,11 @@ _e('Check this and SEO pack will create a log of important events (all_in_one_se
 <input type="hidden" name="page_options" value="aiosp_home_description" /> 
 <input type="submit" name="Submit" value="<?php _e('Update Options', 'all_in_one_seo_pack')?> &raquo;" /> 
 </p>
+<p><br />
+<strong>Check out these other great plugins!</strong><br />
+<a href="http://semperfiwebdesign.com/custom-applications/sms-text-message/" title="SMS Text Message WordPress plugin">SMS Text Message</a> - sends SMS updates to your readers<br />
+<a href="http://semperfiwebdesign.com/custom-applications/wp-security-scan/" title="WordPress Security">WordPress Security Scan</a> - provides vital security for your WordPress site
+</p>
 </form>
 </div>
 <?php
@@ -1617,5 +1624,4 @@ add_action('save_post', array($aiosp, 'post_meta_tags'));
 add_action('edit_page_form', array($aiosp, 'post_meta_tags'));
 
 add_action('admin_menu', array($aiosp, 'admin_menu'));
-
 ?>

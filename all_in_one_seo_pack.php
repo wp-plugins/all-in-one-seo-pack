@@ -2,9 +2,9 @@
 
 /*
 Plugin Name: All in One SEO Pack
-Plugin URI: http://semperfiwebdesign.com
+Plugin URI: http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/all-in-one-seo-pack/
 Description: Out-of-the-box SEO for your Wordpress blog.
-Version: 1.4.6.14
+Version: 1.4.6.15
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -476,7 +476,7 @@ $UTF8_TABLES['strtoupper'] = array(
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.6.14";
+ 	var $version = "1.4.6.15";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -566,10 +566,15 @@ class All_in_One_SEO_Pack {
 
 		if (get_option('aiosp_rewrite_titles')) {
 			ob_start(array($this, 'output_callback_for_title'));
+if($post->ID == get_option('page_for_posts')){
+
+}			
+
 		}
 	}
 	
 	function output_callback_for_title($content) {
+
 		return $this->rewrite_title($content);
 	}
 
@@ -646,15 +651,51 @@ class All_in_One_SEO_Pack {
 		if ($this->ob_start_detected) {
 			echo "ob_start_detected ";
 		}
+		
 		echo "[$this->title_start,$this->title_end] ";
 		echo "-->\n";
 		
-		if ((is_home() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
+		
+		/*delete*/
+	/*	if ($this->is_static_posts_page()){
+			echo "is static posts";
+		}else{echo "not posts static";}
+		
+		if ($this->is_static_front_page()){
+			echo "is static front ";
+		}else{echo "not static front";}
+		echo "page id = " . $post->ID;
+		if (get_option('page_for_posts')==$post->ID){
+			echo "is page for posts";
+		
+		
+		
+		
+		}
+		
+		echo "page on front: " . get_option('page_on_front');
+*/
+		/*delete*/
+
+		
+		
+		
+		if (get_option('page_on_front')==$post->ID) {
+
 			$keywords = trim($this->internationalize(get_option('aiosp_home_keywords')));
-		} else {
+		} elseif(get_option('page_for_posts')==$post->ID){
+
+			$keywords = trim($this->internationalize(get_option('aiosp_posts_keywords')));
+			
+		}
+			else {
 			$keywords = $this->get_all_keywords();
 		}
-		if (is_single() || is_page()) {
+if(get_option('page_for_posts')==$post->ID){
+
+$description = trim(stripcslashes($this->internationalize(get_option('aiosp_posts_description'))));
+}
+	elseif (is_single() || is_page()) {
             if ($this->is_static_front_page()) {
 				$description = trim(stripcslashes($this->internationalize(get_option('aiosp_home_description'))));
             } else {
@@ -763,7 +804,8 @@ class All_in_One_SEO_Pack {
 	
 	function replace_title($content, $title) {
 		$title = trim(strip_tags($title));
-		
+
+
 		$title_tag_start = "<title>";
 		$title_tag_end = "</title>";
 		$len_start = strlen($title_tag_start);
@@ -808,15 +850,15 @@ class All_in_One_SEO_Pack {
 		if (!$wp_query) {
 			return null;	
 		}
-		
+
 		$post = $wp_query->get_queried_object();
 		
 		// the_search_query() is not suitable, it cannot just return
 		global $s;
 		
 		$title = null;
-		
-		if (is_home()) {
+
+		if(is_home()) {
 			$title = get_option('blogname');
 		} else if (is_single()) {
 			$title = $this->internationalize(wp_title('', false));
@@ -886,7 +928,7 @@ class All_in_One_SEO_Pack {
 			$header .= "<!-- no wp_query found! -->\n";
 			return $header;	
 		}
-		
+
 		$post = $wp_query->get_queried_object();
 		
 		// the_search_query() is not suitable, it cannot just return
@@ -899,6 +941,7 @@ class All_in_One_SEO_Pack {
 			$title = $this->internationalize(get_option('aiosp_home_title'));
 			if (empty($title)) {
 				$title = $this->internationalize(get_option('blogname'));
+
 			}
 			$title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
@@ -974,6 +1017,7 @@ class All_in_One_SEO_Pack {
 	            $new_title = str_replace('%page_author_lastname%', ucwords($authordata->last_name), $new_title);
 				$title = trim($new_title);
 				$header = $this->replace_title($header, $title);
+
 			}
 		} else if (function_exists('is_tag') && is_tag()) {
 			global $utw;
@@ -1022,7 +1066,10 @@ class All_in_One_SEO_Pack {
             $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
 			$header = $this->replace_title($header, $new_title);
 		}
-		
+ if($post->ID==get_option('page_for_posts')){
+$pos_tit = 	get_option('aiosp_posts_title');
+		$header=$this->replace_title($header, $pos_tit);
+	}
 		return $header;
 
 	}
@@ -1085,6 +1132,8 @@ class All_in_One_SEO_Pack {
 		if (is_404()) {
 			return null;
 		}
+		
+
 		
 		// if we are on synthetic pages
 		if (!is_home() && !is_page() && !is_single() &&!$this->is_static_front_page() && !$this->is_static_posts_page()) {
@@ -1528,6 +1577,10 @@ class All_in_One_SEO_Pack {
 		// update options
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
 			$message = $message_updated;
+			update_option('aiosp_posts_title', $_POST['aiosp_posts_title']);
+			update_option('aiosp_posts_description', $_POST['aiosp_posts_description']);
+			update_option('aiosp_posts_keywords', $_POST['aiosp_posts_keywords']);
+			
 			update_option('aiosp_home_title', $_POST['aiosp_home_title']);
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
 			update_option('aiosp_home_keywords', $_POST['aiosp_home_keywords']);
@@ -1602,6 +1655,7 @@ $canwrite = $this->is_upgrade_directory_writable();
 </p>
 <p></p>
 
+
 <?php if (!$canwrite) {
 	echo("<p><strong>"); echo(sprintf(__("Please make sure that %s is writable.", 'all_in_one_seo_pack'), $this->upgrade_folder)); echo("</p></strong>");
 } ?>
@@ -1623,6 +1677,65 @@ $canwrite = $this->is_upgrade_directory_writable();
 
 <form name="dofollow" action="" method="post">
 <table class="form-table">
+
+
+
+
+	<tr>
+	<th scope="row" style="text-align:right; vertical-align:top;">
+	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_title_tip');">
+	<?php echo "Static Posts Page Title"?>
+	</a>
+	</td>
+	<td>
+	<textarea cols="57" rows="2" name="aiosp_posts_title"><?php echo stripcslashes(get_option('aiosp_posts_title')); ?></textarea>
+	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_title_tip">
+	<?php
+	_e('This will be the title of your static posts page.', 'all_in_one_seo_pack');
+	 ?>
+	</div>
+	</td>
+	</tr>
+
+	<tr>
+	<th scope="row" style="text-align:right; vertical-align:top;">
+	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_description_tip');">
+	<?php echo "Static Posts Page Description"?>
+	</a>
+	</td>
+	<td>
+	<textarea cols="57" rows="2" name="aiosp_posts_description"><?php echo stripcslashes(get_option('aiosp_posts_description')); ?></textarea>
+	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_description_tip">
+	<?php
+	_e('The META description for your static posts page.', 'all_in_one_seo_pack');
+	 ?>
+	</div>
+	</td>
+	</tr>
+
+	<tr>
+	<th scope="row" style="text-align:right; vertical-align:top;">
+	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_keywords_tip');">
+	<?php echo "Static Posts Page Keywords"?>
+	</a>
+	</td>
+	<td>
+	<textarea cols="57" rows="2" name="aiosp_posts_keywords"><?php echo stripcslashes(get_option('aiosp_posts_keywords')); ?></textarea>
+	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_keywords_tip">
+	<?php
+	_e("A comma separated list of important keywords for your site that will be written as META keywords on your static posts page. Don't stuff everything in here.", 'all_in_one_seo_pack');
+	 ?>
+	</div>
+	</td>
+	</tr>
+
+
+
+
+
+
+
+
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
@@ -2050,6 +2163,10 @@ _e('Check this and SEO pack will create a log of important events (all_in_one_se
 	} // options_panel
 
 }
+add_option("aiosp_posts_description", null, 'All in One SEO Plugin Posts Description', 'yes');
+add_option("aiosp_posts_title", null, 'All in One SEO Plugin Posts Title', 'yes');
+//add_option("aiosp_posts_keywords", null, 'All in One SEO Plugin Posts Keywords', 'yes');
+
 
 add_option("aiosp_home_description", null, 'All in One SEO Plugin Home Description', 'yes');
 add_option("aiosp_home_title", null, 'All in One SEO Plugin Home Title', 'yes');

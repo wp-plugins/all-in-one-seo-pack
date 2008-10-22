@@ -474,6 +474,9 @@ $UTF8_TABLES['strtoupper'] = array(
 	"b" => "B",		"a" => "A",
 );
 
+add_option("aiosp_posts_description", null, 'All in One SEO Plugin Posts Description', 'yes');
+add_option("aiosp_posts_title", null, 'All in One SEO Plugin Posts Title', 'yes');
+
 class All_in_One_SEO_Pack {
 	
  	var $version = "1.4.6.15";
@@ -1066,7 +1069,7 @@ $description = trim(stripcslashes($this->internationalize(get_option('aiosp_post
             $new_title = str_replace('%request_words%', $this->request_as_words($_SERVER['REQUEST_URI']), $new_title);
 			$header = $this->replace_title($header, $new_title);
 		}
- if($post->ID==get_option('page_for_posts')){
+ if($post->ID==get_option('page_for_posts') && get_option('what_to_show')=='posts'){
 $pos_tit = 	get_option('aiosp_posts_title');
 		$header=$this->replace_title($header, $pos_tit);
 	}
@@ -1656,6 +1659,7 @@ $canwrite = $this->is_upgrade_directory_writable();
 <p></p>
 
 
+
 <?php if (!$canwrite) {
 	echo("<p><strong>"); echo(sprintf(__("Please make sure that %s is writable.", 'all_in_one_seo_pack'), $this->upgrade_folder)); echo("</p></strong>");
 } ?>
@@ -1679,55 +1683,6 @@ $canwrite = $this->is_upgrade_directory_writable();
 <table class="form-table">
 
 
-
-
-	<tr>
-	<th scope="row" style="text-align:right; vertical-align:top;">
-	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_title_tip');">
-	<?php echo "Static Posts Page Title"?>
-	</a>
-	</td>
-	<td>
-	<textarea cols="57" rows="2" name="aiosp_posts_title"><?php echo stripcslashes(get_option('aiosp_posts_title')); ?></textarea>
-	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_title_tip">
-	<?php
-	_e('This will be the title of your static posts page.', 'all_in_one_seo_pack');
-	 ?>
-	</div>
-	</td>
-	</tr>
-
-	<tr>
-	<th scope="row" style="text-align:right; vertical-align:top;">
-	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_description_tip');">
-	<?php echo "Static Posts Page Description"?>
-	</a>
-	</td>
-	<td>
-	<textarea cols="57" rows="2" name="aiosp_posts_description"><?php echo stripcslashes(get_option('aiosp_posts_description')); ?></textarea>
-	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_description_tip">
-	<?php
-	_e('The META description for your static posts page.', 'all_in_one_seo_pack');
-	 ?>
-	</div>
-	</td>
-	</tr>
-
-	<tr>
-	<th scope="row" style="text-align:right; vertical-align:top;">
-	<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_keywords_tip');">
-	<?php echo "Static Posts Page Keywords"?>
-	</a>
-	</td>
-	<td>
-	<textarea cols="57" rows="2" name="aiosp_posts_keywords"><?php echo stripcslashes(get_option('aiosp_posts_keywords')); ?></textarea>
-	<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_keywords_tip">
-	<?php
-	_e("A comma separated list of important keywords for your site that will be written as META keywords on your static posts page. Don't stuff everything in here.", 'all_in_one_seo_pack');
-	 ?>
-	</div>
-	</td>
-	</tr>
 
 
 
@@ -1800,6 +1755,62 @@ _e("Note that this is all about the title tag. This is what you see in your brow
 </div>
 </td>
 </tr>
+
+
+
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_title_tip');">
+<?php echo "Static Posts Page Title"?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_posts_title"><?php echo stripcslashes(get_option('aiosp_posts_title')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_title_tip">
+<?php
+_e('This will be the title of your static posts page.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_description_tip');">
+<?php echo "Static Posts Page Description"?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_posts_description"><?php echo stripcslashes(get_option('aiosp_posts_description')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_description_tip">
+<?php
+_e('The META description for your static posts page.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_posts_keywords_tip');">
+<?php echo "Static Posts Page Keywords"?>
+</a>
+</td>
+<td>
+<textarea cols="57" rows="2" name="aiosp_posts_keywords"><?php echo stripcslashes(get_option('aiosp_posts_keywords')); ?></textarea>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_posts_keywords_tip">
+<?php
+_e("A comma separated list of important keywords for your site that will be written as META keywords on your static posts page. Don't stuff everything in here.", 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+
+
+
+
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
@@ -2163,8 +2174,7 @@ _e('Check this and SEO pack will create a log of important events (all_in_one_se
 	} // options_panel
 
 }
-add_option("aiosp_posts_description", null, 'All in One SEO Plugin Posts Description', 'yes');
-add_option("aiosp_posts_title", null, 'All in One SEO Plugin Posts Title', 'yes');
+
 //add_option("aiosp_posts_keywords", null, 'All in One SEO Plugin Posts Keywords', 'yes');
 
 

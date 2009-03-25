@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.4.7.4
+Version: 1.4.8
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -476,7 +476,7 @@ $UTF8_TABLES['strtoupper'] = array(
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.7.4";
+ 	var $version = "1.4.8";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -600,7 +600,8 @@ class All_in_One_SEO_Pack {
 		$stylesheet = $home.'/wp-content/plugins' . $this->get_base() . '/css/all_in_one_seo_pack.css';
 		echo('<link rel="stylesheet" href="' . $stylesheet . '" type="text/css" media="screen" />');
 	}
-	
+
+
 	function wp_head() {
 		if (is_feed()) {
 			return;
@@ -743,8 +744,101 @@ class All_in_One_SEO_Pack {
 			echo "$meta_string\n";
 		}
 		
+		if(get_option('aiosp_can')){
+			$url = $this->aiosp_mrt_get_url($wp_query);
+				if ($url) {
+			echo "".'<link rel="canonical" href="'.$url.'"/>'."\n";
+			}
+		}
+		
 		echo "<!-- /all in one seo pack -->\n";
 	}
+	
+	
+	function aiosp_mrt_get_url($query) {
+		if ($query->is_404 || $query->is_search) {
+			return false;
+		}
+		$haspost = count($query->posts) > 0;
+	    $has_ut = function_exists('user_trailingslashit');
+
+		if (get_query_var('m')) {
+	        $m = preg_replace('/[^0-9]/', '', get_query_var('m'));
+	        switch (strlen($m)) {
+	            case 4: 
+	                $link = get_year_link($m);
+	                break;
+	            case 6: 
+	                $link = get_month_link(substr($m, 0, 4), substr($m, 4, 2));
+	                break;
+	            case 8: 
+	                $link = get_day_link(substr($m, 0, 4), substr($m, 4, 2),
+	                                     substr($m, 6, 2));
+	                break;
+	            default:
+	                return false;
+	        }
+	    } elseif (($query->is_single || $query->is_page) && $haspost) {
+	        $post = $query->posts[0];
+	        $link = get_permalink($post->ID);
+	        $page = get_query_var('paged');
+	        if ($page && $page > 1) {
+	            $link = trailingslashit($link) . "page/". "$page";
+	            if ($has_ut) {
+	                $link = user_trailingslashit($link, 'paged');
+	            } else {
+	                $link .= '/';
+	            }
+	        }
+	        if ($query->is_page && ('page' == get_option('show_on_front')) && 
+	            $post->ID == get_option('page_on_front'))
+	        {
+	            $link = trailingslashit($link);
+	        }
+	    } elseif ($query->is_author && $haspost) {
+	        global $wp_version;
+	        if ($wp_version >= '2') {
+	            $author = get_userdata(get_query_var('author'));
+	            if ($author === false)
+	                return false;
+	            $link = get_author_link(false, $author->ID,
+	                $author->user_nicename);
+	        } else {
+	            global $cache_userdata;
+	            $userid = get_query_var('author');
+	            $link = get_author_link(false, $userid,
+	                $cache_userdata[$userid]->user_nicename);
+	        }
+	    } elseif ($query->is_category && $haspost) {
+	        $link = get_category_link(get_query_var('cat'));
+	    } elseif ($query->is_day && $haspost) {
+	        $link = get_day_link(get_query_var('year'),
+	                             get_query_var('monthnum'),
+	                             get_query_var('day'));
+	    } elseif ($query->is_month && $haspost) {
+	        $link = get_month_link(get_query_var('year'),
+	                               get_query_var('monthnum'));
+	    } elseif ($query->is_year && $haspost) {
+	        $link = get_year_link(get_query_var('year'));
+	    } elseif ($query->is_home) {
+	        if ((get_option('show_on_front') == 'page') &&
+	            ($pageid = get_option('page_for_posts'))) 
+	        {
+	            $link = trailingslashit(get_permalink($pageid));
+	        } else {
+	            $link = trailingslashit(get_option('home'));
+	        }
+	    } else {
+	        return false;
+	    }
+	
+		return $link;
+		
+	}
+	
+	
+	
+	
 	
 	function get_post_description($post) {
 	    $description = trim(stripcslashes($this->internationalize(get_post_meta($post->ID, "description", true))));
@@ -1530,6 +1624,7 @@ class All_in_One_SEO_Pack {
 		// update options
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
 			$message = $message_updated;
+			update_option('aiosp_can', $_POST['aiosp_can']);
 			update_option('aiosp_donate', $_POST['aiosp_donate']);
 			update_option('aiosp_home_title', $_POST['aiosp_home_title']);
 			update_option('aiosp_home_description', $_POST['aiosp_home_description']);
@@ -1688,6 +1783,22 @@ _e('The META description for your homepage. Independent of any other options, th
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_home_keywords_tip">
 <?php
 _e("A comma separated list of your most important keywords for your site that will be written as META keywords on your homepage. Don't stuff everything in here.", 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_can_tip');">
+<?php _e('Canonical URLs:', 'all_in_one_seo_pack')?>
+</a>
+</td>
+<td>
+<input type="checkbox" name="aiosp_can" <?php if (get_option('aiosp_can')) echo "checked=\"1\""; ?>/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_can_tip">
+<?php
+_e("This option will automatically generate Canonical URLS for your entire WordPress installation.  This will help to prevent duplicate content penalties by <a href='http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html' target='_blank'>Google</a>.", 'all_in_one_seo_pack');
  ?>
 </div>
 </td>
@@ -2093,6 +2204,7 @@ _e('All donations support continued development of this free software.', 'all_in
 add_option("aiosp_home_description", null, 'All in One SEO Plugin Home Description', 'yes');
 add_option("aiosp_home_title", null, 'All in One SEO Plugin Home Title', 'yes');
 add_option("aiosp_donate", 0, 'All in One SEO Pack Donate', 'no');
+add_option("aiosp_can", 1, 'All in One SEO Pack Canonical URLs', 'yes');
 add_option("aiosp_rewrite_titles", 1, 'All in One SEO Plugin Rewrite Titles', 'yes');
 add_option("aiosp_use_categories", 0, 'All in One SEO Plugin Use Categories', 'yes');
 add_option("aiosp_category_noindex", 1, 'All in One SEO Plugin Noindex for Categories', 'yes');

@@ -747,7 +747,7 @@ class All_in_One_SEO_Pack {
 		if(get_option('aiosp_can')){
 			$url = $this->aiosp_mrt_get_url($wp_query);
 				if ($url) {
-			echo "".'<link rel="canonical" href="'.$url.'"/>'."\n";
+			echo "".'<link rel="canonical" href="'.$url.'" />'."\n";
 			}
 		}
 		

@@ -21,6 +21,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 Some features:
 
+**Canonical URLs
 * Automatically optimizes your **titles** for search engines
 * Generates **META tags automatically**
 * Avoids the typical duplicate content found on Wordpress blogs

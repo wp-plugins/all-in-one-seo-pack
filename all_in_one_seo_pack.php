@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.4.8
+Version: 1.4.9
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -476,7 +476,7 @@ $UTF8_TABLES['strtoupper'] = array(
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.8";
+ 	var $version = "1.4.9";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -781,8 +781,8 @@ class All_in_One_SEO_Pack {
 	    } elseif (($query->is_single || $query->is_page) && $haspost) {
 	        $post = $query->posts[0];
 	        $link = get_permalink($post->ID);
-	        $page = get_query_var('paged');
-	        if ($page && $page > 1) {
+	        $link = $this->yoast_get_paged($link); 
+/*	        if ($page && $page > 1) {
 	            $link = trailingslashit($link) . "page/". "$page";
 	            if ($has_ut) {
 	                $link = user_trailingslashit($link, 'paged');
@@ -794,7 +794,7 @@ class All_in_One_SEO_Pack {
 	            $post->ID == get_option('page_on_front'))
 	        {
 	            $link = trailingslashit($link);
-	        }
+	        }*/
 	    } elseif ($query->is_author && $haspost) {
 	        global $wp_version;
 	        if ($wp_version >= '2') {
@@ -811,6 +811,13 @@ class All_in_One_SEO_Pack {
 	        }
 	    } elseif ($query->is_category && $haspost) {
 	        $link = get_category_link(get_query_var('cat'));
+			$link = $this->yoast_get_paged($link);
+		} else if ($query->is_tag  && $haspost) {
+			$tag = get_term_by('slug',get_query_var('tag'),'post_tag');
+	             if (!empty($tag->term_id)) {
+	                    $link = get_tag_link($tag->term_id);
+	             } 
+				 $link = $this->yoast_get_paged($link);			
 	    } elseif ($query->is_day && $haspost) {
 	        $link = get_day_link(get_query_var('year'),
 	                             get_query_var('monthnum'),
@@ -824,10 +831,13 @@ class All_in_One_SEO_Pack {
 	        if ((get_option('show_on_front') == 'page') &&
 	            ($pageid = get_option('page_for_posts'))) 
 	        {
-	            $link = trailingslashit(get_permalink($pageid));
+	            $link = get_permalink($pageid);
+				$link = $this->yoast_get_paged($link);
+				$link = trailingslashit($link);
 	        } else {
-	            $link = trailingslashit(get_option('home'));
-	        }
+	            $link = get_option('home');
+				$link = $this->yoast_get_paged($link);
+				$link = trailingslashit($link);	        }
 	    } else {
 	        return false;
 	    }
@@ -837,7 +847,18 @@ class All_in_One_SEO_Pack {
 	}
 	
 	
-	
+	function yoast_get_paged($link) {
+			$page = get_query_var('paged');
+	        if ($page && $page > 1) {
+	            $link = trailingslashit($link) ."page/". "$page";
+	            if ($has_ut) {
+	                $link = user_trailingslashit($link, 'paged');
+	            } else {
+	                $link .= '/';
+	            }
+			}
+			return $link;
+	}	
 	
 	
 	function get_post_description($post) {

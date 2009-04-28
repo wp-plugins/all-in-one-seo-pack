@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.4.9
+Version: 1.4.91
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -476,7 +476,7 @@ $UTF8_TABLES['strtoupper'] = array(
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.9";
+ 	var $version = "1.4.91";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -753,7 +753,8 @@ class All_in_One_SEO_Pack {
 		
 		echo "<!-- /all in one seo pack -->\n";
 	}
-	
+
+// Thank you, Yoast de Valk, for much of this code.	
 	
 	function aiosp_mrt_get_url($query) {
 		if ($query->is_404 || $query->is_search) {
@@ -1739,6 +1740,43 @@ $canwrite = $this->is_upgrade_directory_writable();
 </script>
 
 <h3><?php _e('Click on option titles to get help!', 'all_in_one_seo_pack') ?></h3>
+Highest
+<?php
+$uri = "http://donations.semperfiwebdesign.com/category/highest-donations/feed/";
+include_once(ABSPATH . WPINC . '/rss.php');
+$rss = fetch_rss($uri);
+$maxitems = 5;
+$items = array_slice($rss->items, 0, $maxitems);
+?>
+<ul>
+<?php if (empty($items)) echo '<li>No items</li>';
+else
+foreach ( $items as $item ) : ?>
+<li><a href='<?php echo $item['description']; ?>' 
+title='<?php echo $item['title']; ?>'>
+<?php echo $item['title']; ?>
+</a></li>
+<?php endforeach; ?>
+</ul>
+Donations
+<?php
+$uri = "http://donations.semperfiwebdesign.com/category/all-in-one-seo-pack/feed/";
+include_once(ABSPATH . WPINC . '/rss.php');
+$rss = fetch_rss($uri);
+$maxitems = 5;
+$items = array_slice($rss->items, 0, $maxitems);
+?>
+<ul>
+<?php if (empty($items)) echo '<li>No items</li>';
+else
+foreach ( $items as $item ) : ?>
+<li><a href='<?php echo $item['link']; ?>' 
+title='<?php echo $item['title']; ?>'>
+<?php echo $item['title']; ?>
+</a></li>
+<?php endforeach; ?>
+</ul>
+
 
 <form name="dofollow" action="" method="post">
 <table class="form-table">

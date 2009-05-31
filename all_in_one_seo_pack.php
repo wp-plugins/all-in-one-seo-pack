@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.4.91
+Version: 1.5
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -476,7 +476,7 @@ $UTF8_TABLES['strtoupper'] = array(
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.4.91";
+ 	var $version = "1.5";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -1463,12 +1463,12 @@ class All_in_One_SEO_Pack {
 		    $title = $wpdb->escape($_POST["aiosp_title"]);
 		    $old_category = $wpdb->get_row("select * from $this->table_categories where category_id=$id", OBJECT);
 		    if ($old_category) {
-		    	$wpdb->query("update $this->table_categories
+		    	$wpdb->query($wpdb->prepare("update $this->table_categories
 		    			set meta_title='$title', meta_keywords='$keywords'
-		    			where category_id=$id");
+		    			where category_id=$id"));
 		    } else {
-		    	$wpdb->query("insert into $this->table_categories(meta_title, meta_keywords, category_id)
-		    			values ('$title', '$keywords', $id");
+		    	$wpdb->query($wpdb->prepare("insert into $this->table_categories(meta_title, meta_keywords, category_id)
+		    			values ('$title', '$keywords', $id"));
 		    }
 		    //$wpdb->query("insert into $this->table_categories")
 	    	/*
@@ -1645,6 +1645,8 @@ class All_in_One_SEO_Pack {
 		
 		// update options
 		if ($_POST['action'] && $_POST['action'] == 'aiosp_update') {
+			$nonce = $_POST['nonce-aioseop'];
+			if (!wp_verify_nonce($nonce, 'aioseop-nonce')) die ( 'Security Check - If you receive this in error, log out and back in to WordPress');
 			$message = $message_updated;
 			update_option('aiosp_can', $_POST['aiosp_can']);
 			update_option('aiosp_donate', $_POST['aiosp_donate']);
@@ -1746,6 +1748,7 @@ $uri = "http://donations.semperfiwebdesign.com/category/highest-donations/feed/"
 include_once(ABSPATH . WPINC . '/rss.php');
 $rss = fetch_rss($uri);
 $maxitems = 5;
+if(is_array($rss->items)){
 $items = array_slice($rss->items, 0, $maxitems);
 ?>
 <ul>
@@ -1758,12 +1761,14 @@ title='<?php echo $item['title']; ?>'>
 </a></li>
 <?php endforeach; ?>
 </ul>
+<? } ?>
 Donations
 <?php
 $uri = "http://donations.semperfiwebdesign.com/category/all-in-one-seo-pack/feed/";
 include_once(ABSPATH . WPINC . '/rss.php');
 $rss = fetch_rss($uri);
 $maxitems = 5;
+if(is_array($rss->items)){
 $items = array_slice($rss->items, 0, $maxitems);
 ?>
 <ul>
@@ -1776,7 +1781,7 @@ title='<?php echo $item['title']; ?>'>
 </a></li>
 <?php endforeach; ?>
 </ul>
-
+<?php } ?>
 
 <form name="dofollow" action="" method="post">
 <table class="form-table">
@@ -2244,6 +2249,7 @@ _e('All donations support continued development of this free software.', 'all_in
 </table>
 <p class="submit">
 <input type="hidden" name="action" value="aiosp_update" /> 
+<input type="hidden" name="nonce-aioseop" value="<?php echo wp_create_nonce('aioseop-nonce'); ?>" />
 <input type="hidden" name="page_options" value="aiosp_home_description" /> 
 <input type="submit" name="Submit" value="<?php _e('Update Options', 'all_in_one_seo_pack')?> &raquo;" /> 
 </p>

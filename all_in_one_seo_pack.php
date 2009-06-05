@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.5.1
+Version: 1.5.2
 Author: Michael Torbert
 Author URI: http://semperfiwebdesign.com
 */
@@ -474,6 +474,15 @@ $UTF8_TABLES['strtoupper'] = array(
 	"b" => "B",		"a" => "A",
 );
 
+if ( ! defined( 'WP_CONTENT_URL' ) )
+    define( 'WP_CONTENT_URL', get_option( 'siteurl' ) . '/wp-content' );
+if ( ! defined( 'WP_CONTENT_DIR' ) )
+    define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+if ( ! defined( 'WP_PLUGIN_URL' ) )
+    define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
+if ( ! defined( 'WP_PLUGIN_DIR' ) )
+    define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins' );
+
 class All_in_One_SEO_Pack {
 	
  	var $version = "1.5.1";
@@ -575,7 +584,7 @@ class All_in_One_SEO_Pack {
 
 	function init() {
 		if (function_exists('load_plugin_textdomain')) {
-			load_plugin_textdomain('all_in_one_seo_pack', 'wp-content/plugins/all-in-one-seo-pack');
+			load_plugin_textdomain('all_in_one_seo_pack', WP_PLUGIN_DIR . '/all-in-one-seo-pack');
 		}
 	}
 
@@ -597,7 +606,7 @@ class All_in_One_SEO_Pack {
 
 	function admin_head() {
 		$home = get_settings('siteurl');
-		$stylesheet = $home.'/wp-content/plugins' . $this->get_base() . '/css/all_in_one_seo_pack.css';
+		$stylesheet = WP_PLUGIN_URL . $this->get_base() . '/css/all_in_one_seo_pack.css';
 		echo('<link rel="stylesheet" href="' . $stylesheet . '" type="text/css" media="screen" />');
 	}
 
@@ -1470,7 +1479,7 @@ class All_in_One_SEO_Pack {
 		    	$wpdb->query($wpdb->prepare("insert into $this->table_categories(meta_title, meta_keywords, category_id)
 		    			values ('$title', '$keywords', $id"));
 		    }
-		    //$wpdb->query("insert into $this->table_categories")
+		    //$wpdb->query($wpdb->prepare("insert into $this->table_categories"))
 	    	/*
 		    delete_post_meta($id, 'keywords');
 		    delete_post_meta($id, 'description');
@@ -2289,6 +2298,9 @@ add_option("aiosp_post_meta_tags", '', 'All in One SEO Plugin Additional Post Me
 add_option("aiosp_page_meta_tags", '', 'All in One SEO Plugin Additional Post Meta Tags', 'yes');
 add_option("aiosp_home_meta_tags", '', 'All in One SEO Plugin Additional Home Meta Tags', 'yes');
 add_option("aiosp_do_log", null, 'All in One SEO Plugin write log file', 'yes');
+//$role = get_role('administrator');
+//$role->add_cap('Edit AIOSEOP Options');
+//$role->add_cap('Edit AIOSEOP on Posts/Pages');
 
 $aiosp = new All_in_One_SEO_Pack();
 add_action('wp_head', array($aiosp, 'wp_head'));

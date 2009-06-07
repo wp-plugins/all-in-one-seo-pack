@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.5.3
+Version: 1.5.4
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -485,7 +485,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.5.3";
+ 	var $version = "1.5.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -1436,7 +1436,9 @@ class All_in_One_SEO_Pack {
 
 	function post_meta_tags($id) {
 	    $awmp_edit = $_POST["aiosp_edit"];
-	    if (isset($awmp_edit) && !empty($awmp_edit)) {
+		$nonce = $_POST['nonce-aioseop-edit'];
+//		if (!wp_verify_nonce($nonce, 'edit-aioseop-nonce')) die ( 'Security Check - If you receive this in error, log out and back in to WordPress');
+	    if (isset($awmp_edit) && !empty($awmp_edit) && wp_verify_nonce($nonce, 'edit-aioseop-nonce')) {
 		    $keywords = $_POST["aiosp_keywords"];
 		    $description = $_POST["aiosp_description"];
 		    $title = $_POST["aiosp_title"];
@@ -1593,7 +1595,7 @@ class All_in_One_SEO_Pack {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="62"/></td>
 		</tr>
-
+<input type="hidden" name="nonce-aioseop-edit" value="<?php echo wp_create_nonce('edit-aioseop-nonce'); ?>" />
 		<?php if ($this->is_admin()) { ?>
 		<tr>
 		<th scope="row" style="text-align:right; vertical-align:top;">
@@ -1728,6 +1730,8 @@ href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/all-in-
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php echo 'Donate' ?>"
 href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><?php echo 'Donate' ?></a>
+| <a target="_blank" title="<?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?>"
+href="http://twitter.com/michaeltorbert/"><?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?></a>
 </p>
 <p>
 <?php
@@ -2407,6 +2411,7 @@ function aiosp_meta() {
 		<th scope="row" style="text-align:right;"><?php _e('Keywords (comma separated):', 'all_in_one_seo_pack') ?></th>
 		<td><input value="<?php echo $keywords ?>" type="text" name="aiosp_keywords" size="62"/></td>
 		</tr>
+		<input type="hidden" name="nonce-aioseop-edit" value="<?php echo wp_create_nonce('edit-aioseop-nonce') ?>" />
 
 
 		<tr>

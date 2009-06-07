@@ -22,6 +22,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 Some features:
 
 * Canonical URLs
+* Nonce Security
 * Support for CMS-style WordPress installations
 * Automatically optimizes your **titles** for search engines
 * Generates **META tags automatically**

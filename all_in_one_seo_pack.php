@@ -4,9 +4,9 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.5.2
+Version: 1.5.3
 Author: Michael Torbert
-Author URI: http://semperfiwebdesign.com
+Author URI: http://michaeltorbert.com
 */
 
 /*
@@ -485,7 +485,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.5.1";
+ 	var $version = "1.5.3";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -619,7 +619,10 @@ class All_in_One_SEO_Pack {
 		global $wp_query;
 		$post = $wp_query->get_queried_object();
 		$meta_string = null;
-		
+		if($this->is_static_posts_page()){
+					$title = strip_tags( apply_filters( 'single_post_title', $post->post_title ) );
+
+				}
 		//echo("wp_head() " . wp_title('', false) . " is_home() => " . is_home() . ", is_page() => " . is_page() . ", is_single() => " . is_single() . ", is_static_front_page() => " . $this->is_static_front_page() . ", is_static_posts_page() => " . $this->is_static_posts_page());
 
 		if (is_single() || is_page()) {
@@ -658,13 +661,18 @@ class All_in_One_SEO_Pack {
 		}
 		echo "[$this->title_start,$this->title_end] ";
 		echo "-->\n";
-		
-		if ((is_home() && get_option('aiosp_home_keywords')) || $this->is_static_front_page()) {
+		if ((is_home() && get_option('aiosp_home_keywords') && !$this->is_static_posts_page()) || $this->is_static_front_page()) {
 			$keywords = trim($this->internationalize(get_option('aiosp_home_keywords')));
-		} else {
-			$keywords = $this->get_all_keywords();
-		}
-		if (is_single() || is_page()) {
+		} elseif($this->is_static_posts_page() && !get_option('aiosp_dynamic_postspage_keywords')){  // and if option = use page set keywords instead of keywords from recent posts
+				//$keywords = "posts keyyysss" . stripcslashes(get_post_meta($post->ID,'keywords',true));
+				$keywords = stripcslashes($this->internationalize(get_post_meta($post->ID, "keywords", true)));
+              
+//			$keywords =	$this->get_unique_keywords($keywords);
+
+			}else {
+				$keywords = $this->get_all_keywords();
+			}
+		if (is_single() || is_page() || $this->is_static_posts_page()) {
             if ($this->is_static_front_page()) {
 				$description = trim(stripcslashes($this->internationalize(get_option('aiosp_home_description'))));
             } else {
@@ -728,7 +736,7 @@ class All_in_One_SEO_Pack {
 		$page_meta = stripcslashes(get_option('aiosp_page_meta_tags'));
 		$post_meta = stripcslashes(get_option('aiosp_post_meta_tags'));
 		$home_meta = stripcslashes(get_option('aiosp_home_meta_tags'));
-		if (is_page() && isset($page_meta) && !empty($page_meta)) {
+		if (is_page() && isset($page_meta) && !empty($page_meta) || $this->is_static_posts_page()) {
 			if (isset($meta_string)) {
 				$meta_string .= "\n";
 			}
@@ -1020,7 +1028,7 @@ class All_in_One_SEO_Pack {
 		// simple tagging support
 		global $STagging;
 
-		if (is_home()) {
+		if (is_home() && !$this->is_static_posts_page()) {
 			$title = $this->internationalize(get_option('aiosp_home_title'));
 			if (empty($title)) {
 				$title = $this->internationalize(get_option('blogname'));
@@ -1077,7 +1085,7 @@ class All_in_One_SEO_Pack {
             $title = str_replace('%blog_description%', $this->internationalize(get_bloginfo('description')), $title);
             $title = $this->paged_title($title);
 			$header = $this->replace_title($header, $title);
-		} else if (is_page()) {
+		} else if (is_page() || $this->is_static_posts_page()) {
 			// we're not in the loop :(
 			$authordata = get_userdata($post->post_author);
 			if ($this->is_static_front_page()) {
@@ -1674,6 +1682,7 @@ class All_in_One_SEO_Pack {
 			update_option('aiosp_404_title_format', $_POST['aiosp_404_title_format']);
 			update_option('aiosp_paged_format', $_POST['aiosp_paged_format']);
 			update_option('aiosp_use_categories', $_POST['aiosp_use_categories']);
+			update_option('aiosp_dynamic_postspage_keywords', $_POST['aiosp_dynamic_postspage_keywords']);
 			update_option('aiosp_category_noindex', $_POST['aiosp_category_noindex']);
 			update_option('aiosp_archive_noindex', $_POST['aiosp_archive_noindex']);
 			update_option('aiosp_tags_noindex', $_POST['aiosp_tags_noindex']);
@@ -2111,6 +2120,21 @@ _e('Check this if you want your categories for a given post used as the META key
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_dynamic_postspage_keywords_tip');">
+<?php _e('Dynamically Generate Keywords for Posts Page:', 'all_in_one_seo_pack')?>
+</td>
+<td>
+<input type="checkbox" name="aiosp_dynamic_postspage_keywords" <?php if (get_option('aiosp_dynamic_postspage_keywords')) echo "checked=\"1\""; ?>/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_dynamic_postspage_keywords_tip">
+<?php
+_e('Check this if you want your keywords on a custom posts page (set it in options->reading) to be dynamically generated from the keywords of the posts showing on that page.  If unchecked, it will use the keywords set in the edit page screen for the posts page.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_category_noindex_tip');">
 <?php _e('Use noindex for Categories:', 'all_in_one_seo_pack')?>
 </a>
@@ -2287,6 +2311,7 @@ add_option("aiosp_tags_noindex", 0, 'All in One SEO Plugin Noindex for Tag Archi
 add_option("aiosp_generate_descriptions", 1, 'All in One SEO Plugin Autogenerate Descriptions', 'yes');
 add_option("aiosp_post_title_format", '%post_title% | %blog_title%', 'All in One SEO Plugin Post Title Format', 'yes');
 add_option("aiosp_page_title_format", '%page_title% | %blog_title%', 'All in One SEO Plugin Page Title Format', 'yes');
+add_option("aiosp_dynamic_postspage_keywords", 1, 'All in One SEO Plugin Dynamic Posts Page Keywords', 'yes');
 add_option("aiosp_category_title_format", '%category_title% | %blog_title%', 'All in One SEO Plugin Category Title Format', 'yes');
 add_option("aiosp_archive_title_format", '%date% | %blog_title%', 'All in One SEO Plugin Archive Title Format', 'yes');
 add_option("aiosp_tag_title_format", '%tag% | %blog_title%', 'All in One SEO Plugin Tag Title Format', 'yes');

@@ -21,7 +21,8 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 Some features:
 
-**Canonical URLs
+* Canonical URLs
+* Support for CMS-style WordPress installations
 * Automatically optimizes your **titles** for search engines
 * Generates **META tags automatically**
 * Avoids the typical duplicate content found on Wordpress blogs
@@ -34,6 +35,9 @@ Be sure to check out:
 [WP Security Scan](http://wordpress.org/extend/plugins/wp-security-scan/)
 and
 [SMS Text Message](http://wordpress.org/extend/plugins/sms-text-message/)
+
+Follow me on Twitter to keep up with the latest updates [Michael
+Torbert](http://twitter.com/michaeltorbert/)
 
 == Installation ==
 

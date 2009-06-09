@@ -54,4 +54,4 @@ If you have to upgrade manually simply repeat the installation steps.
 == Frequently Asked Questions ==
 
 Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/)** before requesting
-**[Support](http://semperfiwebdesign.com/contact/)**
+**[Support](http://semperfiwebdesign.com/forum/)**

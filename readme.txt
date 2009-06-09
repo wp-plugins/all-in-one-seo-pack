@@ -14,7 +14,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 **[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
 
-[Support](http://semperfiwebdesign.com/contact/) |
+[Support](http://semperfiwebdesign.com/forum/) |
 [Version History](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-pack-release-history/) |
 [FAQ](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/)|
 [Translations](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/)

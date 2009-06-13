@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.5.5
+Version: 1.5.6
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -485,7 +485,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.5.5";
+ 	var $version = "1.5.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;

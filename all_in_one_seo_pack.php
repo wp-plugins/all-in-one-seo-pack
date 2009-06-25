@@ -4,7 +4,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/all_in_one_seo_pack.php">Options configuration panel</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/" >Support</a> 
-Version: 1.5.6
+Version: 1.5.7
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -485,7 +485,7 @@ if ( ! defined( 'WP_PLUGIN_DIR' ) )
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.5.6";
+ 	var $version = "1.5.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -583,9 +583,21 @@ class All_in_One_SEO_Pack {
 	}
 
 	function init() {
+if (function_exists('load_plugin_textdomain')) {
+	if ( !defined('WP_PLUGIN_DIR') ) {
+		load_plugin_textdomain('all_in_one_seo_pack', str_replace( ABSPATH, '', dirname(__FILE__)));
+	} else {
+		load_plugin_textdomain('all_in_one_seo_pack', false, dirname(plugin_basename(__FILE__)));
+	}
+}
+
+
+/*
 		if (function_exists('load_plugin_textdomain')) {
 			load_plugin_textdomain('all_in_one_seo_pack', WP_PLUGIN_DIR . '/all-in-one-seo-pack');
 		}
+*/
+
 	}
 
 	function is_static_front_page() {
@@ -1720,18 +1732,19 @@ class All_in_One_SEO_Pack {
 <p>
 <?php _e("This is version ", 'all_in_one_seo_pack') ?><?php _e("$this->version ", 'all_in_one_seo_pack') ?>
 &nbsp;<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
-href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-pack-release-history/"><?php _e("Should I upgrade?", 'all_in_one_seo_pack')?>
+href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-pack-release-history/"><?php _e("Changelog", 'all_in_one_seo_pack')?>
 </a>
 | <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('All in One SEO Plugin Feedback', 'all_in_one_seo_pack') ?>"
-href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/all-in-one-seo-pack/"><?php _e('Feedback', 'all_in_one_seo_pack') ?></a>
+| <a target="_blank" title="<?php _e('All in One SEO Plugin Support Forum', 'all_in_one_seo_pack') ?>"
+href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php echo 'Donate' ?>"
-href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><?php echo 'Donate' ?></a>
-| <a target="_blank" title="<?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?>"
-href="http://twitter.com/michaeltorbert/"><?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?></a>
+<br /><br />
+<a target="_blank" title="<?php echo 'Donate' ?>"
+href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" width="100px" alt="Donate" /><?php //echo 'Donate' ?></a>
+| <a target="_blank" title="<?php _e('Follow us on', 'all_in_one_seo_pack') ?>"
+href="http://twitter.com/michaeltorbert/"><?php _e('Follow us on ', 'all_in_one_seo_pack') ?><img src="http://static.twitter.com/images/twitter_logo.png" alt="<?php _e('Twitter', 'all_in_one_seo_pack') ?>" width="70px" /></a>
 </p>
 <p>
 <?php

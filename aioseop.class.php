@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6";
+ 	var $version = "1.6.1";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -248,7 +248,7 @@ if (function_exists('load_plugin_textdomain')) {
             $description = str_replace('%blog_description%', get_bloginfo('description'), $description);
             $description = str_replace('%wp_title%', $this->get_original_title(), $description);
             //$description = html_entity_decode($description, ENT_COMPAT, get_bloginfo('charset')); 
-            if($aioseop_options['aiosp_can']){
+            if($aioseop_options['aiosp_can'] && is_attachment()){
                     $url = $this->aiosp_mrt_get_url($wp_query);
                             if ($url) {
                             preg_match_all('/(\d+)/', $url, $matches);
@@ -431,6 +431,7 @@ if (function_exists('load_plugin_textdomain')) {
 	
 	
 	function get_post_description($post) {
+		global $aioseop_options;
 	    $description = trim(stripcslashes($this->internationalize(get_post_meta($post->ID, "_aioseop_description", true))));
 		if (!$description) {
 			$description = $this->trim_excerpt_without_filters_full_length($this->internationalize($post->post_excerpt));

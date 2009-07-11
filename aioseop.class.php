@@ -192,7 +192,7 @@ if (function_exists('load_plugin_textdomain')) {
 			}
 		}
 		
-		echo "\n<!-- all in one seo pack $this->version ";
+		echo "\n<!-- All in One SEO Pack $this->version by Michael Torbert of Semper Fi Web Design";
 		if ($this->ob_start_detected) {
 			echo "ob_start_detected ";
 		}

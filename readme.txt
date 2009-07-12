@@ -61,6 +61,9 @@ If you have to upgrade manually simply repeat the installation steps and re-enab
 
 **If upgrading, please back up your database first!**
 
+[Upgrade guide for upgrading from 1.5.x and below to
+1.6.x](http://onefinejay.com/2009/07/11/a-guide-to-upgrading-to-aioseop-v1-6-1)
+
 == Frequently Asked Questions ==
 
 Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/)** before requesting

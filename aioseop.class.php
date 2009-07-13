@@ -1424,7 +1424,6 @@ title='<?php echo $item['title']; ?>'>
 <?php endforeach; ?>
 </ul>
 <?php } }else{
-	echo "sdf";
 	//fall back on something else for feed here
 }?>
 

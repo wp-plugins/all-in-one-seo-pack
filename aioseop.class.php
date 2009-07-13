@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.1";
+ 	var $version = "1.6.2";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -1375,11 +1375,13 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php echo WP_PLUGIN_URL; ?>
 </script>
 
 <h3><?php _e('Click on option titles to get help!', 'all_in_one_seo_pack') ?></h3>
-Highest
+
 <?php
-$uri = "http://donations.semperfiwebdesign.com/category/highest-donations/feed/";
+$uri = "feed://donations.semperfiwebdesign.com/category/highest-donations/feed/";
 include_once(ABSPATH . WPINC . '/rss.php');
 $rss = fetch_rss($uri);
+if($rss){
+echo "Highest Donations";
 $maxitems = 5;
 if(is_array($rss->items)){
 $items = array_slice($rss->items, 0, $maxitems);
@@ -1394,12 +1396,19 @@ title='<?php echo $item['title']; ?>'>
 </a></li>
 <?php endforeach; ?>
 </ul>
-<?php } ?>
-Donations
+<?php } }else{
+	//do something else for feed here
+}
+
+
+ ?>
+
 <?php
-$uri = "http://donations.semperfiwebdesign.com/category/all-in-one-seo-pack/feed/";
+$uri = "feed://donations.semperfiwebdesign.com/category/all-in-one-seo-pack/feed/";
 include_once(ABSPATH . WPINC . '/rss.php');
 $rss = fetch_rss($uri);
+if($rss){
+echo "Latest Donations";
 $maxitems = 5;
 if(is_array($rss->items)){
 $items = array_slice($rss->items, 0, $maxitems);
@@ -1414,7 +1423,10 @@ title='<?php echo $item['title']; ?>'>
 </a></li>
 <?php endforeach; ?>
 </ul>
-<?php } ?>
+<?php } }else{
+	echo "sdf";
+	//fall back on something else for feed here
+}?>
 
 <?php
 global $wpdb;

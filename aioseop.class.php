@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.3";
+ 	var $version = "1.6.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -1991,11 +1991,15 @@ _e('All donations support continued development of this free software.', 'all_in
 
 </table>
 <p class="submit">
+	<?php if($aioseop_options) {  ?>
+	
 <input type="hidden" name="action" value="aiosp_update" /> 
 <input type="hidden" name="nonce-aioseop" value="<?php echo wp_create_nonce('aioseop-nonce'); ?>" />
 <input type="hidden" name="page_options" value="aiosp_home_description" /> 
 <input type="submit" class='button-primary' name="Submit" value="<?php _e('Update Options', 'all_in_one_seo_pack')?> &raquo;" /> 
 </p>
+<?php } ?>
+
 <p><br />
 <strong>Check out these other great plugins!</strong><br />
 <a href="http://semperfiwebdesign.com/custom-applications/sms-text-message/" title="SMS Text Message WordPress plugin">SMS Text Message</a> - sends SMS updates to your readers<br />

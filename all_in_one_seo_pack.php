@@ -657,7 +657,8 @@ if( ($_POST['aiosp_enabled'] == null && $aioseop_options['aiosp_enabled']!='1') 
 add_action( 'admin_notices', 'aioseop_activation_notice');
 }
 
-// Thanks to SarahG for much of the code for the following two functions
+
+// The following two functions copied entirely and modified slightly from Sarah G's Page Menu Editor, http://wordpress.org/extend/plugins/page-menu-editor/
 function aioseop_list_pages($content){
 		$url = preg_replace(array('/\//', '/\./', '/\-/'), array('\/', '\.', '\-'), get_option('siteurl'));
 		$pattern = '/<li class="page_item page-item-(\d+)([^\"]*)"><a href=\"([^\"]+)" title="([^\"]+)">([^<]+)<\/a>/i';

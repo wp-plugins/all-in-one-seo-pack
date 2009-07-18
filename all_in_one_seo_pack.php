@@ -592,6 +592,7 @@ $naioseop_options = array(
 "aiosp_enabled" =>0,
 "aiosp_do_log"=>null);
 
+if(get_option('aiosp_post_title_format')){
 foreach( $naioseop_options as $aioseop_opt_name => $value ) {
 		if( $aioseop_oldval = get_option($aioseop_opt_name) ) {
 			$naioseop_options[$aioseop_opt_name] = $aioseop_oldval;
@@ -603,7 +604,7 @@ foreach( $naioseop_options as $aioseop_opt_name => $value ) {
         
 		delete_option($aioseop_opt_name);
 	}
-
+}
 add_option('aioseop_options',$naioseop_options);
 echo "<div class='updated fade' style='background-color:green;border-color:green;'><p><strong>Updating SEO configuration options in database</strong></p></div";
 
@@ -657,7 +658,8 @@ if( ($_POST['aiosp_enabled'] == null && $aioseop_options['aiosp_enabled']!='1') 
 add_action( 'admin_notices', 'aioseop_activation_notice');
 }
 
-// Thanks to SarahG for much of the code for the following two functions
+
+// The following two functions copied entirely and modified slightly from Sarah G's Page Menu Editor, http://wordpress.org/extend/plugins/page-menu-editor/
 function aioseop_list_pages($content){
 		$url = preg_replace(array('/\//', '/\./', '/\-/'), array('\/', '\.', '\-'), get_option('siteurl'));
 		$pattern = '/<li class="page_item page-item-(\d+)([^\"]*)"><a href=\"([^\"]+)" title="([^\"]+)">([^<]+)<\/a>/i';

@@ -592,6 +592,7 @@ $naioseop_options = array(
 "aiosp_enabled" =>0,
 "aiosp_do_log"=>null);
 
+if(get_option('aiosp_post_title_format')){
 foreach( $naioseop_options as $aioseop_opt_name => $value ) {
 		if( $aioseop_oldval = get_option($aioseop_opt_name) ) {
 			$naioseop_options[$aioseop_opt_name] = $aioseop_oldval;
@@ -603,7 +604,7 @@ foreach( $naioseop_options as $aioseop_opt_name => $value ) {
         
 		delete_option($aioseop_opt_name);
 	}
-
+}
 add_option('aioseop_options',$naioseop_options);
 echo "<div class='updated fade' style='background-color:green;border-color:green;'><p><strong>Updating SEO configuration options in database</strong></p></div";
 

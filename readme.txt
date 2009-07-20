@@ -67,4 +67,4 @@ If you have to upgrade manually simply repeat the installation steps and re-enab
 == Frequently Asked Questions ==
 
 Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/)** before requesting
-**[Support](http://semperfiwebdesign.com/forum/)**
+**[My Plugin Support Forum](http://semperfiwebdesign.com/forum/)**

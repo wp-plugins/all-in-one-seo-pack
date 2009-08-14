@@ -1352,7 +1352,11 @@ href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-
 href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
-<br /><br />
+<br />
+<div style="width:75%;background-color:yellow;">
+<em>Thank you for using <strong>All in One SEO Pack</strong> by <strong>Michael Torbert</strong> of <strong>Semper Fi Web Design</strong>.  If you like this plugin and find it useful, feel free to click the <strong>donate</strong> button or send me a gift from my <strong>Amazon wishlist</strong>.  Also, don't forget to follow me on <strong>Twitter</strong>.</em>
+</div>
+<br />
 <a target="_blank" title="<?php echo 'Donate' ?>"
 href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" width="" alt="Donate" /><?php //echo 'Donate' ?></a>
 | <a target="_blank" title="Amazon Wish List" href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web"><img src="https://images-na.ssl-images-amazon.com/images/G/01/gifts/registries/wishlist/v2/web/wl-btn-74-b._V46774601_.gif" width="74" alt="My Amazon.com Wish List" height="42" border="0" /></a>

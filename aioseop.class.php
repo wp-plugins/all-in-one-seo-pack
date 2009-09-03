@@ -118,7 +118,7 @@ class All_in_One_SEO_Pack {
 			$excludedstuff = explode(',',$aioseop_options['aiosp_ex_pages']);
 			foreach($excludedstuff as $exedd){
 				//echo $exedd;
-			if($excludedstuff){
+			if($exedd){
 				if(stristr($currenturl, trim($exedd))){
 					return true;
 				}

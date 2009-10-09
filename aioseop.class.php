@@ -1471,8 +1471,10 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 -->
 </p>
 
-<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;">
+<div style="width:740;">
+<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:35px;border: 1px solid #ddd;">
 <div style="width:350px;height:115px;">
+	<h3>Donate</h3>
 <em>If you like this plugin and find it useful, help keep this plugin free and actively developed by clicking the <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><strong>donate</strong></a> button or send me a gift from my <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank"><strong>Amazon wishlist</strong></a>.  Also, don't forget to follow me on <a href="http://twitter.com/michaeltorbert/" target="_blank"><strong>Twitter</strong></a>.</em>
 </div>
 	<a target="_blank" title="<?php echo 'Donate' ?>"
@@ -1488,9 +1490,10 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 	
 </div>
 
-<div style="float:right;background-color:white;padding: 10px 10px 10px 10px;">
-<div style="width:350px;height:115px;">
-	We would also like to recommend PageLines Themes.  They are attractive, affordable, performance optimized, and integrate perfectly with All in One SEO Pack to put your professional website at the top of the rankings.
+<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;border: 1px solid #ddd;">
+<div style="width:415px;height:115px;">
+	<h3>Pageline Themes</h3>
+	We would also like to recommend <a href="http://www.pagelines.com/wpthemes/">PageLines for Professional WordPress Themes</a>.  They are attractive, affordable, performance optimized themes that integrate perfectly with All in One SEO Pack to put your <a href="http://www.pagelines.com/wpthemes/">professional website</a> at the top of the rankings.
 </div>
 	<a target="_blank" title="iBlogPro" href="http://www.pagelines.com/wpthemes/">
 	<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/iblogpro.jpg" alt="<?php _e('iBlogPro theme', 'all_in_one_seo_pack') ?>" />	</a>
@@ -1502,7 +1505,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 	<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/whitehouse.jpg" alt="<?php _e('WhiteHouse theme', 'all_in_one_seo_pack') ?>" />	</a>
 
 </div>
-
+</div>
 <div style="clear:both";></div>
 <!--
 <p>

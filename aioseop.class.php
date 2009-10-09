@@ -1471,7 +1471,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 -->
 </p>
 
-<div style="width:740;">
+<div style="width:844px;">
 <div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:35px;border: 1px solid #ddd;">
 <div style="width:350px;height:115px;">
 	<h3>Donate</h3>

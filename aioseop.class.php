@@ -1493,7 +1493,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 <div style="float:left;background-color:white;padding: 10px 10px 10px 10px;border: 1px solid #ddd;">
 <div style="width:415px;height:115px;">
 	<h3>Pageline Themes</h3>
-	We would also like to recommend <a href="http://www.pagelines.com/wpthemes/">PageLines for Professional WordPress Themes</a>.  They are attractive, affordable, performance optimized themes that integrate perfectly with All in One SEO Pack to put your <a href="http://www.pagelines.com/wpthemes/">professional website</a> at the top of the rankings.
+	We would also like to recommend <a href="http://www.pagelines.com/wpthemes/">PageLines</a> for Professional WordPress Themes.  They are attractive, affordable, performance optimized themes that integrate perfectly with All in One SEO Pack to put your professional website at the top of the rankings.
 </div>
 	<a target="_blank" title="iBlogPro" href="http://www.pagelines.com/wpthemes/">
 	<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/iblogpro.jpg" alt="<?php _e('iBlogPro theme', 'all_in_one_seo_pack') ?>" />	</a>

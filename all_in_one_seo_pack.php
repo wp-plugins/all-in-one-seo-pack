@@ -615,7 +615,7 @@ echo "<div class='updated fade' style='background-color:green;border-color:green
 function aioseop_activation_notice(){
 	global $aioseop_options;
 				if(function_exists('admin_url')){
-				echo '<div class="error fade" style="background-color:red;"><p><strong>All in One SEO Pack has new options. Go to <a href="' . admin_url( 'options-general.php?page=all-in-one-seo-pack/aioseop.class.php' ) . '">the admin page</a> to enable and configure the plugin.</strong></p></div>';
+				echo '<div class="error fade" style="background-color:red;"><p><strong>All in One SEO Pack must be configured. Go to <a href="' . admin_url( 'options-general.php?page=all-in-one-seo-pack/aioseop.class.php' ) . '">the admin page</a> to enable and configure the plugin.</strong></p></div>';
 }else{
 		echo '<div class="error fade" style="background-color:red;"><p><strong>All in One SEO Pack must be configured. Go to <a href="' . get_option('siteurl') . 'options-general.php?page=all-in-one-seo-pack/aioseop.class.php' . '">the admin page</a> to enable and configure the plugin.</strong></p></div>';
 }

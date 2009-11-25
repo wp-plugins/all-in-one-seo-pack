@@ -12,7 +12,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 **Optimizes** your Wordpress blog for Search Engines (**Search Engine Optimization**).
 
-**[Download now!](http://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip)**
+**[Pro Version](http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version)**
 
 **If upgrading, please back up your database first!**
 

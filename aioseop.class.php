@@ -1457,8 +1457,8 @@ href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-
 href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('Pro Version', 'all_in_one_seo_pack') ?>"
-href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version"><?php _e('Pro Version', 'all_in_one_seo_pack') ?></a>
+| <strong><a target="_blank" title="<?php _e('Pro Version', 'all_in_one_seo_pack') ?>"
+href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version"><?php _e('UPGRADE TO PRO VERSION', 'all_in_one_seo_pack') ?></a></strong>
 <br />
 
 <!--<div style="width:75%;background-color:yellow;">

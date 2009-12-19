@@ -21,7 +21,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 
 Some features:
 
-* Canonical URLs
+* Advanced Canonical URLs
 * Fine tune Page Navigational Links 
 * Built-in API so other plugins/themes can access and extend functionality
 * ONLY plugin to provide SEO Integration for WP e-Commerce sites

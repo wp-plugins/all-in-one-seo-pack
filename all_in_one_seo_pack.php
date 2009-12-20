@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /*******************************************************************************************************/
-register_activation_hook(__FILE__,'aioseop_activate_pl');
+//register_activation_hook(__FILE__,'aioseop_activate_pl');
 
 $UTF8_TABLES['strtolower'] = array(
 	"Ôº∫" => "ÔΩö",	"Ôºπ" => "ÔΩô",	"Ôº∏" => "ÔΩò",

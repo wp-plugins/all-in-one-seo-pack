@@ -5,7 +5,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/aioseop.class.php">Options configuration panel</a> | <a href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version">Upgrade to Pro Version</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/forum/" >Support</a> |  <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank" title="Amazon Wish List">Amazon Wishlist</a>
-Version: 1.6.12
+Version: 1.6.12.1
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -640,7 +640,7 @@ if($aioseop_options['aiosp_can'] == '1' || $aioseop_options['aiosp_can'] == 'on'
 }
 
 function aioseop_get_version(){
-	return '1.6.12';
+	return '1.6.12.1';
 }
 
 function add_plugin_row($links, $file) {
@@ -724,17 +724,20 @@ if (substr($aiosp->wp_version, 0, 3) < '2.5') {
 
 function aioseop_meta_box_add() {
 	if ( function_exists('add_meta_box') ) {
-		$mrt_aioseop_pts=get_post_types('','names'); 
-
-
-		$aioseop_options = get_option('aioseop_options');
-		$aioseop_mrt_cpt = $aioseop_options['aiosp_enablecpost'];
-			
-		foreach ($mrt_aioseop_pts as $mrt_aioseop_pt) {
-			if($mrt_aioseop_pt == 'post' || $mrt_aioseop_pt == 'page' || $aioseop_mrt_cpt){
-				add_meta_box('aiosp',__('All in One SEO Pack', 'all_in_one_seo_pack'),'aiosp_meta',$mrt_aioseop_pt);
+		if( function_exists('get_post_types')){		
+			$mrt_aioseop_pts=get_post_types('','names'); 
+			$aioseop_options = get_option('aioseop_options');
+			$aioseop_mrt_cpt = $aioseop_options['aiosp_enablecpost'];
+			foreach ($mrt_aioseop_pts as $mrt_aioseop_pt) {
+				if($mrt_aioseop_pt == 'post' || $mrt_aioseop_pt == 'page' || $aioseop_mrt_cpt){
+					add_meta_box('aiosp',__('All in One SEO Pack', 'all_in_one_seo_pack'),'aiosp_meta',$mrt_aioseop_pt);
+				}
 			}
+		}else{
+			add_meta_box('aiosp',__('All in One SEO Pack', 'all_in_one_seo_pack'),'aiosp_meta','post');
+			add_meta_box('aiosp',__('All in One SEO Pack', 'all_in_one_seo_pack'),'aiosp_meta','page');
 		}
+
 	} else {
 		add_action('dbx_post_advanced', array($aiosp, 'add_meta_tags_textinput'));
 		add_action('dbx_page_advanced', array($aiosp, 'add_meta_tags_textinput'));

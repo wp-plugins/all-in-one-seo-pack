@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.11.1";
+ 	var $version = "1.6.12";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -1366,6 +1366,7 @@ if (function_exists('load_plugin_textdomain')) {
 					"aiosp_generate_descriptions"=>1,
 					"aiosp_debug_info"=>null,
 					"aiosp_post_meta_tags"=>'',
+					"aiosp_enablecpost"=>'0',
 					"aiosp_page_meta_tags"=>'',
 					"aiosp_home_meta_tags"=>'',
 					"aiosp_enabled" =>0,
@@ -1404,6 +1405,7 @@ if (function_exists('load_plugin_textdomain')) {
 				$aioseop_options['aiosp_tags_noindex'] = $_POST['aiosp_tags_noindex'];
 				$aioseop_options['aiosp_generate_descriptions'] = $_POST['aiosp_generate_descriptions'];
 				$aioseop_options['aiosp_cap_cats'] = $_POST['aiosp_cap_cats'];
+				$aioseop_options['aiosp_enablecpost'] = $_POST['aiosp_enablecpost'];
 				$aioseop_options['aiosp_debug_info'] = $_POST['aiosp_debug_info'];
 				$aioseop_options['aiosp_post_meta_tags'] = $_POST['aiosp_post_meta_tags'];
 				$aioseop_options['aiosp_page_meta_tags'] = $_POST['aiosp_page_meta_tags'];
@@ -2001,6 +2003,22 @@ echo('</ul>');
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_enablecpost_tip');">
+<?php _e('SEO for Custom Post Types:', 'all_in_one_seo_pack')?>
+</td>
+<td>
+<input type="checkbox" name="aiosp_enablecpost" <?php if ($aioseop_options['aiosp_enablecpost']) echo "checked=\"1\""; ?>/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_enablecpost_tip">
+<?php
+_e('Check this if you want your enable AIOSEOP support for Custom Post Types on this site.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+
+
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_use_categories_tip');">
 <?php _e('Use Categories for META keywords:', 'all_in_one_seo_pack')?>
 </td>
@@ -2013,7 +2031,6 @@ _e('Check this if you want your categories for a given post used as the META key
 </div>
 </td>
 </tr>
-
 
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">

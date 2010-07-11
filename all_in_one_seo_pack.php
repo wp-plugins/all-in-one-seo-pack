@@ -702,9 +702,6 @@ function aioseop_list_pages($content){
 	return $content;
 	}
 
-
-	
-
 function aioseop_filter_callback($matches) {
 	global $wpdb;
 	if ($matches[1] && !empty($matches[1])) $postID = $matches[1];
@@ -745,20 +742,16 @@ function aioseop_meta_box_add() {
 }
 
 function aiosp_meta() {
-
 	global $post;
-	
 	$post_id = $post;
-	if (is_object($post_id)){
-		$post_id = $post_id->ID;
-	}
+	if (is_object($post_id)) $post_id = $post_id->ID;
  	$keywords = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_keywords', true)));
-    $title = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_title', true)));
+    	$title = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_title', true)));
 	$description = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_description', true)));
-    $aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aiosp_meta', true)));
-    $aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_disable', true)));
-    $aiosp_titleatr = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_titleatr', true)));
-    $aiosp_menulabel = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_menulabel', true)));	
+   	$aiosp_meta = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aiosp_meta', true)));
+    	$aiosp_disable = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_disable', true)));
+    	$aiosp_titleatr = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_titleatr', true)));
+    	$aiosp_menulabel = htmlspecialchars(stripcslashes(get_post_meta($post_id, '_aioseop_menulabel', true)));	
 	?>
 		<SCRIPT LANGUAGE="JavaScript">
 		<!-- Begin

@@ -1384,8 +1384,8 @@ if (function_exists('load_plugin_textdomain')) {
 				$message = __("All in One SEO Options Updated.", 'all_in_one_seo_pack');
 				$aioseop_options['aiosp_can'] = $_POST['aiosp_can'];
 				$aioseop_options['aiosp_donate'] = $_POST['aiosp_donate'];
-				$aioseop_options['aiosp_home_title'] = $_POST['aiosp_home_title'];
-				$aioseop_options['aiosp_home_description'] = $_POST['aiosp_home_description'];
+				$aioseop_options['aiosp_home_title'] = esc_attr($_POST['aiosp_home_title']);
+				$aioseop_options['aiosp_home_description'] = esc_attr($_POST['aiosp_home_description']);
 				$aioseop_options['aiosp_home_keywords'] = $_POST['aiosp_home_keywords'];
 				$aioseop_options['aiosp_max_words_excerpt'] = $_POST['aiosp_max_words_excerpt'];
 				$aioseop_options['aiosp_rewrite_titles'] = $_POST['aiosp_rewrite_titles'];

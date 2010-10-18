@@ -1459,7 +1459,7 @@ href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-
 | <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Support Forum', 'all_in_one_seo_pack') ?>"
-href="http://semperfiwebdesign.com/portfolio/wordpress/wordpress-plugins/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
+href="http://semperfiwebdesign.com/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
 | <strong><a target="_blank" title="<?php _e('Pro Version', 'all_in_one_seo_pack') ?>"

@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.12.2";
+ 	var $version = "1.6.13";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -2065,7 +2065,7 @@ _e('Check this if you want your enable AIOSEOP support for Custom Post Types on 
 </div>
 </td>
 </tr>
-
+<?php if( function_exists('get_post_types')){		?>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('123_tip');">
@@ -2093,7 +2093,7 @@ _e('Choose which post types you want to have SEO columns on the edit.php screen.
 </div>
 </td>
 </tr>
-
+<?php } ?>
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_use_categories_tip');">

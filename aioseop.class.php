@@ -1530,7 +1530,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 <div style="clear:both;">
 
 <div style="float:left;width:387px;padding-top:1px;">
-		<img src="http://www.bestthinking.com/content/images/wordpressseoad4.gif" width="371px">
+		<a href="http://www.bestthinking.com/invitation/visibility"><img src="http://www.bestthinking.com/content/images/wordpressseoad4.gif" width="371px"></a>
 </div>
 
 	<div style="float:left;background-color:white;padding:10px 10px 10px 10px;border:1px solid #ddd"> 

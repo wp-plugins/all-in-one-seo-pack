@@ -5,7 +5,7 @@ Tags: seo,meta,keywords,description,title,post, search engine optimization, goog
 Requires at least: 2.8
 Tested up to: 3.1.3
 Stable tag: trunk
-
+ 
 Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
 
 == Description ==

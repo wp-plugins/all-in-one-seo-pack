@@ -1466,9 +1466,9 @@ href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translation
 href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version"><?php _e('UPGRADE TO PRO VERSION', 'all_in_one_seo_pack') ?></a></strong>
 </div>
 
-<div style="float:left;width:370px;margin-left:10px;">
+<div style="width:600px;margin-top:40px;">
 	<form action="http://semperfiwebdesign.us1.list-manage.com/subscribe/post?u=794674d3d54fdd912f961ef14&amp;id=af0a96d3d9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-		<span>Join our mailing list for tips, tricks, and WordPress secrets.<em><strong>Sign up today and receive a free copy of the e-book 5 SEO Tips for WordPress</strong></em> ($39 value).</span>
+		<span>Join our mailing list for tips, tricks, and WordPress secrets.<br /><em><strong>Sign up today and receive a free copy of the e-book 5 SEO Tips for WordPress</strong></em> ($39 value).</span>
 		<div>
 	<label for="mce-EMAIL">Email Address </label>
 	<input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
@@ -1494,9 +1494,9 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 -->
 </p>
 
-<div style="width:832px;">
-	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:15px;border: 1px solid #ddd;">
-		<div style="width:350px;height:130px;">
+<div style="width:905px;">
+	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:15px;border: 1px solid #ddd;height:200px;">
+		<div style="width:423px;height:130px;">
 			<h3>Donate</h3>
 			<em>If you like this plugin and find it useful, help keep this plugin free and actively developed by clicking the <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><strong>donate</strong></a> button or send me a gift from my <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank"><strong>Amazon wishlist</strong></a>.  Also, don't forget to follow me on <a href="http://twitter.com/michaeltorbert/" target="_blank"><strong>Twitter</strong></a>.</em>
 		</div>
@@ -1509,7 +1509,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/twitter.jpg" alt="<?php _e('Follow Us on Twitter', 'all_in_one_seo_pack') ?>" />	</a>
 	</div>
 	
-	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;">
+	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:200px;">
 	<div style="width:423px;height:130px;">
 	<h3>Reliable WordPress Hosting</h3>
 	<p><a title="WebHostingHub.com" target="_blank"
@@ -1529,20 +1529,14 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 
 <div style="clear:both;">
 
-<div style="float:left;width:387px;padding-top:1px;">
-		<a href="http://www.bestthinking.com/invitation/visibility"><img src="http://www.bestthinking.com/content/images/wordpressseoad4.gif" width="371px"></a>
+<div style="float:left;background-color:white;padding:10px 10px 10px 10px;border:1px solid #ddd;margin-right:15px;margin-top:2px"> 
+		<div style="width:423px;height:130px"> 
+		<h3>Secure your WordPress Blog with WebsiteDefender.com</h3>
+		<p><a href="http://www.websitedefender.com">WebsiteDefender.com</a> is an online service that checks your WordPress blog by checking for malware, security vulnerabilities and hacker activity. Don’t take the risk of getting blacklisted by Google.
+			<strong><a href="https://dashboard.websitedefender.com/register-for-free-website-scan.php">Sign up for FREE</a> and keep your blog safe!</strong>
+	</div>
+	<a href="http://www.websitedefender.com/wordpress-security-with-websitedefender/" target="blank"><img src="http://www.websitedefender.com/adverts/WD_wordpress_450x50.gif" alt="Sign up for a free WebsiteDefender account and secure your WordPress blog"></a>
 </div>
-
-	<div style="float:left;background-color:white;padding:10px 10px 10px 10px;border:1px solid #ddd"> 
-			<div style="width:423px;height:130px"> 
-	    <h3>The Ultimate WordPress Backup Solution</h3> 
-	    <p>Running on <em>thousands</em> of sites, <a href="http://pluginbuddy.com/wordpress-backup/" target="_blank">BackupBuddy</a> is an all-in-one solution for <strong>WordPress</strong> <strong>backups, restoration, &amp; migration</strong>. Whether you’re a blogger or developer, this plugin is sure to bring you peace of mind &amp; added safety in the event of data loss. </p> 
-	    	</div> 
-			<a title="Backup WordPress Easily" href="http://pluginbuddy.com/wordpress-backup/" target="_blank"><img src="http://ithemes.com/graphics/ads/bb-AIO-ad.png" alt="Backup WordPress Easily"></a> 
-    </div>
-
-
-		
 
 <!--
 	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;border: 1px solid #ddd;">

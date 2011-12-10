@@ -22,6 +22,7 @@ Automatically optimizes your Wordpress blog for Search Engines (Search Engine Op
 Some features:
 
 
+* Google Analytics support
 * Support for Custom Post Types
 * Advanced Canonical URLs
 * Fine tune Page Navigational Links 

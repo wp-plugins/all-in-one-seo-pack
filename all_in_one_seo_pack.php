@@ -5,7 +5,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/aioseop.class.php">Options configuration panel</a> | <a href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version">Upgrade to Pro Version</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/forum/" >Support</a> |  <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank" title="Amazon Wish List">Amazon Wishlist</a>
-Version: 1.6.13.5
+Version: 1.6.13.6
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -534,8 +534,8 @@ $naioseop_options = array(
 "aiosp_ga_track_outbound_links"=>0,
 "aiosp_use_categories"=>0,
 "aiosp_dynamic_postspage_keywords"=>1,
-"aiosp_category_noindex"=>1,
-"aiosp_archive_noindex"=>1,
+"aiosp_category_noindex"=>0,
+"aiosp_archive_noindex"=>0,
 "aiosp_tags_noindex"=>0,
 "aiosp_cap_cats"=>1,
 "aiosp_generate_descriptions"=>0,
@@ -572,7 +572,7 @@ echo "<div class='updated fade' style='background-color:green;border-color:green
 
 function aioseop_activation_notice(){
 	global $aioseop_options;
-				echo '<div class="error fade" style="background-color:red;"><p><strong>All in One SEO Pack must be configured. Go to <a href="' . admin_url( 'options-general.php?page=all-in-one-seo-pack/aioseop.class.php' ) . '">the admin page</a> to enable and configure the plugin.</strong><br />All in One SEO Pack now supports <em>Custom Post Types</em>.</p></div>';
+				echo '<div class="error fade" style="background-color:red;"><p><strong>All in One SEO Pack must be configured. Go to <a href="' . admin_url( 'options-general.php?page=all-in-one-seo-pack/aioseop.class.php' ) . '">the admin page</a> to enable and configure the plugin.</strong><br />All in One SEO Pack now supports <em>Custom Post Types</em> and Google Analytics.</p></div>';
 }
 
 if($aioseopcc){
@@ -599,7 +599,7 @@ if($aioseop_options['aiosp_can'] == '1' || $aioseop_options['aiosp_can'] == 'on'
 }
 
 function aioseop_get_version(){
-	return '1.6.13.5';
+	return '1.6.13.6';
 }
 
 function add_plugin_row($links, $file) {
@@ -689,6 +689,13 @@ add_action('admin_menu', array($aiosp, 'admin_menu'));
 add_action('admin_menu', 'aioseop_meta_box_add');
 add_action('admin_menu', 'aioseop_mrt_nap');
 
+////analytics
+if($aioseop_options['aiosp_google_analytics_id'])
+	add_action('wp_footer', array($aiosp, 'aiosp_google_analytics'));
+
+
+
+
 function aioseop_mrt_nap(){
 	add_submenu_page("__FILE__", 'Settings', 'Settings', 'manage_options', '__FILE__', 'aioseop_mrt_nap_menu2a');
 	add_submenu_page("__FILE__", 'Tools', 'Tools', 'manage_options', 'subpageb', 'aioseop_mrt_nap_menu2b');
@@ -771,7 +778,7 @@ function aiosp_meta() {
 		</script>
 		<input value="aiosp_edit" type="hidden" name="aiosp_edit" />
 		
-		<a target="__blank" href="http://semperfiwebdesign.com/forum/"><?php _e('Click here for Support', 'all_in_one_seo_pack') ?></a>
+		<a target="__blank" href="http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/"><?php _e('Upgrade to All in One SEO Pack Pro Version', 'all_in_one_seo_pack') ?></a>
 		<table style="margin-bottom:40px">
 		<tr>
 		<th style="text-align:left;" colspan="2">

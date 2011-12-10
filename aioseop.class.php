@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.13.5";
+ 	var $version = "1.6.13.6";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -349,55 +349,8 @@ class All_in_One_SEO_Pack {
 					
 					echo "".'<link rel="canonical" href="'.$url.'" />'."\n";
 				}
-			}
-			if($aioseop_options['aiosp_google_analytics_id']) {
-?>
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', '<?php echo $aioseop_options['aiosp_google_analytics_id']; ?>']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script>
-<?php
-				if ($aioseop_options['aiosp_ga_track_outbound_links']) {
-					?>
-	<script type="text/javascript">
-		function recordOutboundLink(link, category, action) {
-			_gat._getTrackerByName()._trackEvent(category, action);
-			setTimeout('document.location = "' + link.href + '"', 100);
-		}
-
-	if(typeof jQuery == 'function') { /* use jQuery if it exists because it is a more elegant solution */
-		jQuery(function () {
-			jQuery('a:not([href*="' + document.domain + '"])').click(function () {
-				recordOutboundLink(this, 'Outbound Links', document.domain);
-			});
-		});
-	}
-	else { /* use regular Javascript if jQuery does not exist */
-		window.onload = function () {
-			var links = document.getElementsByTagName('a');
-			for (var x=0; x < links.length; x++) {
-				links[x].onclick = function () {
-					var mydomain = new RegExp(document.domain, 'i');
-					if(!mydomain.test(this.getAttribute('href'))) {
-						recordOutboundLink(this, 'Outbound Links', document.domain);
-					}
-				};
-			}
-		};
-	}
-	</script>
-	
-					<?php
-				}
+		
+		
 
 			}
 		
@@ -405,6 +358,59 @@ class All_in_One_SEO_Pack {
 		}
 
 		// Thank you, Yoast de Valk, for much of this code.	
+	
+function aiosp_google_analytics(){
+	global $aioseop_options;
+	
+	?>
+		<script type="text/javascript">
+
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', '<?php echo $aioseop_options['aiosp_google_analytics_id']; ?>']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+
+		</script>
+	<?php
+					if ($aioseop_options['aiosp_ga_track_outbound_links']) {
+						?>
+		<script type="text/javascript">
+			function recordOutboundLink(link, category, action) {
+				_gat._getTrackerByName()._trackEvent(category, action);
+				setTimeout('document.location = "' + link.href + '"', 100);
+			}
+
+		if(typeof jQuery == 'function') { /* use jQuery if it exists because it is a more elegant solution */
+			jQuery(function () {
+				jQuery('a:not([href*="' + document.domain + '"])').click(function () {
+					recordOutboundLink(this, 'Outbound Links', document.domain);
+				});
+			});
+		}
+		else { /* use regular Javascript if jQuery does not exist */
+			window.onload = function () {
+				var links = document.getElementsByTagName('a');
+				for (var x=0; x < links.length; x++) {
+					links[x].onclick = function () {
+						var mydomain = new RegExp(document.domain, 'i');
+						if(!mydomain.test(this.getAttribute('href'))) {
+							recordOutboundLink(this, 'Outbound Links', document.domain);
+						}
+					};
+				}
+			};
+		}
+		</script>
+
+						<?php
+	
+}}
+	
 	
 		function aiosp_mrt_get_url($query) {
 			global $aioseop_options;
@@ -587,11 +593,7 @@ class All_in_One_SEO_Pack {
 		} else if (is_single()) {
 			$title = $this->internationalize(wp_title('', false));
 		} else if (is_search() && isset($s) && !empty($s)) {
-			if (function_exists('attribute_escape')) {
-				$search = attribute_escape(stripcslashes($s));
-			} else {
-				$search = wp_specialchars(stripcslashes($s), true);
-			}
+			$search = esc_attr(stripcslashes($s));
 			$search = $this->capitalize($search);
 			$title = $search;
 		} else if (is_category() && !is_feed()) {
@@ -707,11 +709,7 @@ class All_in_One_SEO_Pack {
 			$title = apply_filters('aioseop_title_single',$title);
 			$header = $this->replace_title($header, $title);
 		} else if (is_search() && isset($s) && !empty($s)) {
-			if (function_exists('attribute_escape')) {
-				$search = attribute_escape(stripcslashes($s));
-			} else {
-				$search = wp_specialchars(stripcslashes($s), true);
-			}
+			$search = esc_attr(stripcslashes($s)); 
 			$search = $this->capitalize($search);
             $title_format = $aioseop_options['aiosp_search_title_format'];
             $title = str_replace('%blog_title%', $this->internationalize(get_bloginfo('name')), $title_format);
@@ -1538,10 +1536,22 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		<div style="width:423px;height:130px"> 
 		<h3>Secure your WordPress Blog with WebsiteDefender.com</h3>
 		<p><a href="http://www.websitedefender.com">WebsiteDefender.com</a> is an online service that checks your WordPress blog by checking for malware, security vulnerabilities and hacker activity. Don’t take the risk of getting blacklisted by Google.
-			<strong><a href="https://dashboard.websitedefender.com/register-for-free-website-scan.php">Sign up for FREE</a> and keep your blog safe!</strong>
+			<strong><a href="https://dashboard.websitedefender.com/register-for-free-website-scan.php">Sign up for FREE</a> and keep your blog safe!</strong></p>
 	</div>
-	<a href="http://www.websitedefender.com/wordpress-security-with-websitedefender/" target="blank"><img src="http://www.websitedefender.com/adverts/WD_wordpress_450x50.gif" alt="Sign up for a free WebsiteDefender account and secure your WordPress blog"></a>
+	<a href="http://www.websitedefender.com/wordpress-security-with-websitedefender/" target="_blank"><img src="http://www.websitedefender.com/adverts/WD_wordpress_450x50.gif" alt="Sign up for a free WebsiteDefender account and secure your WordPress blog"></a>
 </div>
+
+
+	<div style="float:left;background-color:white;padding:10px 10px 10px 10px;border:1px solid #ddd;margin-top:2px"> 
+			<div style="width:423px;height:130px"> 
+			<h3>Drag and Drop WordPress Design</h3>
+			<p><a href="http://semperfiwebdesign.com/headwayaio/" target="_blank">Headway Themes</a> allows you to easily create your own stunning website designs! Stop using premade themes start making your own design with Headway's easy to use Drag and Drop interface. All in One SEO Pack users have an exclusive discount by using coupon code <strong>SEMPERFI30</strong> at checkout.</p>
+		</div>
+		<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/headwaybanner.png"></a>
+	</div>
+	
+	
+
 
 <!--
 	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;border: 1px solid #ddd;">

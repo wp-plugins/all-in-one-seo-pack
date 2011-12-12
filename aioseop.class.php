@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.13.6";
+ 	var $version = "1.6.13.7";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -387,8 +387,11 @@ function aiosp_google_analytics(){
 
 		if(typeof jQuery == 'function') { /* use jQuery if it exists because it is a more elegant solution */
 			jQuery(function () {
-				jQuery('a:not([href*="' + document.domain + '"])').click(function () {
-					recordOutboundLink(this, 'Outbound Links', document.domain);
+				jQuery('a').click(function () {
+					var href = this.attr('href');
+					if ( (href.match(/^http/)) && (! href.match(document.domain)) ) {
+						recordOutboundLink(this, 'Outbound Links', document.domain);
+					}
 				});
 			});
 		}

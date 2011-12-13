@@ -5,7 +5,7 @@
 Plugin Name: All in One SEO Pack
 Plugin URI: http://semperfiwebdesign.com
 Description: Out-of-the-box SEO for your Wordpress blog. <a href="options-general.php?page=all-in-one-seo-pack/aioseop.class.php">Options configuration panel</a> | <a href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version">Upgrade to Pro Version</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate</a> | <a href="http://semperfiwebdesign.com/forum/" >Support</a> |  <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank" title="Amazon Wish List">Amazon Wishlist</a>
-Version: 1.6.13.7
+Version: 1.6.13.8
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
 */
@@ -599,7 +599,7 @@ if($aioseop_options['aiosp_can'] == '1' || $aioseop_options['aiosp_can'] == 'on'
 }
 
 function aioseop_get_version(){
-	return '1.6.13.7';
+	return '1.6.13.8';
 }
 
 function add_plugin_row($links, $file) {
@@ -721,27 +721,37 @@ if( ($_POST['aiosp_enabled'] == null && $aioseop_options['aiosp_enabled']!='1') 
 
 // The following two functions are GPLed from Sarah G's Page Menu Editor, http://wordpress.org/extend/plugins/page-menu-editor/.
 function aioseop_list_pages($content){
+	global $wp_version;
 	$matches = array();
 	if (preg_match_all('/<li class="page_item page-item-(\d+)/i', $content, $matches)) {
 		update_postmeta_cache(array_values($matches[1]));
 		unset($matches);
-		$pattern = '/<li class="page_item page-item-(\d+)([^\"]*)"><a href=\"([^\"]+)" title="([^\"]+)">([^<]+)<\/a>/i';
+		if ( $wp_version >= 3.3 ) {
+			$pattern = '@<li class="page_item page-item-(\d+)([^\"]*)"><a href=\"([^\"]+)">(.*?)</a>@is';
+		} else {
+			$pattern = '@<li class="page_item page-item-(\d+)([^\"]*)"><a href=\"([^\"]+)" title="([^\"]+)">(.*?)</a>@is';
+		}
 		return preg_replace_callback($pattern, "aioseop_filter_callback", $content);
 	}
 	return $content;
 	}
 
 function aioseop_filter_callback($matches) {
-	global $wpdb;
+	global $wpdb, $wp_version;
+	if ( $wp_version >= 3.3 ) {
+		$t = 4;
+	} else {
+		$t = 5;
+	}
 	if ($matches[1] && !empty($matches[1])) $postID = $matches[1];
 	if (empty($postID)) $postID = get_option("page_on_front");
 	$title_attrib = stripslashes(get_post_meta($postID, '_aioseop_titleatr', true));
 	$menulabel = stripslashes(get_post_meta($postID, '_aioseop_menulabel', true));
-	if (empty($menulabel)) $menulabel = $matches[4];
+	if (empty($menulabel)) $menulabel = $matches[$t];
 	if (!empty($title_attrib)) :
 		$filtered = '<li class="page_item page-item-'.$postID.$matches[2].'"><a href="'.$matches[3].'" title="'.$title_attrib.'">'.$menulabel.'</a>';
 	else :
-    	$filtered = '<li class="page_item page-item-'.$postID.$matches[2].'"><a href="'.$matches[3].'" title="'.$matches[4].'">'.$menulabel.'</a>';
+    	$filtered = '<li class="page_item page-item-'.$postID.$matches[2].'"><a href="'.$matches[3].'" title="'.$matches[$t].'">'.$menulabel.'</a>';
 	endif;
 	return $filtered;
 }

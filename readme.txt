@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: trunk
  
-Automatically optimizes your Wordpress blog for Search Engines (Search Engine Optimization).
+WordPress SEO plugin to automatically optimize your Wordpress blog for Search Engines.
 
 == Description ==
 

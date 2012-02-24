@@ -1501,7 +1501,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 </p>
 
 <div style="width:905px;">
-	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:15px;border: 1px solid #ddd;height:200px;">
+	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;margin-right:15px;border: 1px solid #ddd;height:200px;margin-bottom:2px;">
 		<div style="width:423px;height:130px;">
 			<h3>Donate</h3>
 			<em>If you like this plugin and find it useful, help keep this plugin free and actively developed by clicking the <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><strong>donate</strong></a> button or send me a gift from my <a href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web" target="_blank"><strong>Amazon wishlist</strong></a>.  Also, don't forget to follow me on <a href="http://twitter.com/michaeltorbert/" target="_blank"><strong>Twitter</strong></a>.</em>
@@ -1514,7 +1514,17 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		<a target="_blank" title="<?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?>" href="http://twitter.com/michaeltorbert/">
 		<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/twitter.jpg" alt="<?php _e('Follow Us on Twitter', 'all_in_one_seo_pack') ?>" />	</a>
 	</div>
-	
+
+
+<div style="clear:both;">
+	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:200px;margin-right:15px;">
+		<div style="width:423px;height:130px"> 
+		<h3>Drag and Drop WordPress Design</h3>
+		<p><a href="http://semperfiwebdesign.com/headwayaio/" target="_blank">Headway Themes</a> allows you to easily create your own stunning website designs! Stop using premade themes start making your own design with Headway's easy to use Drag and Drop interface. All in One SEO Pack users have an exclusive discount by using coupon code <strong>SEMPERFI30</strong> at checkout.</p>
+	</div>
+	<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/headwaybanner.png"></a>
+	</div>
+
 	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:200px;">
 	<div style="width:423px;height:130px;">
 	<h3>Reliable WordPress Hosting</h3>
@@ -1532,6 +1542,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 	src="http://webhostingrating.com/images/hub_420_wordpress.png"
 	alt="WebHostingHub.com" width="420" height="53" border="0" /></a>
 	</div>
+</div>
 
 <div style="clear:both;">
 
@@ -1546,12 +1557,20 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 
 
 	<div style="float:left;background-color:white;padding:10px 10px 10px 10px;border:1px solid #ddd;margin-top:2px"> 
-			<div style="width:423px;height:130px"> 
-			<h3>Drag and Drop WordPress Design</h3>
-			<p><a href="http://semperfiwebdesign.com/headwayaio/" target="_blank">Headway Themes</a> allows you to easily create your own stunning website designs! Stop using premade themes start making your own design with Headway's easy to use Drag and Drop interface. All in One SEO Pack users have an exclusive discount by using coupon code <strong>SEMPERFI30</strong> at checkout.</p>
-		</div>
-		<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/headwaybanner.png"></a>
+	<div style="width:423px;height:130px;">
+		<h3>Awesome WordPress Hosting</h3>
+		<a title="GreenGeeks.com" target="_blank"
+		href="http://www.greengeeks.com/cgi-bin/affiliates/clickthru.cgi?id=allin1seo&page=1">GreenGeeks.com</a>
+		the world's #1 most eco-friendly web host, provides Awesome WordPress Hosting! 99.9% Uptime Guarantee. 24x7x365 Customer Support. FREE SITE MIGRATION. 30 day money back guarantee. Find out why we're Awesome! 877-ECO-SITE / 877-326-7483.
+		<br />
+		Get $30 OFF when you order. Use Coupon code: <strong>ALLIN1SEO</strong>.
 	</div>
+	<a title="GreenGeeks" target="_blank"
+	href="http://www.greengeeks.com/cgi-bin/affiliates/clickthru.cgi?id=allin1seo&page=1"><img
+	src="http://www.greengeeks.com/images/mktg/420x53-greengeeks-wordpress.png"
+	alt="GreenGeeks" width="420" height="53" border="0" /></a>	
+	</div>
+</div>
 	
 	
 
@@ -1572,7 +1591,6 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 </div>
 </div>
 -->
-</div>
 <div style="clear:both";></div>
 <!--
 <p>

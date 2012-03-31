@@ -60,24 +60,49 @@ class All_in_One_SEO_Pack {
 //		$this->upgrade_folder = dirname(__FILE__);
 	}
 	
+
+	/*** Case conversion; handle non UTF-8 encodings and fallback ***/
+	
+	function convert_case( $str, $mode = 'upper' ) {
+		static $charset = null;
+		if ($charset == null) $charset = get_bloginfo( 'charset' );
+		if ( $charset == 'UTF-8' ) {
+			global $UTF8_TABLES;
+			include_once( 'aioseop_utility.php' );
+		}
+		if ( $charset == 'UTF-8' && is_array($UTF8_TABLES) ) {		
+			if ( $mode == 'upper' ) return strtr( $str, $UTF8_TABLES['strtoupper'] );
+			if ( $mode == 'lower' ) return strtr( $str, $UTF8_TABLES['strtolower'] );
+			return $str;
+		} else {
+			if ( $mode == 'upper' && function_exists( 'mb_strtoupper' ) ) {
+				return mb_strtoupper( $str, $charset );
+			} elseif ( $mode == 'lower' && function_exists( 'mb_strtolower' ) ) {
+				return mb_strtolower( $str, $charset );
+			} else {
+				if ( $mode == 'upper' ) return strtoupper( $str );
+				if ( $mode == 'lower' ) return strtolower( $str );
+				return $str;
+			}
+		}
+	}
+
 	/**      
 	 * Convert a string to lower case
 	 * Compatible with mb_strtolower(), an UTF-8 friendly replacement for strtolower()
 	 */
-	function strtolower($str) {
-		global $UTF8_TABLES;
-		return strtr($str, $UTF8_TABLES['strtolower']);
+
+	function strtolower( $str ) {
+		return $this->convert_case( $str, 'lower' );
 	}
 	
 	/**      
 	 * Convert a string to upper case
 	 * Compatible with mb_strtoupper(), an UTF-8 friendly replacement for strtoupper()
 	 */
-	function strtoupper($str) {
-		global $UTF8_TABLES;
-		return strtr($str, $UTF8_TABLES['strtoupper']);
-	}	
-	
+	function strtoupper( $str ) {
+		return $this->convert_case( $str, 'upper' );
+	}
 	
 	function template_redirect() {
 		global $wp_query;

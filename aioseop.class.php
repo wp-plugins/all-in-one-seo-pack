@@ -199,7 +199,7 @@ class All_in_One_SEO_Pack {
 
 	function seo_mrt_admin_head() {
 		$home = get_settings('siteurl');
-		$stylesheet = WP_PLUGIN_URL . '/all-in-one-seo-pack/style.css';
+		$stylesheet = AIOSEOP_PLUGIN_URL . 'style.css';
 		echo '<link rel="stylesheet" href="' . $stylesheet . '" type="text/css" media="screen" />';
 	}
 
@@ -1495,17 +1495,6 @@ href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version"><?php _e('
 	<div style="clear:both;">
 
 <br />
-<!--<div style="width:75%;background-color:yellow;">
-<em>Thank you for using <strong>All in One SEO Pack</strong> by <strong>Michael Torbert</strong> of <strong>Semper Fi Web Design</strong>.  If you like this plugin and find it useful, feel free to click the <strong>donate</strong> button or send me a gift from my <strong>Amazon wishlist</strong>.  Also, don't forget to follow me on <strong>Twitter</strong>.</em>
-</div>
--->
-<!--
-<a target="_blank" title="<?php //echo 'Donate' ?>"
-href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"><img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" width="" alt="Donate" /><?php //echo 'Donate' ?></a>
-| <a target="_blank" title="Amazon Wish List" href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web"><img src="https://images-na.ssl-images-amazon.com/images/G/01/gifts/registries/wishlist/v2/web/wl-btn-74-b._V46774601_.gif" width="74" alt="My Amazon.com Wish List" height="42" border="0" /></a>
-| <a target="_blank" title="<?php //_e('Follow us on Twitter', 'all_in_one_seo_pack') ?>"
-href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/twitter.png" alt="<?php //_e('Follow Us on Twitter', 'all_in_one_seo_pack') ?>" height="47px" /></a>
--->
 </p>
 
 <div style="width:905px;">
@@ -1516,11 +1505,11 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		</div>
 		<a target="_blank" title="<?php echo 'Donate' ?>"
 	href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8">
-		<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/donate.jpg" alt="<?php _e('Donate with Paypal', 'all_in_one_seo_pack') ?>" />	</a>
+		<img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>donate.jpg" alt="<?php _e('Donate with Paypal', 'all_in_one_seo_pack') ?>" />	</a>
 		<a target="_blank" title="Amazon Wish List" href="https://www.amazon.com/wishlist/1NFQ133FNCOOA/ref=wl_web">
-		<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/amazon.jpg" alt="<?php _e('My Amazon Wish List', 'all_in_one_seo_pack') ?>" /> </a>
+		<img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>amazon.jpg" alt="<?php _e('My Amazon Wish List', 'all_in_one_seo_pack') ?>" /> </a>
 		<a target="_blank" title="<?php _e('Follow us on Twitter', 'all_in_one_seo_pack') ?>" href="http://twitter.com/michaeltorbert/">
-		<img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/twitter.jpg" alt="<?php _e('Follow Us on Twitter', 'all_in_one_seo_pack') ?>" />	</a>
+		<img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>twitter.jpg" alt="<?php _e('Follow Us on Twitter', 'all_in_one_seo_pack') ?>" />	</a>
 	</div>
 
 
@@ -1530,7 +1519,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		<h3>Drag and Drop WordPress Design</h3>
 		<p><a href="http://semperfiwebdesign.com/headwayaio/" target="_blank">Headway Themes</a> allows you to easily create your own stunning website designs! Stop using premade themes start making your own design with Headway's easy to use Drag and Drop interface. All in One SEO Pack users have an exclusive discount by using coupon code <strong>SEMPERFI30</strong> at checkout.</p>
 	</div>
-	<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo WP_PLUGIN_URL; ?>/all-in-one-seo-pack/images/headwaybanner.png"></a>
+	<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>headwaybanner.png"></a>
 	</div>
 
 	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:200px;">
@@ -1547,7 +1536,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 	</div>
 	<a title="WebHostingHub.com" target="_blank"
 	href="http://ref.webhostinghub.com/scripts/click.php?ref_id=rsuog2&ad_id=54c8d95f"><img
-	src="http://webhostingrating.com/images/hub_420_wordpress.png"
+	src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>hub_420_wordpress.png"
 	alt="WebHostingHub.com" width="420" height="53" border="0" /></a>
 	</div>
 </div>
@@ -1560,7 +1549,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 		<p><a href="http://www.websitedefender.com">WebsiteDefender.com</a> is an online service that checks your WordPress blog by checking for malware, security vulnerabilities and hacker activity. Don’t take the risk of getting blacklisted by Google.
 			<strong><a href="https://dashboard.websitedefender.com/register-for-free-website-scan.php">Sign up for FREE</a> and keep your blog safe!</strong></p>
 	</div>
-	<a href="http://www.websitedefender.com/wordpress-security-with-websitedefender/" target="_blank"><img src="http://www.websitedefender.com/adverts/WD_wordpress_450x50.gif" alt="Sign up for a free WebsiteDefender account and secure your WordPress blog"></a>
+	<a href="http://www.websitedefender.com/wordpress-security-with-websitedefender/" target="_blank"><img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>WD_wordpress_450x50.gif" alt="Sign up for a free WebsiteDefender account and secure your WordPress blog"></a>
 </div>
 
 
@@ -1575,7 +1564,7 @@ href="http://twitter.com/michaeltorbert/"><img src="<?php //echo WP_PLUGIN_URL; 
 	</div>
 	<a title="GreenGeeks" target="_blank"
 	href="http://www.greengeeks.com/cgi-bin/affiliates/clickthru.cgi?id=allin1seo&page=1"><img
-	src="http://www.greengeeks.com/images/mktg/420x53-greengeeks-wordpress.png"
+	src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>420x53-greengeeks-wordpress.png"
 	alt="GreenGeeks" width="420" height="53" border="0" /></a>	
 	</div>
 </div>

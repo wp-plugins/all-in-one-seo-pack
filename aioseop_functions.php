@@ -4,7 +4,7 @@
  */
 
 /** Ajax callback functions for quickedit functionality */
-add_action( 'wp_ajax_aioseop_ajax_save_meta', 'aioseop_ajax_save_meta');
+//add_action( 'wp_ajax_aioseop_ajax_save_meta', 'aioseop_ajax_save_meta');
 
 if (!function_exists('aioseop_activate')) {
 	function aioseop_activate() {
@@ -178,16 +178,16 @@ if (!function_exists('aioseop_addmycolumns')) {
 if (!function_exists('aioseop_mrt_pcolumns')) {
 	function aioseop_mrt_pcolumns($aioseopc) {
 		global $aioseop_options;
-	    $aioseopc['seotitle'] = __('SEO Title');
-	    if ($aioseop_options['aiosp_togglekeywords'] == '') $aioseopc['seokeywords'] = __('SEO Keywords');
-	    $aioseopc['seodesc'] = __('SEO Description');
-	    return $aioseopc;
+		$aioseopc['seotitle'] = __('SEO Title');
+		$aioseopc['seokeywords'] = __('SEO Keywords');
+		$aioseopc['seodesc'] = __('SEO Description');
+		return $aioseopc;
 	}	
 }
 
 if (!function_exists('aioseop_admin_head')) {
 	function aioseop_admin_head() {
-		echo '<script type="text/javascript" src="' . AIOSEOP_PLUGIN_URL . 'quickedit_functions.js" ></script>';
+//		echo '<script type="text/javascript" src="' . AIOSEOP_PLUGIN_URL . 'quickedit_functions.js" ></script>';
 		?><style>
 		.aioseop_edit_button {
 		margin: 0 0 0 5px;
@@ -248,29 +248,15 @@ if (!function_exists('aioseop_ajax_save_meta')) {
 
 if (!function_exists('aioseop_mrt_pccolumn')) {
 	function aioseop_mrt_pccolumn($aioseopcn, $aioseoppi) {
-		$id = $aioseoppi;
-		$target = null;
-		if( $aioseopcn == 'seotitle' ) $target = 'title';
-		if( $aioseopcn == 'seokeywords' ) $target = 'keywords';
-		if( $aioseopcn == 'seodesc' ) $target = 'description';
-		if ( !$target ) return;
-		if( current_user_can( 'edit_post', $id ) ) { ?>
-			<div class="aioseop_mpc_admin_meta_container">
-				<div 	class="aioseop_mpc_admin_meta_options" 
-						id="aioseop_<?php print $target; ?>_<?php echo $id; ?>" 
-						style="float:left;">
-					<?php $content = htmlspecialchars( stripcslashes( get_post_meta( $id, "_aioseop_" . $target,	TRUE ) ) ); 
-					if( !empty($content) ): $label = str_replace( "'", "\'", $content );  
-					else: $label = ''; $content = '<strong><i>No ' . $target . '</i></strong>' ; endif;
-						print $content . '<a id="' . $target . 'editlink' . $id . '" href="javascript:void(0);" onclick="aioseop_ajax_edit_meta_form(' .
-						$id . ', \'' . $label . '\', \'' . $target . '\');return false;" title="' . __('Edit') . '">';
-						print "<img class='aioseop_edit_button' 
-											id='aioseop_edit_id' 
-											src='" . AIOSEOP_PLUGIN_IMAGES_URL . "cog_edit.png' /></a>";
-					 ?>
-				</div>
-			</div>
-		<?php }
+		if( $aioseopcn == 'seotitle' ) {
+			echo htmlspecialchars(stripcslashes(get_post_meta($aioseoppi,'_aioseop_title',TRUE)));
+		}
+		if( $aioseopcn == 'seokeywords' ) {
+			echo htmlspecialchars(stripcslashes(get_post_meta($aioseoppi,'_aioseop_keywords',TRUE)));
+		}
+		if( $aioseopcn == 'seodesc' ) {
+			echo htmlspecialchars(stripcslashes(get_post_meta($aioseoppi,'_aioseop_description',TRUE)));
+		}
 	}	
 }
 

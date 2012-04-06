@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.14.1";
+ 	var $version = "1.6.14.2";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -554,7 +554,7 @@ function aiosp_google_analytics(){
 		}
 		
 		// "internal whitespace trim"
-		$description = preg_replace("/\s\s+/", " ", $description);
+		$description = preg_replace("/\s\s+/u", " ", $description);
 		
 		return $description;
 	}

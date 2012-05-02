@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.14.2";
+ 	var $version = "1.6.14.3";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -407,30 +407,30 @@ function aiosp_google_analytics(){
 				_gat._getTrackerByName()._trackEvent(category, action);
 				setTimeout('document.location = "' + link.href + '"', 100);
 			}
+			/* use regular Javascript for this */
+			function getAttr(ele, attr) {
+				var result = (ele.getAttribute && ele.getAttribute(attr)) || null;
+				if( !result ) {
+					var attrs = ele.attributes;
+					var length = attrs.length;
+					for(var i = 0; i < length; i++)
+					if(attr[i].nodeName === attr) result = attr[i].nodeValue;
+				}
+				return result;
+			}
 
-		if(typeof jQuery == 'function') { /* use jQuery if it exists because it is a more elegant solution */
-			jQuery(function () {
-				jQuery('a').click(function () {
-					var href = this.attr('href');
-					if ( ( typeof href != 'undefined' ) && (href.match(/^http/)) && (! href.match(document.domain)) ) {
-						recordOutboundLink(this, 'Outbound Links', document.domain);
-					}
-				});
-			});
-		}
-		else { /* use regular Javascript if jQuery does not exist */
 			window.onload = function () {
 				var links = document.getElementsByTagName('a');
 				for (var x=0; x < links.length; x++) {
 					links[x].onclick = function () {
 						var mydomain = new RegExp(document.domain, 'i');
-						if(!mydomain.test(this.getAttribute('href'))) {
-							recordOutboundLink(this, 'Outbound Links', document.domain);
+						href = getAttr(this, 'href');
+						if(href && href.toLowerCase().indexOf('http') === 0 && !mydomain.test(href)) {
+							recordOutboundLink(this, 'Outbound Links', href);
 						}
 					};
 				}
 			};
-		}
 		</script>
 
 						<?php

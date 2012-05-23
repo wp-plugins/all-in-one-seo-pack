@@ -405,7 +405,9 @@ function aiosp_google_analytics(){
 		<script type="text/javascript">
 			function recordOutboundLink(link, category, action) {
 				_gat._getTrackerByName()._trackEvent(category, action);
+				if ( link.target == '_blank' ) return true;
 				setTimeout('document.location = "' + link.href + '"', 100);
+				return false;
 			}
 			/* use regular Javascript for this */
 			function getAttr(ele, attr) {
@@ -422,13 +424,15 @@ function aiosp_google_analytics(){
 			window.onload = function () {
 				var links = document.getElementsByTagName('a');
 				for (var x=0; x < links.length; x++) {
+					if (typeof links[x] == 'undefined') continue;
+					if (typeof links[x].onclick != 'undefined') continue;
 					links[x].onclick = function () {
 						var mydomain = new RegExp(document.domain, 'i');
 						href = getAttr(this, 'href');
 						if(href && href.toLowerCase().indexOf('http') === 0 && !mydomain.test(href)) {
 							recordOutboundLink(this, 'Outbound Links', href);
 						}
-					};
+					}
 				}
 			};
 		</script>

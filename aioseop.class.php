@@ -1528,25 +1528,14 @@ href="http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/"><?php _
 		<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>headwaybanner.png"></a>
 	</div>
 
-<div style="clear:both;">
-
-
-	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;height:200px;margin: 2px 15px 2px 0px;">
-		<div style="width:423px;height:130px;">
-			<h3>Reliable WordPress Hosting</h3>
-			<p><a title="WebHostingHub.com" target="_blank"
-			href="http://ref.webhostinghub.com/scripts/click.php?ref_id=rsuog2&ad_id=54c8d95f">WebHostingHub.com</a>
-			is a true leader in WordPress hosting and configured for WordPress
-			blogs. Hub's account includes UNLIMITED Hosting, NO-DOWNTIME Transfer,
-			24/7 U.S. Support & 90-Day FULL Money Back.<br />
-			Check our <a title="WebHostingHub reviews" target="_blank"
-			href="http://webhostingrating.com/companies/web-hosting-hub/">customer
-			reviews</a> at WebHostingRating.com.</p>
+	<div style="clear:both;">	
+		<?php $themefuse_ab = ( mt_rand( 0, 1 ) ) ? 'a' : 'b'; ?>
+		<div style="float:left;background-color:white;margin-top:3px;margin-right:15px;">
+			<a title="ThemeFuse" target="_blank"
+			href="http://themefuse.com/wp-themes-shop/?plugin=all-in-one-seo-pack&v=<?php echo $themefuse_ab; ?>"><img
+			src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>themefuse_banner_<?php echo $themefuse_ab; ?>.jpg"
+			alt="ThemeFuse" width="445" height="220" border="0" /></a>	
 		</div>
-		<a title="WebHostingHub.com" target="_blank"
-		href="http://ref.webhostinghub.com/scripts/click.php?ref_id=rsuog2&ad_id=54c8d95f"><img
-		src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>hub_420_wordpress.png"
-		alt="WebHostingHub.com" width="420" height="53" border="0" /></a>
 	</div>
 	
 	<div style="float:left;background-color:white;padding:10px;border:1px solid #ddd;margin-top:2px;"> 
@@ -1559,20 +1548,6 @@ href="http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/"><?php _
 	</div>
 	
 </div>
-
-<div style="clear:both;">
-	
-	<?php $themefuse_ab = ( mt_rand( 0, 1 ) ) ? 'a' : 'b'; ?>
-	<div style="float:left;background-color:white;margin-top:3px;">
-		<a title="ThemeFuse" target="_blank"
-		href="http://themefuse.com/wp-themes-shop/?plugin=all-in-one-seo-pack&v=<?php echo $themefuse_ab; ?>"><img
-		src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>themefuse_banner_<?php echo $themefuse_ab; ?>.jpg"
-		alt="ThemeFuse" width="445" height="220" border="0" /></a>	
-	</div>
-</div>
-	
-	
-
 
 <!--
 	<div style="float:left;background-color:white;padding: 10px 10px 10px 10px;border: 1px solid #ddd;">

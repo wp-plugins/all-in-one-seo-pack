@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.14.3";
+ 	var $version = "1.6.14.4";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -354,6 +354,14 @@ class All_in_One_SEO_Pack {
 					$meta_string .= "\n";
 				}
 				$meta_string .= "$post_meta";
+			}
+
+			if ( is_singular() && !empty( $post ) && ( $googleplus = get_the_author_meta( 'googleplus', $post->post_author ) ) ) {
+				$meta_string = '<link rel="author" href="' . $googleplus . '" />' . "\n" . $meta_string;
+			}
+			
+			if ( is_home() && !empty( $aioseop_options['aiosp_google_publisher'] ) ) {
+				$meta_string = '<link rel="publisher" href="' . $aioseop_options['aiosp_google_publisher'] . '" />' . "\n" . $meta_string;
 			}
 		
 			if (is_home() && !empty($home_meta)) {
@@ -1391,6 +1399,7 @@ function aiosp_google_analytics(){
 					"aiosp_404_title_format"=>'Nothing found for %request_words%',
 					"aiosp_paged_format"=>' - Part %page%',
 					"aiosp_google_analytics_id"=>null,
+					"aiosp_google_publisher"=>'',
 					"aiosp_ga_track_outbound_links"=>0,
 					"aiosp_use_categories"=>0,
 					"aiosp_dynamic_postspage_keywords"=>1,
@@ -1424,13 +1433,13 @@ function aiosp_google_analytics(){
 				$options = Array(	"aiosp_can", "aiosp_donate", "aiosp_home_title", "aiosp_home_description", "aiosp_home_keywords", "aiosp_max_words_excerpt",
 									"aiosp_rewrite_titles", "aiosp_post_title_format", "aiosp_page_title_format", "aiosp_category_title_format",
 									"aiosp_archive_title_format", "aiosp_tag_title_format", "aiosp_search_title_format", "aiosp_description_format",
-									"aiosp_404_title_format", "aiosp_paged_format", "aiosp_google_analytics_id", "aiosp_ga_track_outbound_links",
+									"aiosp_404_title_format", "aiosp_paged_format", "aiosp_google_publisher", "aiosp_google_analytics_id", "aiosp_ga_track_outbound_links",
 									"aiosp_use_categories", "aiosp_dynamic_postspage_keywords", "aiosp_category_noindex", "aiosp_archive_noindex",
 									"aiosp_tags_noindex", "aiosp_generate_descriptions", "aiosp_cap_cats", "aiosp_enablecpost", "aiosp_debug_info",
 									"aiosp_post_meta_tags", "aiosp_page_meta_tags", "aiosp_home_meta_tags", "aiosp_ex_pages", "aiosp_do_log",
 									"aiosp_enabled", "aiosp_use_tags_as_keywords", "aiosp_seopostcol", "aiosp_seocustptcol", "aiosp_posttypecolumns");
 				
-				$esc_options = Array( "aiosp_home_title", "aiosp_home_description", "aiosp_google_analytics_id" );
+				$esc_options = Array( "aiosp_home_title", "aiosp_home_description", "aiosp_google_publisher", "aiosp_google_analytics_id" );
 				
 				foreach( $options as $o ) {
 					$aioseop_options[$o] = '';
@@ -1471,17 +1480,12 @@ function aiosp_google_analytics(){
 			<div style="float:left;">
 			
 		<?php //_e("This is version ", 'all_in_one_seo_pack') ?><?php //_e("$this->version ", 'all_in_one_seo_pack') ?>
-&nbsp;<a target="_blank" title="<?php _e('All in One SEO Plugin Release History', 'all_in_one_seo_pack')?>"
-href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-pack-release-history/"><?php _e("Changelog", 'all_in_one_seo_pack')?>
-</a>
-| <a target="_blank" title="<?php _e('FAQ', 'all_in_one_seo_pack') ?>"
-href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/all-in-one-seo-faq/"><?php _e('FAQ', 'all_in_one_seo_pack') ?></a>
-| <a target="_blank" title="<?php _e('All in One SEO Plugin Support Forum', 'all_in_one_seo_pack') ?>"
-href="http://semperfiwebdesign.com/forum/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
+&nbsp;<a target="_blank" title="<?php _e('All in One SEO Plugin Support Forum', 'all_in_one_seo_pack') ?>"
+href="http://semperplugins.com/support/"><?php _e('Support', 'all_in_one_seo_pack') ?></a>
 | <a target="_blank" title="<?php _e('All in One SEO Plugin Translations', 'all_in_one_seo_pack') ?>"
 href="http://semperfiwebdesign.com/documentation/all-in-one-seo-pack/translations-for-all-in-one-seo-pack/"><?php _e('Translations', 'all_in_one_seo_pack') ?></a>
 | <strong><a target="_blank" title="<?php _e('Pro Version', 'all_in_one_seo_pack') ?>"
-href="http://wpplugins.com/plugin/50/all-in-one-seo-pack-pro-version"><?php _e('UPGRADE TO PRO VERSION', 'all_in_one_seo_pack') ?></a></strong>
+href="http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/"><?php _e('UPGRADE TO PRO VERSION', 'all_in_one_seo_pack') ?></a></strong>
 </div>
 
 <div style="width:600px;margin-top:40px;">
@@ -2130,6 +2134,20 @@ foreach ($post_types as $post_type ) {
 <div style="max-width:500px; text-align:left; display:none" id="123_tip">
 <?php
 _e('Choose which post types you want to have SEO columns on the edit.php screen. You can select as many as you like.', 'all_in_one_seo_pack');
+ ?>
+</div>
+</td>
+</tr>
+<tr>
+<th scope="row" style="text-align:right; vertical-align:top;">
+<a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_google_publisher_tip');">
+<?php _e('Google Plus Profile for Website:', 'all_in_one_seo_pack')?>
+</td>
+<td>
+<input type="text" name="aiosp_google_publisher" value="<?php echo $aioseop_options['aiosp_google_publisher']; ?>" size="38"/>
+<div style="max-width:500px; text-align:left; display:none" id="aiosp_google_publisher_tip">
+<?php
+_e('Enter your Google Plus Profile URL here to link your site\'s home page to Google Plus.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>

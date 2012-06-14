@@ -2,7 +2,7 @@
 
 class All_in_One_SEO_Pack {
 	
- 	var $version = "1.6.14.4";
+ 	var $version = "1.6.14.5";
  	
  	/** Max numbers of chars in auto-generated description */
  	var $maximum_description_length = 160;
@@ -356,13 +356,17 @@ class All_in_One_SEO_Pack {
 				$meta_string .= "$post_meta";
 			}
 
-			if ( is_singular() && !empty( $post ) && ( $googleplus = get_the_author_meta( 'googleplus', $post->post_author ) ) ) {
+			if ( !empty( $post ) )
+				$googleplus = get_the_author_meta( 'googleplus', $post->post_author );
+
+			if ( empty( $googleplus ) && !empty( $aioseop_options['aiosp_google_publisher'] ) )
+				$googleplus = $aioseop_options['aiosp_google_publisher'];
+
+			if ( is_singular() && ( $googleplus ) )
 				$meta_string = '<link rel="author" href="' . $googleplus . '" />' . "\n" . $meta_string;
-			}
 			
-			if ( is_home() && !empty( $aioseop_options['aiosp_google_publisher'] ) ) {
+			if ( is_home() && !empty( $aioseop_options['aiosp_google_publisher'] ) )
 				$meta_string = '<link rel="publisher" href="' . $aioseop_options['aiosp_google_publisher'] . '" />' . "\n" . $meta_string;
-			}
 		
 			if (is_home() && !empty($home_meta)) {
 				if (isset($meta_string)) {
@@ -2116,13 +2120,13 @@ _e('Choose which post types you want to have SEO columns on the edit.php screen.
 <tr>
 <th scope="row" style="text-align:right; vertical-align:top;">
 <a style="cursor:pointer;" title="<?php _e('Click for Help!', 'all_in_one_seo_pack')?>" onclick="toggleVisibility('aiosp_google_publisher_tip');">
-<?php _e('Google Plus Profile for Website:', 'all_in_one_seo_pack')?>
+<?php _e('Google Plus Profile Sitewide Default:', 'all_in_one_seo_pack')?>
 </td>
 <td>
 <input type="text" name="aiosp_google_publisher" value="<?php echo $aioseop_options['aiosp_google_publisher']; ?>" size="38"/>
 <div style="max-width:500px; text-align:left; display:none" id="aiosp_google_publisher_tip">
 <?php
-_e('Enter your Google Plus Profile URL here to link your site\'s home page to Google Plus.', 'all_in_one_seo_pack');
+_e('Enter your Google Plus Profile URL here to link your site\'s pages to Google Plus.', 'all_in_one_seo_pack');
  ?>
 </div>
 </td>

@@ -356,15 +356,18 @@ class All_in_One_SEO_Pack {
 				$meta_string .= "$post_meta";
 			}
 
-			if ( !empty( $post ) )
+			if ( !empty( $post ) && isset( $post->post_author ) )
 				$googleplus = get_the_author_meta( 'googleplus', $post->post_author );
 
 			if ( empty( $googleplus ) && !empty( $aioseop_options['aiosp_google_publisher'] ) )
 				$googleplus = $aioseop_options['aiosp_google_publisher'];
 
-			if ( is_singular() && ( $googleplus ) )
+			if ( is_singular() && ( $googleplus ) ) {
 				$meta_string = '<link rel="author" href="' . $googleplus . '" />' . "\n" . $meta_string;
-			
+			} else if ( !is_home() && !empty( $aioseop_options['aiosp_google_publisher'] ) ) {
+				$meta_string = '<link rel="author" href="' . $aioseop_options['aiosp_google_publisher'] . '" />' . "\n" . $meta_string;
+			}
+
 			if ( is_home() && !empty( $aioseop_options['aiosp_google_publisher'] ) )
 				$meta_string = '<link rel="publisher" href="' . $aioseop_options['aiosp_google_publisher'] . '" />' . "\n" . $meta_string;
 		

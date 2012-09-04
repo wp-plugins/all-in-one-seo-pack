@@ -546,7 +546,7 @@ function aiosp_google_analytics(){
 				$term = get_query_var( 'term' );
 				$link = get_term_link( $term, $taxonomy );
 				$link = $this->yoast_get_paged( $link );
-	    } elseif ( $query->is_archive && function_exists( 'get_post_type_archive_link' ) && ( $post_type = get_query_var( 'post_type' ) ) ) {
+	    } elseif ( $query->is_archive && function_exists( 'get_post_type_archive_link' ) && ( $post_type == get_query_var( 'post_type' ) ) ) {
 	            $link = get_post_type_archive_link( $post_type );
 		} else {
 		        return false;

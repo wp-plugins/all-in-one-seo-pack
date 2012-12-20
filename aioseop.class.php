@@ -345,7 +345,7 @@ class All_in_One_SEO_Pack {
 			$page_meta = stripcslashes($aioseop_options['aiosp_page_meta_tags']);
 			$post_meta = stripcslashes($aioseop_options['aiosp_post_meta_tags']);
 			$home_meta = stripcslashes($aioseop_options['aiosp_home_meta_tags']);
-			$front_meta = isset( $aioseop_options['aiosp_front_meta_tags'] ) ? '' : stripcslashes( $aioseop_options['aiosp_front_meta_tags'] );
+			$front_meta = !isset( $aioseop_options['aiosp_front_meta_tags'] ) ? '' : stripcslashes( $aioseop_options['aiosp_front_meta_tags'] );
 			
 			if ( is_page() && isset( $page_meta ) && !empty( $page_meta ) && ( !$is_front_page || empty( $front_meta ) ) ) {
 				if ( isset( $meta_string ) ) $meta_string .= "\n";

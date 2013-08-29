@@ -1545,7 +1545,7 @@ function aiosp_google_analytics() {
 		$this->title_end = $end;
 		$this->orig_title = $title;
 		
-		return preg_replace( '/<title>(.*?)<\/title>/is', '<title>' . preg_replace('/(\$|\\\\)(?=\d)/', '\\\\\1', esc_textarea( strip_tags( $title ) ) ) . '</title>', $content );
+		return preg_replace( '/<title>(.*?)<\/title>/is', '<title>' . preg_replace('/(\$|\\\\)(?=\d)/', '\\\\\1', strip_tags( $title ) ) . '</title>', $content );
 	}
 	
 	function internationalize( $in ) {

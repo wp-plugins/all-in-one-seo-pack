@@ -581,6 +581,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				if ( !$url ) $url = get_permalink();
 
 				$description = $this->get_aioseop_description( $post );
+				$description = apply_filters( 'aioseop_description', $description );
 				
 				if ( $this->strlen( $title ) > 70 ) $title = $this->trim_excerpt_without_filters( $title, 70 ) . '...';
 				if ( $this->strlen( $description ) > 156 ) $description = $this->trim_excerpt_without_filters( $description, 156 ) . '...';
@@ -1168,6 +1169,8 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				$description = trim( stripslashes( $this->internationalize( $aioseop_options['aiosp_home_description'] ) ) );
 			else if ( is_single() || is_page() || is_home() || $this->is_static_posts_page() )
 				$description = $this->get_aioseop_description( $post );
+			
+			$description = apply_filters( 'aioseop_description', $description );
 			
 			/*
 				if ( $this->is_static_front_page() )
@@ -1904,7 +1907,6 @@ function aiosp_google_analytics() {
 			$description = $this->get_post_description( $blog_page );
 		if ( empty( $description ) && is_object( $post ) && !is_archive() && empty( $blog_page ) )
 			$description = $this->get_post_description( $post );
-		$description = apply_filters( 'aioseop_description', $description );
 		return $description;
 	}
 	
@@ -2585,7 +2587,6 @@ function aiosp_google_analytics() {
 		
 		add_meta_box('aioseop-list', __( "Join Our Mailing List", 'all_in_one_seo_pack' ), array( $this, 'display_extra_metaboxes'), 'aioseop_metaboxes', 'normal', 'core');
 		add_meta_box('aioseop-about', "About <span style='float:right;'>Version <b>" . AIOSEOP_VERSION . "</b></span>", array( $this, 'display_extra_metaboxes'), 'aioseop_metaboxes', 'side', 'core');
-		add_meta_box('aioseop-hosting', __( "Recommended WordPress Hosting", 'all_in_one_seo_pack' ), array( $this, 'display_extra_metaboxes'), 'aioseop_metaboxes', 'side', 'core');
 		
 		add_action( 'aioseop_modules_add_menus', Array( $this, 'add_menu' ), 5 );
 		do_action( 'aioseop_modules_add_menus', $file );

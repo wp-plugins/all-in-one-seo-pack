@@ -844,7 +844,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 		}
 
 		/** Get frequency settings for sitemap entries. **/
-		function get_default_frequency( $item, $nodefaults = false ) {
+		function get_default_frequency( $item, $nodefaults = false, $type = '' ) {
 			$defaults = Array( 'homepage' => 'always', 'blog' => 'daily', 'sitemap' => 'hourly', 'post' => 'weekly', 'archive' => 'monthly', 'author' => 'weekly', 'taxonomies' => 'monthly' );
 			static $cache = Array();
 			return $this->get_default_values( $defaults, 'freq_', $cache, $item, $nodefaults, $type );

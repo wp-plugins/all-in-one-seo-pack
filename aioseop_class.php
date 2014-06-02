@@ -2227,7 +2227,7 @@ function aiosp_google_analytics() {
 			$title = $this->internationalize( $post->post_title );
 			if ( !$title )
 				$title = $this->internationalize( $this->get_original_title( '', false ) );
-			$title = get_the_title( $post->post_parent ) . ' ' . $title . ' â€“ ' . get_option( 'blogname' );
+			$title = get_the_title( $post->post_parent ) . ' ' . $title . ' - ' . get_option( 'blogname' );
 			apply_filters( 'aioseop_attachment_title', $title );
 		} else if ( is_page() || $this->is_static_posts_page() || ( is_home() && !$this->is_static_posts_page() ) ) {
 			if ( $post === null ) return false;

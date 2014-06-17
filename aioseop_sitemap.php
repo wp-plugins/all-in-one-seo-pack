@@ -869,6 +869,9 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 				$prio = $this->get_default_priority( 'post' );
 				$freq = $this->get_default_frequency( 'post' );
 				$post_counts = $this->get_all_post_counts( Array('post_type' => $options["{$this->prefix}posttypes"], 'post_status' => 'publish') );
+				if ( !is_array( $post_counts ) && is_array( $options["{$this->prefix}posttypes"] ) && count( $options["{$this->prefix}posttypes"] ) == 1 ) {
+					$post_counts = Array( $options["{$this->prefix}posttypes"][0] => $post_counts );
+				}
 				foreach( $options["{$this->prefix}posttypes"] as $sm ) {
 					if ( $post_counts[$sm] == 0 ) continue;
 					if ( $this->paginate ) {
@@ -1067,10 +1070,12 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 			$current_host = $_SERVER['HTTP_HOST'];
 			if ( empty( $current_host ) ) $current_host = $_SERVER['SERVER_NAME'];
 			
-			if ( !empty( $current_host ) && ( $current_host != $plugin_url['host'] ) ) {
+			if ( !empty( $current_host ) && ( $current_host != $plugin_url['host'] ) )
 				$plugin_url['host'] = $current_host;
-				$plugin_path = $this->unparse_url( $plugin_url );
-			}
+			
+			unset( $plugin_url['scheme'] );
+			$plugin_path = $this->unparse_url( $plugin_url );
+			
 			$xml_header = '<?xml-stylesheet type="text/xsl" href="' . $plugin_path . 'sitemap.xsl"?>' . "\r\n"
 						. '<urlset ';
 			$namespaces = apply_filters( $this->prefix . 'xml_namespace', Array( 'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9' ) );
@@ -1241,6 +1246,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 		function unparse_url($parsed_url) {
 			$scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : ''; 
 			$host     = isset($parsed_url['host']) ? $parsed_url['host'] : ''; 
+			if ( !empty( $host ) && empty( $scheme ) ) $scheme = '//';
 			$port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : ''; 
 			$user     = isset($parsed_url['user']) ? $parsed_url['user'] : ''; 
 			$pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
@@ -1619,12 +1625,13 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 				if ( !is_array( $args['post_type'] ) || ( count( $args['post_type'] ) == 1 ) ) {
 					if ( is_array( $args['post_type'] ) )
 						$args['post_type'] = array_shift( $args['post_type'] );
-					$count = (Array)wp_count_posts( $args['post_type'] );
+					$count = (Array)wp_count_posts( $args['post_type'] );					
 					$post_counts = $count[$status];
 				} else
 					foreach( $args['post_type'] as $post_type ) {
 						if ( $post_type === 'all' ) continue;
 						$count = (Array)wp_count_posts( $post_type );
+						
 						if ( empty( $count ) )
 							$post_counts[$post_type] = 0;
 						else {

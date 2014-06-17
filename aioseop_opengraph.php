@@ -62,7 +62,8 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 					'movie' => __( 'Movie', 'all_in_one_seo_pack' ),
 					'product' => __( 'Product', 'all_in_one_seo_pack' ),
 					'song' => __( 'Song', 'all_in_one_seo_pack' ),
-					'tv_show' => __( 'TV Show', 'all_in_one_seo_pack' )
+					'tv_show' => __( 'TV Show', 'all_in_one_seo_pack' ),
+					'episode' => __( 'Episode', 'all_in_one_seo_pack' )
 				),'Websites' => Array(
 					'article' => __( 'Article', 'all_in_one_seo_pack' ),
 					'blog' => __( 'Blog', 'all_in_one_seo_pack' ),
@@ -92,10 +93,14 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				"imageheight"			=> __( "Enter the height for your Open Graph image in pixels (i.e. 600).<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 				"defcard"				=> __( "Select the default type of Twitter card to display.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 				"setcard"				=> __( "Select the default type of Twitter card to display.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+				"twitter_site"			=> __( "Enter the Twitter username associated with your website here.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+				"twitter_creator"		=> __( "Allows your authors to be identified by their Twitter usernames as content creators on the Twitter cards for their posts.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),				
+				"twitter_domain"		=> __( "Enter the name of your website here.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 				"types"					=> __( "Select which Post Types you want to use All in One SEO Pack to set Open Graph meta values for.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 				"title"					=> __( "This is the Open Graph title of this Page or Post.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 				"desc"					=> __( "This is the Open Graph description of this Page or Post.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
-				"category"				=> __( "Select the Open Graph type that best describes the content of this Page or Post.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' )
+				"category"				=> __( "Select the Open Graph type that best describes the content of this Page or Post.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+				"tag"				=> __( "This Open Graph meta allows you to add a list of keywords that best describe this content.<br /><a href='http://semperplugins.com/documentation/social-meta-module/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' )
 			);
 			$count_desc = __( " characters. Open Graph allows up to a maximum of %s chars for the %s.", 'all_in_one_seo_pack' );
 			$this->default_options = array(
@@ -129,6 +134,11 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 												'type'			=> 'select', 'initial_options' => Array( 'summary' => __( 'Summary', 'all_in_one_seo_pack' ), 'summary_large_image' => __( 'Summary Large Image', 'all_in_one_seo_pack' ), 'photo' => __( 'Photo', 'all_in_one_seo_pack' ) ), 'default' => 'summary' ),
 					'setcard'		=> Array(	'name'			=> __( 'Twitter Card Type', 'all_in_one_seo_pack' ),
 												'type'			=> 'select', 'initial_options' => Array( 'summary' => __( 'Summary', 'all_in_one_seo_pack' ), 'summary_large_image' => __( 'Summary Large Image', 'all_in_one_seo_pack' ), 'photo' => __( 'Photo', 'all_in_one_seo_pack' ) ) ),
+					'twitter_site'	=> Array(	'name'			=> __( 'Twitter Site', 'all_in_one_seo_pack' ),
+												'type'			=> 'text', 'default' => '' ),
+					'twitter_creator'=>Array(	'name'			=> __( 'Show Twitter Author', 'all_in_one_seo_pack' ) ),
+					'twitter_domain'=> Array(	'name'			=> __( 'Twitter Domain', 'all_in_one_seo_pack' ),
+												'type'			=> 'text', 'default' => '' ),
 					'types' 		=> Array( 	'name'	  		=> __( 'Enable Facebook Meta for', 'all_in_one_seo_pack'),
 												'type'			=> 'multicheckbox', 'initial_options' => $this->get_post_type_titles( Array( '_builtin' => false ) ),
 												'default'		=> Array( 'post' => 'post', 'page' => 'page' ) ),
@@ -140,7 +150,9 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 												'type'			=> 'select', 'style' => '',
 												'initial_options' => $this->fb_object_types,
 												'default'		=> ''
-										)
+										),
+					'tag'			=> Array(	'name'			=> __( 'Article Tags', 'all_in_one_seo_pack' ),
+												'type'			=> 'text', 'default' => '',  'condshow' => Array( 'aioseop_opengraph_settings_category' => 'article' ) ),
 			);
 			
 			if ( !empty( $help_text ) )
@@ -155,10 +167,10 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 
 			$this->locations = array(
 				'opengraph'	=> 	Array( 'name' => $this->name, 'prefix' => 'aiosp_', 'type' => 'settings',
-									   'options' => Array('scan_header', 'setmeta', 'key', 'sitename', 'hometitle', 'description', 'homeimage', 'disable_jetpack', 'generate_descriptions', 'defimg', 'fallback', 'dimg', 'meta_key', 'categories', 'defcard', 'types') ),
+									   'options' => Array('scan_header', 'setmeta', 'key', 'sitename', 'hometitle', 'description', 'homeimage', 'disable_jetpack', 'generate_descriptions', 'defimg', 'fallback', 'dimg', 'meta_key', 'categories', 'defcard', 'twitter_site', 'twitter_creator', 'twitter_domain', 'types') ),
 				'settings'	=>	Array(	'name'		=> __('Social Settings', 'all_in_one_seo_pack'),
 														  'type'		=> 'metabox', 'help_link' => 'http://semperplugins.com/documentation/social-meta-module/#pagepost_settings',
-														  'options'	=> Array( 'title', 'desc', 'image', 'customimg', 'imagewidth', 'imageheight', 'category', 'setcard' ),
+														  'options'	=> Array( 'title', 'desc', 'image', 'customimg', 'imagewidth', 'imageheight', 'category', 'tag', 'setcard' ),
 														  'display' => $display, 'prefix' => 'aioseop_opengraph_'
 									)
 			);
@@ -309,6 +321,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 			$dimg = $this->options['aiosp_opengraph_dimg'];
 			$current_post_type = get_post_type();
 			$title = $description = $image = '';
+			$type = 'article';
 			
 			$sitename = $this->options['aiosp_opengraph_sitename'];
 			
@@ -319,9 +332,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				$first_page = true;
 			}
 			$url = $aiosp->aiosp_mrt_get_url( $wp_query );
-			$home_url = get_option( 'home' );
-			if ( $url == $home_url ) $url = trailingslashit( $url );
-			$url = apply_filters( 'aioseop_canonical_url',$url );		
+			$url = apply_filters( 'aioseop_canonical_url', $url );		
 			$setmeta = $this->options['aiosp_opengraph_setmeta'];
 			if ( is_home( ) || $aiosp->is_static_front_page() ) {
 				$title = $this->options['aiosp_opengraph_hometitle'];
@@ -356,6 +367,9 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 					$type = $metabox['aioseop_opengraph_settings_category'];
 				} elseif ( isset( $this->options["aiosp_opengraph_{$current_post_type}_fb_object_type"] ) ) {
 					$type = $this->options["aiosp_opengraph_{$current_post_type}_fb_object_type"];
+				}
+				if ( $type == 'article' && ( !empty( $metabox['aioseop_opengraph_settings_tag'] ) ) ) {
+					$tag = $metabox['aioseop_opengraph_settings_tag'];
 				}
 				
 				$image = $metabox['aioseop_opengraph_settings_image'];
@@ -435,8 +449,18 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				
 			if ( !empty( $metabox['aioseop_opengraph_settings_setcard'] ) )
 				$card = $metabox['aioseop_opengraph_settings_setcard'];
+				
+			$site = $domain = $creator = '';
 			
-			/* OG only: */
+			if ( !empty( $this->options['aiosp_opengraph_twitter_site'] ) )
+				$site = $this->options['aiosp_opengraph_twitter_site'];
+
+			if ( !empty( $this->options['aiosp_opengraph_twitter_domain'] ) )
+				$domain = $this->options['aiosp_opengraph_twitter_domain'];
+			
+			if ( !empty( $post ) && isset( $post->post_author ) && !empty( $this->options['aiosp_opengraph_twitter_creator'] ) )
+				$creator = get_the_author_meta( 'twitter', $post->post_author );
+			
 			$meta = Array(
 				'facebook'	=> Array(
 						'title'			=> 'og:title',
@@ -447,10 +471,14 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 						'height'		=> 'og:image:height',
 						'sitename'		=> 'og:site_name',
 						'key'			=> 'fb:admins',
-						'description'	=> 'og:description'
+						'description'	=> 'og:description',
+						'tag'			=> 'article:tag'
 					),
 				'twitter'	=> Array(
 						'card'			=> 'twitter:card',
+						'site'			=> 'twitter:site',
+						'creator'		=> 'twitter:creator',
+						'domain'		=> 'twitter:domain',
 						'description'	=> 'twitter:description',
 					)
 			);
@@ -487,16 +515,6 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 						
 					)
 			);
-			*/
-			
-			/*
-				Note -- add support for these too, as per https://dev.twitter.com/docs/cards
-				
-				Card Property	Description	Required
-				twitter:site	@username for the website used in the card footer.	No
-				twitter:site:id	Same as twitter:site, but the website's Twitter user ID instead. Note that user ids never change, while @usernames can be changed by the user.	No
-				twitter:creator	@username for the content creator / author.	No
-				twitter:creator:id	Same as twitter:creator, but the Twitter user's ID.	No
 			*/
 			
 			$tags = Array(

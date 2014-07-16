@@ -1104,7 +1104,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 		$post = $this->get_queried_object();
 		if( empty( $aioseop_options['aiosp_enablecpost'] ) ) {
 			$wp_post_types = get_post_types( Array( '_builtin' => true ) ); // don't display meta if SEO isn't enabled on custom post types -- pdb
-			if( !is_singular( $wp_post_types ) && !is_front_page() ) return false;
+			if( is_singular() && !is_singular( $wp_post_types ) && !is_front_page() ) return false;
 		} elseif ( !empty( $aioseop_options['aiosp_cpostadvanced'] ) ) {
 			$wp_post_types = $aioseop_options['aiosp_cpostactive'];
 			if ( is_singular() && !is_singular( $wp_post_types ) && !is_front_page() ) return false;

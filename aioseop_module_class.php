@@ -984,7 +984,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Module' ) ) {
 			if ( !empty( $this->pointers ) ) {
 				wp_enqueue_script( 'wp-pointer', false, array( 'jquery' ) );
 			}
-			wp_enqueue_script( 'aioseop-module-script', $this->plugin_path['url'] . 'aioseop_module.js' );
+			wp_enqueue_script( 'aioseop-module-script', $this->plugin_path['url'] . 'aioseop_module.js', Array(), AIOSEOP_VERSION );
 			if ( !empty( $this->script_data ) ) {
 				aioseop_localize_script_data();
 			}

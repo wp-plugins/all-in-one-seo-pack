@@ -312,10 +312,10 @@ jQuery(document).ready(function() {
 		aioseop_handle_post_url('aioseop_ajax_scan_header', 'opengraph_scan_header', jQuery('div#aiosp_opengraph_scan_header').serialize() );
 		return false;
 	});
-	jQuery( 'input[name="aiosp_sitemap_posttypes[]"][value="all"]', 'input[name="aiosp_sitemap_taxonomies[]"][value="all"]' ).click(function () {
+	jQuery( 'input[name="aiosp_sitemap_posttypes[]"][value="all"], input[name="aiosp_sitemap_taxonomies[]"][value="all"]' ).click(function () {
 		jQuery(this).parents('div:eq(0)').find(':checkbox').attr('checked', this.checked);
     });
-	jQuery( 'input[name="aiosp_sitemap_posttypes[]"][value!="all"]', 'input[name="aiosp_sitemap_taxonomies[]"][value!="all"]' ).click(function () {
+	jQuery( 'input[name="aiosp_sitemap_posttypes[]"][value!="all"], input[name="aiosp_sitemap_taxonomies[]"][value!="all"]' ).click(function () {
 		if ( !this.checked )
 			jQuery(this).parents('div:eq(0)').find('input[value="all"]:checkbox').attr('checked', this.checked);
     });

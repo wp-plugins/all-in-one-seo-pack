@@ -1408,7 +1408,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Module' ) ) {
 						case 'checkbox':
 						case 'radio':
 						case 'select':
-						default:			  $this->options[$k] = esc_attr( $this->options[$k] );
+						default:			  if ( !is_array( $this->options[$k] ) ) $this->options[$k] = esc_attr( $this->options[$k] );
 					}
 				}
 			}

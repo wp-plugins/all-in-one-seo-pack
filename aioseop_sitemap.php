@@ -354,6 +354,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 
 		/** Handle 'all' option for post types / taxonomies, further sanitization of filename, rewrites on for multisite, setting up addl pages option. **/
 		function filter_options( $options ) {
+			if ( !isset( $this->default_options['posttypes' ]['initial_options'] ) ) $this->add_post_types();
 			if ( is_array( $options["{$this->prefix}posttypes"] ) && in_array( 'all', $options["{$this->prefix}posttypes"] ) && is_array( $this->default_options['posttypes' ]['initial_options'] ) )
 				$options["{$this->prefix}posttypes"] = array_keys( $this->default_options['posttypes' ]['initial_options'] );
 			if ( is_array( $options["{$this->prefix}taxonomies"] ) && in_array( 'all', $options["{$this->prefix}taxonomies"] ) && is_array( $this->default_options['taxonomies' ]['initial_options'] ) )

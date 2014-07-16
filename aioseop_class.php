@@ -1934,7 +1934,7 @@ function aiosp_google_analytics() {
 	
 // Thank you, Yoast de Valk, for much of this code.	
 
-	function aiosp_mrt_get_url( $query ) {
+	function aiosp_mrt_get_url( $query, $show_page = true ) {
 		if ( $query->is_404 || $query->is_search )
 			return false;
 		
@@ -1996,7 +1996,9 @@ function aiosp_google_analytics() {
 	        return false;
 	    }
 		if ( empty( $link ) || !is_string( $link ) ) return false;
-		return $this->get_paged( $link );
+		if ( apply_filters( 'aioseop_canonical_url_pagination', $show_page ) )
+			$link = $this->get_paged( $link );
+		return $link;
 	}
 	
 	function get_page_number() {

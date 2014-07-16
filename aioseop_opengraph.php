@@ -318,9 +318,10 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 				add_filter( 'jetpack_enable_open_graph',	 '__return_false', 100 );
 				add_filter( 'jetpack_disable_twitter_cards', '__return_false', 100 );
 			}
-			foreach( Array( 'xmlns="http://www.w3.org/1999/xhtml"', 'xmlns:og="http://ogp.me/ns#"', 'xmlns:fb="http://www.facebook.com/2008/fbml"' ) as $xmlns ) {
-				if ( strpos( $output, $xmlns ) === false ) {
-					$output .= "\n\t$xmlns ";
+			$attributes = apply_filters( $this->prefix . 'attributes', Array( 'xmlns="http://www.w3.org/1999/xhtml"', 'xmlns:og="http://ogp.me/ns#"', 'xmlns:fb="http://www.facebook.com/2008/fbml"' ) );
+			foreach( $attributes as $attr ) {
+				if ( strpos( $output, $attr ) === false ) {
+					$output .= "\n\t$attr ";
 				}
 			}
 			return $output;

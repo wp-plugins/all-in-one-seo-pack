@@ -2413,7 +2413,6 @@ function aiosp_google_analytics() {
 				$tag = $tags[0]->tag;
 	            $tag = str_replace('-', ' ', $tag);
 			} else {
-				if ( !empty( $opts ) && !empty( $opts['aiosp_title'] ) ) $tag = $opts['aiosp_title'];
 				if ( empty( $tag ) ) $tag = $this->get_original_title( '', false );
 				$tag = $this->internationalize( $tag );
 			}

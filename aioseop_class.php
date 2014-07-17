@@ -1345,8 +1345,11 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			$page = $this->get_page_number();
 
 			$robots_meta = '';
-
-			if ( !empty( $opts ) ) {
+			if ( ( is_category() && !empty( $aioseop_options['aiosp_category_noindex'] ) ) || ( !is_category() && is_archive() && !is_tag() && !is_tax()
+				&& ( ( is_date() && !empty( $aioseop_options['aiosp_archive_date_noindex'] ) ) || ( is_author() && !empty( $aioseop_options['aiosp_archive_author_noindex'] ) ) ) ) 
+				|| ( is_tag() && !empty( $aioseop_options['aiosp_tags_noindex'] ) ) || ( is_search() && !empty( $aioseop_options['aiosp_search_noindex'] ) ) )
+				$robots_meta = 'noindex,follow';
+			elseif ( !empty( $opts ) ) {
 				$post_type = get_post_type();
 			    $aiosp_noindex = htmlspecialchars( stripslashes( $opts['aiosp_noindex'] ) );
 			    $aiosp_nofollow = htmlspecialchars( stripslashes( $opts['aiosp_nofollow'] ) );
@@ -1367,11 +1370,6 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 					if ( $aiosp_noydir ) $nofollow .= ',noydir';
 					$robots_meta = $noindex . ',' . $nofollow;
 				}
-			} else {
-				if ( ( is_category() && !empty( $aioseop_options['aiosp_category_noindex'] ) ) || ( !is_category() && is_archive() && !is_tag() && !is_tax()
-					&& ( ( is_date() && !empty( $aioseop_options['aiosp_archive_date_noindex'] ) ) || ( is_author() && !empty( $aioseop_options['aiosp_archive_author_noindex'] ) ) ) ) 
-					|| ( is_tag() && !empty( $aioseop_options['aiosp_tags_noindex'] ) ) || ( is_search() && !empty( $aioseop_options['aiosp_search_noindex'] ) ) )
-					$robots_meta = 'noindex,follow';				
 			}
 			
 			if ( $robots_meta == 'index,follow' ) $robots_meta = '';

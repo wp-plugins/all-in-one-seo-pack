@@ -467,7 +467,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				'default' => 0),
 			"dont_truncate_descriptions"=> Array(
 				'name' => __( 'Never Shorten Long Descriptions:', 'all_in_one_seo_pack' ),
-				'default' => 0),			
+				'default' => 0),
 			"unprotect_meta"=> Array(
 				'name' => __( 'Unprotect Post Meta Fields:', 'all_in_one_seo_pack' ),
 				'default' => 0),
@@ -1102,12 +1102,15 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 		if ( is_feed() ) return false;
 		if ( aioseop_mrt_exclude_this_page() ) return false;
 		$post = $this->get_queried_object();
+		$post_type = '';
+		if ( !empty( $post ) && !empty( $post->post_type ) )
+			$post_type = $post->post_type;
 		if( empty( $aioseop_options['aiosp_enablecpost'] ) ) {
 			$wp_post_types = get_post_types( Array( '_builtin' => true ) ); // don't display meta if SEO isn't enabled on custom post types -- pdb
-			if( is_singular() && !is_singular( $wp_post_types ) && !is_front_page() ) return false;
+			if( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
 		} elseif ( !empty( $aioseop_options['aiosp_cpostadvanced'] ) ) {
 			$wp_post_types = $aioseop_options['aiosp_cpostactive'];
-			if ( is_singular() && !is_singular( $wp_post_types ) && !is_front_page() ) return false;
+			if ( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
 			if ( is_post_type_archive() && !is_post_type_archive( $wp_post_types ) ) return false;            
 		}
 		

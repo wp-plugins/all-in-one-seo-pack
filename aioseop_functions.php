@@ -53,7 +53,7 @@ if ( !function_exists( 'aioseop_update_settings_check' ) ) {
 				$update_options = true;
 			}
 			if ( !empty( $aioseop_options['aiosp_archive_title_format'] ) && empty( $aioseop_options['aiosp_date_title_format'] ) ) {
-				$aioseop_options['aiosp_date_title_format'] = $aioseop_options['archive_title_format'];
+				$aioseop_options['aiosp_date_title_format'] = $aioseop_options['aiosp_archive_title_format'];
 				unset( $aioseop_options['aiosp_archive_title_format'] );
 				$update_options = true;
 			}

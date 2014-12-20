@@ -2597,7 +2597,7 @@ EOF;
 	}
 	
 	function get_archive_title_format() {
-		return get_post_title_format( "archive" );
+		return $this->get_post_title_format( "archive" );
 	}
 	
 	function apply_archive_title_format( $title, $category = '' ) {

@@ -2461,7 +2461,7 @@ EOF;
 			$post = $GLOBALS["post"];
 		$blog_page = $this->get_blog_page();
 		$description = '';
-		if ( $this->is_static_front_page() && empty( $aioseop_options['aiosp_use_static_home_info'] ) )
+		if ( is_front_page() && empty( $aioseop_options['aiosp_use_static_home_info'] ) )
 			$description = trim( stripslashes( $this->internationalize( $aioseop_options['aiosp_home_description'] ) ) );
 		elseif ( !empty( $blog_page ) )
 			$description = $this->get_post_description( $blog_page );

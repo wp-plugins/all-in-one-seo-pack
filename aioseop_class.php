@@ -1357,6 +1357,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			if( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
 		} else {
 			$wp_post_types = $aioseop_options['aiosp_cpostactive'];
+			if ( empty( $wp_post_types ) ) $wp_post_types = Array();
 			if ( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
 			if ( is_post_type_archive() && !is_post_type_archive( $wp_post_types ) ) return false;
 		}

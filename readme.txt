@@ -5,6 +5,8 @@ Tags: seo, all in one seo pack, search engine optimization, google
 Requires at least: 3.3
 Tested up to: 4.4
 Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 All in One SEO Pack is a WordPress SEO plugin to automatically optimize your WordPress blog for Search Engines such as Google.
 
@@ -67,5 +69,7 @@ Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one
 
 == Upgrade Notice ==
 
-= 2.0.4 =
-This version fixes a security related bug.  Please Upgrade immediately.
+= 2.2.7.3 = 
+
+Update for WordPress 4.4
+

@@ -6,6 +6,7 @@ Description: Out-of-the-box SEO for your WordPress blog. <a href="admin.php?page
 Version: 2.2.7.3
 Author: Michael Torbert
 Author URI: http://michaeltorbert.com
+Text Domain: all_in_one_seo_pack
 */
 
 /*

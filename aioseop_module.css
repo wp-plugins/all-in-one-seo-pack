@@ -256,6 +256,17 @@ div.aioseop_tip_icon:before {
 #wincher15 {
 	background-image: url(images/banner15.png);
 }
+#wincher21 {
+	background-image: url(images/banner21.jpg);
+}
+#wincher22 {
+	background-image: url(images/banner22.jpg);
+}
+#wincher23 {
+	background-image: url(images/banner23.jpg);
+}
+}
+
 .aioseop_content {
 	min-width: 760px;
 	clear: left;
@@ -269,6 +280,9 @@ div.aioseop_tip_icon:before {
 	padding: 7px 10px;
 	margin: 0;
 	line-height: 1;
+}
+.aioseop_options_wrapper .submit input.button-primary {
+	margin-bottom: 5px;
 }
 #aiosp_feature_manager_metabox.postbox {
 	margin-top: 20px;

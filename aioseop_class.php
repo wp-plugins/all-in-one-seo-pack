@@ -3507,8 +3507,9 @@ EOF;
 				}else{
 				?>	
 				<a href="https://www.wincher.com/?referer=all-in-one-seo-pack&adreferer=banner<?php echo $adid; ?>" target="_blank"><div class=wincherad id=wincher<?php echo $adid; ?>>
-			    <?php } ?>
-				</div></a>
+			    </div></a>
+			<?php } ?>
+				
 		</div>
 		
 		
@@ -3520,6 +3521,7 @@ EOF;
 					</div>
 				<a href="http://semperfiwebdesign.com/headwayaio/" target="_blank"><img src="<?php echo AIOSEOP_PLUGIN_IMAGES_URL; ?>headwaybanner.png"></a>
 		</div>
+		
 		
 	</div>
 </div>	

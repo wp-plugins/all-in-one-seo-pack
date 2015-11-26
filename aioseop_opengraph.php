@@ -737,10 +737,18 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Opengraph' ) ) {
 						'description'	=> 'twitter:description',
 						'thumbnail'		=> 'twitter:image',
 					),
-				'google+'	=> Array(
+					//this has been moved below to check for schema.org checkbox
+				/*'google+'	=> Array(
 						'thumbnail'		=> 'image',
-					),
+					),*/
 			);
+			
+			//Only show if "use schema.org markup is checked"
+				if(!empty( $aioseop_options['aiosp_schema_markup'] ))
+				$meta['google+'] = Array('thumbnail' => 'image');
+
+
+
 			
 			// Add links to testing tools
 			

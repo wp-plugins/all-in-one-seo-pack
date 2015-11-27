@@ -3119,9 +3119,9 @@ EOF;
 		return $keywords;
 	}
 	
-	function get_all_terms( $id, $taxnomy ) {
+	function get_all_terms( $id, $taxonomy ) {
 		$keywords = Array();
-		$terms = get_the_terms( $id, $taxnomy );
+		$terms = get_the_terms( $id, $taxonomy );
 		if ( !empty( $terms ) )
 			foreach ( $terms as $term )
 				$keywords[] = $this->internationalize( $term->name );

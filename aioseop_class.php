@@ -1098,7 +1098,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				$taxes = get_object_taxonomies( $p, 'objects' );
 				if ( !empty( $taxes ) )
 					foreach( $taxes as $n => $t )
-						$this->help_text[$field] .= sprintf( __( "%%tax_%s%% - This post's associated %s taxnomy title", 'all-in-one-seo-pack' ), $n, $t->label ) . '</li><li>';
+						$this->help_text[$field] .= sprintf( __( "%%tax_%s%% - This post's associated %s taxonomy title", 'all-in-one-seo-pack' ), $n, $t->label ) . '</li><li>';
 				$this->help_text[$field] .= 
 					__( "%post_author_login% - This post's author' login", 'all-in-one-seo-pack' ) . '</li><li>' . 
 					__( "%post_author_nicename% - This post's author' nicename", 'all-in-one-seo-pack' ) . '</li><li>' . 

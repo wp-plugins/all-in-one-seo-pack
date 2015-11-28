@@ -118,7 +118,7 @@ div.aioseop_tip_icon:before {
 	color: #5F5F5F;
 	font-weight: bold;
 	line-height: 19px;
-	padding-left: 20px;
+	padding-left: 10px; /*changed from 20px to 10px for certain language support*/
 	display: inline-block;
 	text-align: left;
 	position: absolute;
@@ -350,6 +350,7 @@ div.aioseop_tip_icon:before {
 	max-width: 270px;
 	padding-top: 3px;
 	padding-bottom: 3px;
+	height:67px !important; /*added for certain language support*/
 }
 .aioseop_metabox_text h2 {
 	font-size: 14px;

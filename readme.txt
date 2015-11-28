@@ -1,10 +1,12 @@
 === All in One SEO Pack ===
 Contributors: hallsofmontezuma
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
-Tags: all in one, all in one seo, all in one seo pack, seo, search engine optimization, google
+Tags: seo, all in one seo pack, search engine optimization, google
 Requires at least: 3.3
-Tested up to: 4.3
-Stable tag: trunk
+Tested up to: 4.4
+Stable tag: 2.2.7.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 All in One SEO Pack is a WordPress SEO plugin to automatically optimize your WordPress blog for Search Engines such as Google.
 
@@ -67,5 +69,15 @@ Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one
 
 == Upgrade Notice ==
 
-= 2.0.4 =
-This version fixes a security related bug.  Please Upgrade immediately.
+= 2.2.7.4 = 
+
+-Update for WordPress 4.4
+-CSS fixes
+-Important localization improvements
+-Update for Social Meta Module - Photo Twitter Card
+-Add support for the full set of Twitter meta tags (https://dev.twitter.com/cards/markup)
+-Bugfix for issue with Nonindex options for post types
+-Bugfix for schema.org OG markup
+
+
+

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtor
 Tags: seo, all in one seo pack, search engine optimization, google
 Requires at least: 3.3
 Tested up to: 4.4
-Stable tag: 2.2.7.3
+Stable tag: 2.2.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,7 +69,15 @@ Please read these **[FAQs](http://semperfiwebdesign.com/documentation/all-in-one
 
 == Upgrade Notice ==
 
-= 2.2.7.3 = 
+= 2.2.7.4 = 
 
-Update for WordPress 4.4
+-Update for WordPress 4.4
+-CSS fixes
+-Important localization improvements
+-Update for Social Meta Module - Photo Twitter Card
+-Add support for the full set of Twitter meta tags (https://dev.twitter.com/cards/markup)
+-Bugfix for issue with Nonindex options for post types
+-Bugfix for schema.org OG markup
+
+
 
